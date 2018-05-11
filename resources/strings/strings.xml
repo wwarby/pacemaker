@@ -1,5 +1,7 @@
 <strings>
     <string id="AppName">PBSeeker</string>
-
-    <string id="label">My Value</string>
+    <string id="distance">DIST</string>
+    <string id="time">TIME</string>
+    <string id="halfMarathonAbbr">HM</string>
+    <string id="marathonAbbr">MA</string>
 </strings>
