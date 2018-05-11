@@ -2,13 +2,11 @@
 <projectDescription>
 	<name>PBSeeker</name>
 	<comment></comment>
-	<projects>
-	</projects>
+	<projects></projects>
 	<buildSpec>
 		<buildCommand>
 			<name>connectiq.builder</name>
-			<arguments>
-			</arguments>
+			<arguments></arguments>
 		</buildCommand>
 	</buildSpec>
 	<natures>
