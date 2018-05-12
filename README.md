@@ -60,11 +60,19 @@ the data field:
 Additionally, you can configure a custom goal distance and a label to show on the screen for that distance in the settings
 screen.
 
-## Licence
-PB Seeker is open source and it's code resides on GitHub at https://github.com/wwarby/pbseeker
+## Unsupported Devices
+I have supported as many devices as I could at the time of initial release. If there is any interest, I may add support
+for newly released devices. I won't be adding support for devices that aren't designed for running (such as the Edge series)
+or the older Connect IQ 1.x devices like the Forerunner 235. The problem with the older Connect IQ 1.x devices is that they
+limit memory usage to 16KB, and the template for a data field uses over half of that before you've written a line of code.
+My hat goes off to any developer who can work within that limit without dropping down to procedural coding style or
+compromising heavily on functionality, but I don't want development of this data field be constrained to that limitation.
+
+## Source
+PB Seeker is open source (MIT license) and it's code resides on GitHub at https://github.com/wwarby/pbseeker
 
 ## Credits
-This project borrows code and ideas heavily from [RunnersField by kpaumann](https://github.com/kopa/RunnersField).
+This project borrows code and ideas from [RunnersField by kpaumann](https://github.com/kopa/RunnersField).
 Thanks [kpaumann](https://apps.garmin.com/en-GB/developer/ab0f2743-88d2-4f32-9fb0-5fc8ba61e55a/apps) for open sourcing
 your project and giving me a leg up in writing for the Garmin SDK.
 

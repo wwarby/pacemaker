@@ -52,8 +52,6 @@ class PBSeekerView extends Ui.DataField {
 		DataField.initialize();
 		metrics = new ActivityMetrics();
 		goals = new GoalMetrics(metrics);
-		
-		
 	}
 
 	function onLayout(dc) {
@@ -173,7 +171,7 @@ class PBSeekerView extends Ui.DataField {
 		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(center + (paceTextWidth / 2) + 2, topRowY - 4, LABEL_FONT, paceLabelText, Globals.LEFT);
 		
-		// Grid line
+		// Render top grid line
 		drawHorizontalGridLine(dc, topGridLineY);
 		
 		// Render distance
@@ -192,10 +190,10 @@ class PBSeekerView extends Ui.DataField {
 		dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(rightQuadrant, secondRowValuesY, timeFont, timeText, Globals.VCENTER);
 		
-		// Grid line
+		// Render middle grid line
 		drawHorizontalGridLine(dc, middleGridLineY);
 		
-		// Goal rendering
+		// Render goal
 		var goalLabelTextWidth = dc.getTextWidthInPixels(goalLabelText, LABEL_FONT);
 		var goalTimeTextWidth = goalTimeText == null ? 0 : dc.getTextWidthInPixels(goalTimeText, VALUE_FONT);
 		var goalDistTextWidth = goalDistText == null ? 0 : dc.getTextWidthInPixels(goalDistText, VALUE_FONT);
@@ -227,10 +225,10 @@ class PBSeekerView extends Ui.DataField {
 			dc.drawBitmap(goalX, thirdRowY - (tickIcon.getHeight() / 2), tickIcon);
 		}
 		
-		// Grid line
+		// Render bottom grid line
 		drawHorizontalGridLine(dc, bottomGridLineY);
 		
-		// Heart rate
+		// Render heart rate
 		var hrText = metrics.hr.format("%d");
 		var hrTextWidth = dc.getTextWidthInPixels(hrText, VALUE_FONT_LARGE);
 		var heartIconX = center - (hrTextWidth / 2) - 12 - (heartIcon.getWidth() / 2);
@@ -239,7 +237,7 @@ class PBSeekerView extends Ui.DataField {
 		dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(center, bottomRowY, VALUE_FONT_LARGE, hrText, Globals.VCENTER);
 		
-		// Battery
+		// Render battery
 		var batteryX = center + (hrTextWidth / 2) + 5;
 		var batteryY = bottomRowY - 6;
 		drawBattery(System.getSystemStats().battery, dc, batteryX, batteryY, 25, 12);

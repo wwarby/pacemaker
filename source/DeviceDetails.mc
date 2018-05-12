@@ -1,5 +1,3 @@
-
-
 class DeviceDetails {
 	
 	var settings;
