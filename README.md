@@ -1,6 +1,6 @@
 # PB Seeker
 
-A free data field for the Garmin fenix 5x running watch designed to help with attempts at personal best times.
+A free data field for the Garmin running watches designed to help with attempts at personal best times.
 
 ## Release Plan
 This data field has not yet been submitted to the Garmin store. I will do so once I have tested it myself on a few runs.
@@ -25,6 +25,14 @@ testing yet so if it crashes your watch during a race, don't blame me.
    - Average pace (last 3 seconds)
    - Average pace (last 10 seconds)
    - Average pace (last 30 seconds)
+
+## Supported Devices
+- D2 Charlie
+- Descent MK1
+- fenix 5 / 5S / 5X / Chronos
+- Forerunner 645 / Music
+- Forerunner 935
+Note: Tested in real likfe on the fenix 5X, all other watches tested in the device simulator only.
 
 ## Goal Settings
 PB Seeker allows you to track predicted finish times for multiple goals within a single activity, one after the other.
