@@ -32,7 +32,8 @@ testing yet so if it crashes your watch during a race, don't blame me.
 - fenix 5 / 5S / 5X / Chronos
 - Forerunner 645 / Music
 - Forerunner 935
-Note: Tested in real likfe on the fenix 5X, all other watches tested in the device simulator only.
+
+Note: Only tested in on a real fenix 5X in the field, all other watches tested only in the SDK device simulator.
 
 ## Goal Settings
 PB Seeker allows you to track predicted finish times for multiple goals within a single activity, one after the other.
