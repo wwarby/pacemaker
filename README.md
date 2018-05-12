@@ -3,7 +3,7 @@
 A free data field for the Garmin fenix 5x which shows fields for runners designed to
 help with attempts at personal best times.
 
-![RunnersField Screenshot Bright](/doc/screenshot-1.png) ![RunnersField Screenshot Dark](/doc/screenshot-2.png)
+![PBSeeker Screenshot Bright](/screenshots/screenshot-1.png) ![PBSeeker Screenshot Dark](/screenshots/screenshot-2.png)
 
 
 PBSeeker is open source and it's code resides on GitHub at https://github.com/wwarby/pbseeker

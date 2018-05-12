@@ -1,0 +1,77 @@
+<resources>
+	<properties>
+		<property id="enableGoal1k" type="boolean">false</property>
+		<property id="enableGoal1mi" type="boolean">false</property>
+		<property id="enableGoal2mi" type="boolean">false</property>
+		<property id="enableGoal2k" type="boolean">false</property>
+		<property id="enableGoal5k" type="boolean">true</property>
+		<property id="enableGoal5mi" type="boolean">false</property>
+		<property id="enableGoal10k" type="boolean">true</property>
+		<property id="enableGoal15k" type="boolean">true</property>
+		<property id="enableGoal10mi" type="boolean">true</property>
+		<property id="enableGoalHM" type="boolean">true</property>
+		<property id="enableGoalMA" type="boolean">true</property>
+		<property id="customGoalDistance" type="number">0</property>
+		<property id="customGoalLabel" type="string"></property>
+	</properties>
+	<strings>
+		<string id="enableGoal1kTitle">Include 1K in finish time predictions</string>
+		<string id="enableGoal1miTitle">Include 1 mile in finish time predictions</string>
+		<string id="enableGoal2kTitle">Include 2K in finish time predictions</string>
+		<string id="enableGoal2miTitle">Include 2 miles in finish time predictions</string>
+		<string id="enableGoal5kTitle">Include 5K in finish time predictions</string>
+		<string id="enableGoal5miTitle">Include 5 miles in finish time predictions</string>
+		<string id="enableGoal10kTitle">Include 10K in finish time predictions</string>
+		<string id="enableGoal15kTitle">Include 15K in finish time predictions</string>
+		<string id="enableGoal10miTitle">Include 10 miles in finish time predictions</string>
+		<string id="enableGoalHMTitle">Include half marathon in finish time predictions</string>
+		<string id="enableGoalMATitle">Include marathon in finish time predictions</string>
+		<string id="customGoalDistanceTitle">Custom goal distance for finish time predictions</string>
+		<string id="customGoalDistanceErrorMessage">Custom goal distance (in meters) must be between 100 and 999,999</string>
+		<string id="customGoalDistancePrompt">A custom distance (in meters) to be used in finish time predicions, in addition to any of the standard distances checked in the list above</string>
+		<string id="customGoalLabelTitle">Label text for custom goal distance</string>
+		<string id="customGoalLabelErrorMessage">Custom goal label is limited to four characters</string>
+		<string id="customGoalLabelPrompt">This label is shown in the finish time prediction section of the data field when your custom goal distance is the next uncompleted distance for the current activity</string>
+	</strings>
+	<settings>
+		<setting propertyKey="@Properties.enableGoal1k" title="@Strings.enableGoal1kTitle">
+			<settingConfig type="boolean" />
+		</setting>
+		<setting propertyKey="@Properties.enableGoal1mi" title="@Strings.enableGoal1miTitle">
+			<settingConfig type="boolean" />
+		</setting>
+		<setting propertyKey="@Properties.enableGoal2k" title="@Strings.enableGoal2kTitle">
+			<settingConfig type="boolean" />
+		</setting>
+		<setting propertyKey="@Properties.enableGoal2mi" title="@Strings.enableGoal2miTitle">
+			<settingConfig type="boolean" />
+		</setting>
+		<setting propertyKey="@Properties.enableGoal5k" title="@Strings.enableGoal5kTitle">
+			<settingConfig type="boolean" />
+		</setting>
+		<setting propertyKey="@Properties.enableGoal5mi" title="@Strings.enableGoal5miTitle">
+			<settingConfig type="boolean" />
+		</setting>
+		<setting propertyKey="@Properties.enableGoal10k" title="@Strings.enableGoal10kTitle">
+			<settingConfig type="boolean" />
+		</setting>
+		<setting propertyKey="@Properties.enableGoal15k" title="@Strings.enableGoal15kTitle">
+			<settingConfig type="boolean" />
+		</setting>
+		<setting propertyKey="@Properties.enableGoal10mi" title="@Strings.enableGoal10miTitle">
+			<settingConfig type="boolean" />
+		</setting>
+		<setting propertyKey="@Properties.enableGoalHM" title="@Strings.enableGoalHMTitle">
+			<settingConfig type="boolean" />
+		</setting>
+		<setting propertyKey="@Properties.enableGoalMA" title="@Strings.enableGoalMATitle">
+			<settingConfig type="boolean" />
+		</setting>
+		<setting propertyKey="@Properties.customGoalDistance" title="@Strings.customGoalDistanceTitle" prompt="@Strings.customGoalDistancePrompt">
+			<settingConfig type="numeric" min="100" max="999999" errorMessage="@Strings.customGoalDistanceErrorMessage" />
+		</setting>
+		<setting propertyKey="@Properties.customGoalLabel" title="@Strings.customGoalLabelTitle" prompt="@Strings.customGoalLabelPrompt">
+			<settingConfig type="alphaNumeric" maxLength="4" errorMessage="@Strings.customGoalLabelErrorMessage" />
+		</setting>
+	</settings>
+</resources>
