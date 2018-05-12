@@ -10,7 +10,7 @@ For anyone stumbling across this repository, feel free to download and try it ou
 testing yet so if it crashes your watch during a race, don't blame me.
 
 ## Features
-- Current pace (average for the previous 10 seconds)
+- Current pace
 - Total distance
 - Elapsed time
 - Predicted finish time for next goal
@@ -46,15 +46,8 @@ a single goal and watch your predicted time for that goal throughout the whole r
 
 The following goal distances are available out of the box and can be enabled with a checkbox in the settings screen for
 the data field:
-- 1K
-- 1 mile
-- 2K
-- 2 miles
-- 5K
-- 5 miles
-- 10K
-- 10 miles
-- 15K
+- 1 / 2 / 5 / 10 / 15K
+- 1 / 2 / 5 / 10 miles
 - Half Marathon
 - Marathon
 Additionally, you can configure a custom goal distance and a label to show on the screen for that distance in the settings

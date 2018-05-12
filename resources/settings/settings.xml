@@ -13,7 +13,7 @@
 		<property id="enableGoalMA" type="boolean">false</property>
 		<property id="customGoalDistance" type="number">0</property>
 		<property id="customGoalLabel" type="string"></property>
-		<property id="paceMode" type="number">3</property>
+		<property id="paceMode" type="number">0</property>
 	</properties>
 	<strings>
 		<string id="enableGoal1kTitle">Include 1K in finish time predictions</string>
@@ -28,13 +28,13 @@
 		<string id="enableGoalHMTitle">Include half marathon in finish time predictions</string>
 		<string id="enableGoalMATitle">Include marathon in finish time predictions</string>
 		
-		<string id="customGoalDistanceTitle">Custom goal distance for finish time predictions</string>
-		<string id="customGoalDistanceErrorMessage">Custom goal distance (in meters) must be less than 999,999</string>
-		<string id="customGoalDistancePrompt">A custom distance (in meters) to be used in finish time predicions, in addition to any of the standard distances checked in the list above. Set this to zero to disable.</string>
+		<string id="customGoalDistanceTitle">Custom distance for finish time predictions</string>
+		<string id="customGoalDistanceErrorMessage">Custom goal distance must be less than 999,999</string>
+		<string id="customGoalDistancePrompt">In meters, e.g. 8000 for 8K</string>
 		
-		<string id="customGoalLabelTitle">Label text for custom goal distance</string>
-		<string id="customGoalLabelErrorMessage">Custom goal label is limited to four characters</string>
-		<string id="customGoalLabelPrompt">This label is shown in the finish time prediction section of the data field when your custom goal distance is the next uncompleted distance for the current activity</string>
+		<string id="customGoalLabelTitle">Custom goal name</string>
+		<string id="customGoalLabelErrorMessage">Custom goal name is limited to four characters</string>
+		<string id="customGoalLabelPrompt">Up to 4 characters, e.g. 8K</string>
 		
 		<string id="paceModeTitle">Pace mode</string>
 		<string id="paceModeCurrent">Current pace</string>
