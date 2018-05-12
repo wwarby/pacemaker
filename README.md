@@ -2,12 +2,12 @@
 
 A free data field for the Garmin running watches designed to help with attempts at personal best times.
 
+![PBSeeker Screenshot Bright](/screenshots/screenshot-1.png) ![PBSeeker Screenshot Dark](/screenshots/screenshot-2.png)
+
 ## Release Plan
 This data field has not yet been submitted to the Garmin store. I will do so once I have tested it myself on a few runs.
 For anyone stumbling across this repository, feel free to download and try it out, but be warned - it has had almost no
 testing yet so if it crashes your watch during a race, don't blame me.
-
-![PBSeeker Screenshot Bright](/screenshots/screenshot-1.png) ![PBSeeker Screenshot Dark](/screenshots/screenshot-2.png)
 
 ## Features
 - Current pace (average for the previous 10 seconds)
