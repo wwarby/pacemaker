@@ -27,11 +27,13 @@ testing yet so if it crashes your watch during a race, don't blame me.
    - Average pace (last 30 seconds)
 
 ## Supported Devices
+- Approach S60
 - D2 Charlie
 - Descent MK1
 - fenix 5 / 5S / 5X / Chronos
 - Forerunner 645 / Music
 - Forerunner 935
+- vivoactive 3
 
 Note: Only tested in on a real fenix 5X in the field, all other watches tested only in the SDK device simulator.
 

@@ -107,12 +107,6 @@ class PBSeekerView extends Ui.DataField {
 		
 		setColours();
 		
-		var labelHeight = dc.getTextDimensions("TEST", LABEL_FONT)[1];
-		var valueHeight = dc.getTextDimensions("TEST", VALUE_FONT)[1];
-		var valueHeightLarge = dc.getTextDimensions("TEST", VALUE_FONT_LARGE)[1];
-		var labelLargeValueYOffset = valueHeightLarge - labelHeight + 3; //Not sure why this doesn't work precisely - have to push it down a bit
-		var center = dc.getWidth() / 2;
-		
 		// Format values
 		var paceText =  TimeFormat.formatTime(metrics.computedPace * 1000);
 		var distText = DistanceFormat.formatDistance(metrics.distance, metrics.kmOrMileInMeters);
@@ -142,17 +136,30 @@ class PBSeekerView extends Ui.DataField {
 			}
 		}
 		
-		// Calculate grid positions
-		
+		// Calculate positions
+		var center = dc.getWidth() / 2;
+		var leftQuadrant = center / 2;
+		var rightQuadrant = center + leftQuadrant;
 		var topGridLineY =
-			device.round240 ? valueHeightLarge + 20 :
-			device.round218 ? valueHeightLarge + 16 :
+			device.round240 ? 56 :
+			device.round218 ? 50 :
 			0;
-		
-		var bottomGridLineY =
-			device.round240 ? device.height - valueHeightLarge - 20 :
-			device.round218 ? device.height - valueHeightLarge - 16 :
+		var topRowY = topGridLineY / 2;
+		var secondRowLabelsY =
+			device.round240 ? topGridLineY + 17 :
+			device.round218 ? topGridLineY + 15 :
 			0;
+		var secondRowValuesY =
+			device.round240 ? secondRowLabelsY + 30 :
+			device.round218 ? secondRowLabelsY + 28 :
+			0;
+		var middleGridLineY =
+			device.round240 ? 132 :
+			device.round218 ? 120 :
+			0;
+		var bottomGridLineY = device.height - topGridLineY;
+		var bottomRowY = device.height - ((device.height - bottomGridLineY) / 2);
+		var thirdRowY = middleGridLineY + ((bottomGridLineY - middleGridLineY) / 2);
 		
 		// Render background
 		dc.setColor(backgroundColour, backgroundColour);
@@ -161,51 +168,31 @@ class PBSeekerView extends Ui.DataField {
 		// Render pace
 		//paceText = "88:88"; // Uncomment to test realistic max width
 		var paceTextWidth = dc.getTextWidthInPixels(paceText, VALUE_FONT_LARGE);
-		var paceY =
-			device.round240 ? 10 :
-			device.round218 ? 8 :
-			0;
 		dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(dc.getWidth() / 2, paceY, VALUE_FONT_LARGE, paceText, Globals.CENTER);
+		dc.drawText(center, topRowY, VALUE_FONT_LARGE, paceText, Globals.VCENTER);
 		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(center + (paceTextWidth / 2) + 2, paceY + labelLargeValueYOffset, LABEL_FONT, paceLabelText, Globals.LEFT);
+		dc.drawText(center + (paceTextWidth / 2) + 2, topRowY - 4, LABEL_FONT, paceLabelText, Globals.LEFT);
 		
 		// Grid line
 		drawHorizontalGridLine(dc, topGridLineY);
 		
-		// Calculate metrics positioning
-		var metricsLabelsY =
-			device.round240 ? topGridLineY + 4 :
-			device.round218 ? topGridLineY + 4 :
-			0;
-		var metricsLeftX = device.width / 4;
-		var metricsRightX = device.width - metricsLeftX;
-		var metricsValuesY =
-			device.round240 ? metricsLabelsY + labelHeight + (valueHeightLarge / 2) + 5 :
-			device.round218 ? metricsLabelsY + labelHeight + (valueHeightLarge / 2) :
-			0; 
-		
 		// Render distance
 		//distText = "88.88"; // Uncomment to test realistic max width
 		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(metricsLeftX, metricsLabelsY, LABEL_FONT, distLabelText, Globals.CENTER);
+		dc.drawText(leftQuadrant, secondRowLabelsY, LABEL_FONT, distLabelText, Globals.VCENTER);
 		dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(metricsLeftX, metricsValuesY, VALUE_FONT_LARGE, distText, Globals.VCENTER);
+		dc.drawText(leftQuadrant, secondRowValuesY, VALUE_FONT_LARGE, distText, Globals.VCENTER);
 				
 		// Render elapsed time
 		//timeText = "88:88:88"; // Uncomment to test realistic max width
 		var timeTextWidth = dc.getTextWidthInPixels(timeText, VALUE_FONT_LARGE);
 		var timeFont = timeTextWidth < 100 ? VALUE_FONT_LARGE : VALUE_FONT;
 		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(metricsRightX, metricsLabelsY, LABEL_FONT, timeLabelText, Globals.CENTER);
+		dc.drawText(rightQuadrant, secondRowLabelsY, LABEL_FONT, timeLabelText, Globals.VCENTER);
 		dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(metricsRightX, metricsValuesY, timeFont, timeText, Globals.VCENTER);
+		dc.drawText(rightQuadrant, secondRowValuesY, timeFont, timeText, Globals.VCENTER);
 		
 		// Grid line
-		var middleGridLineY =
-			device.round240 ? metricsValuesY + (valueHeightLarge / 2) + 10 :
-			device.round218 ? metricsValuesY + (valueHeightLarge / 2) + 8 :
-			0;
 		drawHorizontalGridLine(dc, middleGridLineY);
 		
 		// Goal rendering
@@ -219,26 +206,25 @@ class PBSeekerView extends Ui.DataField {
 		
 		var totalGoalWidth = goalLabelTextWidth + goalLabelSpace + goalTimeTextWidth + goalValueSpace + goalDistTextWidth + goalCompletedTickSpace + goalCompletedTickWidth;
 		var goalX = (dc.getWidth() - totalGoalWidth) / 2;
-		var goalY = middleGridLineY + ((bottomGridLineY - middleGridLineY) / 2);
 		
 		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(goalX, goalY, LABEL_FONT, goalLabelText, Globals.LEFT_VCENTER);
+		dc.drawText(goalX, thirdRowY, LABEL_FONT, goalLabelText, Globals.LEFT_VCENTER);
 		goalX += goalLabelTextWidth + goalLabelSpace;
 		
 		if (goalTimeText != null) {
 			dc.setColor(goalCompleted ? SUCCESS_COLOUR : valueColour, Gfx.COLOR_TRANSPARENT);
-			dc.drawText(goalX, goalY, VALUE_FONT, goalTimeText, Globals.LEFT_VCENTER);
+			dc.drawText(goalX, thirdRowY, VALUE_FONT, goalTimeText, Globals.LEFT_VCENTER);
 			goalX += goalTimeTextWidth + goalValueSpace;
 		}
 		
 		if (goalDistText != null) {
 			dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
-			dc.drawText(goalX, goalY, VALUE_FONT, goalDistText, Globals.LEFT_VCENTER);
+			dc.drawText(goalX, thirdRowY, VALUE_FONT, goalDistText, Globals.LEFT_VCENTER);
 		}
 		
 		if (goalCompleted) {
 			goalX += goalDistTextWidth + goalLabelSpace;
-			dc.drawBitmap(goalX, goalY - (tickIcon.getHeight() / 2), tickIcon);
+			dc.drawBitmap(goalX, thirdRowY - (tickIcon.getHeight() / 2), tickIcon);
 		}
 		
 		// Grid line
@@ -247,19 +233,15 @@ class PBSeekerView extends Ui.DataField {
 		// Heart rate
 		var hrText = metrics.hr.format("%d");
 		var hrTextWidth = dc.getTextWidthInPixels(hrText, VALUE_FONT_LARGE);
-		var hrY = 
-			device.round240 ? device.height - valueHeightLarge - 10:
-			device.round218 ? device.height - valueHeightLarge - 8:
-			0;
 		var heartIconX = center - (hrTextWidth / 2) - 12 - (heartIcon.getWidth() / 2);
-		var heartIconY = hrY + (valueHeightLarge / 2) - (heartIcon.getHeight() / 2) + 2;
+		var heartIconY = bottomRowY - (heartIcon.getHeight() / 2) + 2;
 		dc.drawBitmap(heartIconX, heartIconY, heartIcon);
 		dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(center, hrY, VALUE_FONT_LARGE, hrText, Globals.CENTER);
+		dc.drawText(center, bottomRowY, VALUE_FONT_LARGE, hrText, Globals.VCENTER);
 		
 		// Battery
 		var batteryX = center + (hrTextWidth / 2) + 5;
-		var batteryY = hrY + (valueHeightLarge / 2) - (heartIcon.getHeight() / 2) + 4;
+		var batteryY = bottomRowY - 6;
 		drawBattery(System.getSystemStats().battery, dc, batteryX, batteryY, 25, 12);
 	}
 	
