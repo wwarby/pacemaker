@@ -6,11 +6,11 @@
 		<property id="enableGoal2k" type="boolean">false</property>
 		<property id="enableGoal5k" type="boolean">true</property>
 		<property id="enableGoal5mi" type="boolean">false</property>
-		<property id="enableGoal10k" type="boolean">true</property>
-		<property id="enableGoal15k" type="boolean">true</property>
-		<property id="enableGoal10mi" type="boolean">true</property>
-		<property id="enableGoalHM" type="boolean">true</property>
-		<property id="enableGoalMA" type="boolean">true</property>
+		<property id="enableGoal10k" type="boolean">false</property>
+		<property id="enableGoal15k" type="boolean">false</property>
+		<property id="enableGoal10mi" type="boolean">false</property>
+		<property id="enableGoalHM" type="boolean">false</property>
+		<property id="enableGoalMA" type="boolean">false</property>
 		<property id="customGoalDistance" type="number">0</property>
 		<property id="customGoalLabel" type="string"></property>
 	</properties>
