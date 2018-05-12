@@ -19,6 +19,12 @@ testing yet so if it crashes your watch during a race, don't blame me.
 - Current heart rate
 - Battery life indicator
 - Supports device units setting (KM or miles)
+- Choose how pace is calculated from:
+   - Current pace
+   - Average pace
+   - Average pace (last 3 seconds)
+   - Average pace (last 10 seconds)
+   - Average pace (last 30 seconds)
 
 ## Goal Settings
 PB Seeker allows you to track predicted finish times for multiple goals within a single activity, one after the other.

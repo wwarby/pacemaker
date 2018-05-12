@@ -11,7 +11,15 @@ class Goal {
 	
 	function compute(completedDistance, elapsedTime, speedMetersPerSecond) {
 		
-		if (completedDistance == null || completedDistance == 0 || elapsedTime == null || elapsedTime == 0 || completed) { return; }
+		if (
+			completedDistance == null ||
+			completedDistance == 0 ||
+			elapsedTime == null ||
+			elapsedTime == 0 ||
+			completed ||
+			speedMetersPerSecond == null ||
+			speedMetersPerSecond == 0
+		) { return; }
 		
 		remainingDistance = Calc.max(0, distance - completedDistance);
 		

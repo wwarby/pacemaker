@@ -6,12 +6,9 @@ using Globals;
 class GoalMetrics {
 	
 	hidden var goals = new[0];
-	
 	hidden var customGoal;
-
+	hidden var metrics;
 	hidden var app;
-	
-	var metrics;
 	
 	function initialize(parentMetrics) {
 		app = App.getApp();
@@ -48,7 +45,7 @@ class GoalMetrics {
 		customGoal.distance = app.getProperty("customGoalDistance");
 		customGoal.label = app.getProperty("customGoalLabel");
 		customGoal.enabled = customGoal.distance != null && customGoal.distance > 0;
-		if (customGoal.label == null || customGoal.label == "") {
+		if (customGoal.label == null || customGoal.label.length() == 0) {
 			customGoal.label = "CUST";
 		}
 	}
@@ -66,7 +63,7 @@ class GoalMetrics {
 		// Compute values for next goal
 		var goal = nextGoal();
 		if (goal != null) {
-			goal.compute(metrics.distance, metrics.elapsedTime, metrics.speedMetersPerSecond());
+			goal.compute(metrics.distance, metrics.elapsedTime, metrics.computedSpeed);
 		}
 		
 		// Capture actual time for completed goals

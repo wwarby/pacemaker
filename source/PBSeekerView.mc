@@ -104,7 +104,7 @@ class PBSeekerView extends Ui.DataField {
 		setColours();
 		
 		// Format values
-		var paceText =  TimeFormat.formatTime(metrics.secondsPerKmOrMile() * 1000);
+		var paceText =  TimeFormat.formatTime(metrics.computedPace * 1000);
 		var distText = DistanceFormat.formatDistance(metrics.distance, metrics.kmOrMileInMeters);
 		var timeText =  TimeFormat.formatTime(metrics.elapsedTime);
 		

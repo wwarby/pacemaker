@@ -13,6 +13,7 @@
 		<property id="enableGoalMA" type="boolean">false</property>
 		<property id="customGoalDistance" type="number">0</property>
 		<property id="customGoalLabel" type="string"></property>
+		<property id="paceMode" type="number">3</property>
 	</properties>
 	<strings>
 		<string id="enableGoal1kTitle">Include 1K in finish time predictions</string>
@@ -26,12 +27,21 @@
 		<string id="enableGoal10miTitle">Include 10 miles in finish time predictions</string>
 		<string id="enableGoalHMTitle">Include half marathon in finish time predictions</string>
 		<string id="enableGoalMATitle">Include marathon in finish time predictions</string>
+		
 		<string id="customGoalDistanceTitle">Custom goal distance for finish time predictions</string>
-		<string id="customGoalDistanceErrorMessage">Custom goal distance (in meters) must be between 100 and 999,999</string>
-		<string id="customGoalDistancePrompt">A custom distance (in meters) to be used in finish time predicions, in addition to any of the standard distances checked in the list above</string>
+		<string id="customGoalDistanceErrorMessage">Custom goal distance (in meters) must be less than 999,999</string>
+		<string id="customGoalDistancePrompt">A custom distance (in meters) to be used in finish time predicions, in addition to any of the standard distances checked in the list above. Set this to zero to disable.</string>
+		
 		<string id="customGoalLabelTitle">Label text for custom goal distance</string>
 		<string id="customGoalLabelErrorMessage">Custom goal label is limited to four characters</string>
 		<string id="customGoalLabelPrompt">This label is shown in the finish time prediction section of the data field when your custom goal distance is the next uncompleted distance for the current activity</string>
+		
+		<string id="paceModeTitle">Pace mode</string>
+		<string id="paceModeCurrent">Current pace</string>
+		<string id="paceModeAverage">Average pace</string>
+		<string id="paceMode3Seconds">Average pace (last 3 seconds)</string>
+		<string id="paceMode10Seconds">Average pace (last 10 seconds)</string>
+		<string id="paceMode30Seconds">Average pace (last 30 seconds)</string>
 	</strings>
 	<settings>
 		<setting propertyKey="@Properties.enableGoal1k" title="@Strings.enableGoal1kTitle">
@@ -68,10 +78,19 @@
 			<settingConfig type="boolean" />
 		</setting>
 		<setting propertyKey="@Properties.customGoalDistance" title="@Strings.customGoalDistanceTitle" prompt="@Strings.customGoalDistancePrompt">
-			<settingConfig type="numeric" min="100" max="999999" errorMessage="@Strings.customGoalDistanceErrorMessage" />
+			<settingConfig type="numeric" max="999999" errorMessage="@Strings.customGoalDistanceErrorMessage" />
 		</setting>
 		<setting propertyKey="@Properties.customGoalLabel" title="@Strings.customGoalLabelTitle" prompt="@Strings.customGoalLabelPrompt">
 			<settingConfig type="alphaNumeric" maxLength="4" errorMessage="@Strings.customGoalLabelErrorMessage" />
+		</setting>
+		<setting propertyKey="@Properties.paceMode" title="@Strings.paceModeTitle">
+			<settingConfig type="list">
+            <listEntry value="0">@Strings.paceModeCurrent</listEntry>
+            <listEntry value="1">@Strings.paceModeAverage</listEntry>
+            <listEntry value="2">@Strings.paceMode3Seconds</listEntry>
+            <listEntry value="3">@Strings.paceMode10Seconds</listEntry>
+            <listEntry value="4">@Strings.paceMode30Seconds</listEntry>
+        </settingConfig>
 		</setting>
 	</settings>
 </resources>
