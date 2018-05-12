@@ -6,7 +6,7 @@ using Globals;
 using Calc;
 
 class PBSeekerView extends Ui.DataField {
-
+	
 	hidden const LABEL_FONT = Gfx.FONT_XTINY;
 	hidden const VALUE_FONT = Gfx.FONT_NUMBER_MILD;
 	hidden const VALUE_FONT_LARGE = Gfx.FONT_NUMBER_MEDIUM;
@@ -14,7 +14,7 @@ class PBSeekerView extends Ui.DataField {
 	hidden const GOAL_LABEL_SPACE = 5;
 	hidden const GOAL_VALUE_SPACE = 10;
 	
-	hidden const BATTERY_BACKGROUND_COLOUR = Gfx.COLOR_DK_GRAY;
+	hidden const BATTERY_BACKGROUND_COLOUR = Gfx.COLOR_LT_GRAY;
 	hidden const BATTERY_BACKGROUND_COLOUR_DARK_MODE = Gfx.COLOR_WHITE;
 	
 	hidden const LABEL_COLOUR = Gfx.COLOR_DK_GRAY;
@@ -44,6 +44,7 @@ class PBSeekerView extends Ui.DataField {
 	
 	hidden var doUpdates = 0;
 	
+	hidden var device;
 	hidden var metrics;
 	hidden var goals;
 	
@@ -51,17 +52,20 @@ class PBSeekerView extends Ui.DataField {
 		DataField.initialize();
 		metrics = new ActivityMetrics();
 		goals = new GoalMetrics(metrics);
+		
+		
 	}
 
 	function onLayout(dc) {
-		setDeviceSettingsDependentVariables();
+		device = new DeviceDetails();
+		setDeviceSettingsDependentVariables(device.settings);
 		heartIcon = Ui.loadResource(Rez.Drawables.HeartIcon);
 		tickIcon = Ui.loadResource(Rez.Drawables.TickIcon);
 	}
 	
-	function setDeviceSettingsDependentVariables() {
+	function setDeviceSettingsDependentVariables(deviceSettings) {
 		
-		metrics.setDeviceSettingsDependentVariables();
+		metrics.setDeviceSettingsDependentVariables(deviceSettings);
 		
 		if (metrics.distanceUnits == System.UNIT_METRIC) {
 			paceLabelText = "/km";
@@ -103,6 +107,12 @@ class PBSeekerView extends Ui.DataField {
 		
 		setColours();
 		
+		var labelHeight = dc.getTextDimensions("TEST", LABEL_FONT)[1];
+		var valueHeight = dc.getTextDimensions("TEST", VALUE_FONT)[1];
+		var valueHeightLarge = dc.getTextDimensions("TEST", VALUE_FONT_LARGE)[1];
+		var labelLargeValueYOffset = valueHeightLarge - labelHeight + 3; //Not sure why this doesn't work precisely - have to push it down a bit
+		var center = dc.getWidth() / 2;
+		
 		// Format values
 		var paceText =  TimeFormat.formatTime(metrics.computedPace * 1000);
 		var distText = DistanceFormat.formatDistance(metrics.distance, metrics.kmOrMileInMeters);
@@ -132,36 +142,71 @@ class PBSeekerView extends Ui.DataField {
 			}
 		}
 		
+		// Calculate grid positions
+		
+		var topGridLineY =
+			device.round240 ? valueHeightLarge + 20 :
+			device.round218 ? valueHeightLarge + 16 :
+			0;
+		
+		var bottomGridLineY =
+			device.round240 ? device.height - valueHeightLarge - 20 :
+			device.round218 ? device.height - valueHeightLarge - 16 :
+			0;
+		
 		// Render background
 		dc.setColor(backgroundColour, backgroundColour);
 		dc.fillRectangle(0, 0, dc.getWidth(), dc.getHeight());
 		
 		// Render pace
+		//paceText = "88:88"; // Uncomment to test realistic max width
 		var paceTextWidth = dc.getTextWidthInPixels(paceText, VALUE_FONT_LARGE);
+		var paceY =
+			device.round240 ? 10 :
+			device.round218 ? 8 :
+			0;
 		dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(dc.getWidth() / 2, 33, VALUE_FONT_LARGE, paceText, Globals.CENTER);
+		dc.drawText(dc.getWidth() / 2, paceY, VALUE_FONT_LARGE, paceText, Globals.CENTER);
 		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(dc.getWidth() / 2 + (paceTextWidth / 2) + 2, 41, LABEL_FONT, paceLabelText, Globals.LEFT);
+		dc.drawText(center + (paceTextWidth / 2) + 2, paceY + labelLargeValueYOffset, LABEL_FONT, paceLabelText, Globals.LEFT);
 		
 		// Grid line
-		drawHorizontalGridLine(dc, 58);
+		drawHorizontalGridLine(dc, topGridLineY);
+		
+		// Calculate metrics positioning
+		var metricsLabelsY =
+			device.round240 ? topGridLineY + 4 :
+			device.round218 ? topGridLineY + 4 :
+			0;
+		var metricsLeftX = device.width / 4;
+		var metricsRightX = device.width - metricsLeftX;
+		var metricsValuesY =
+			device.round240 ? metricsLabelsY + labelHeight + (valueHeightLarge / 2) + 5 :
+			device.round218 ? metricsLabelsY + labelHeight + (valueHeightLarge / 2) :
+			0; 
 		
 		// Render distance
+		//distText = "88.88"; // Uncomment to test realistic max width
 		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(70, 74, LABEL_FONT, distLabelText, Globals.CENTER);
+		dc.drawText(metricsLeftX, metricsLabelsY, LABEL_FONT, distLabelText, Globals.CENTER);
 		dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(70, 104, VALUE_FONT_LARGE, distText, Globals.CENTER);
+		dc.drawText(metricsLeftX, metricsValuesY, VALUE_FONT_LARGE, distText, Globals.VCENTER);
 				
 		// Render elapsed time
+		//timeText = "88:88:88"; // Uncomment to test realistic max width
 		var timeTextWidth = dc.getTextWidthInPixels(timeText, VALUE_FONT_LARGE);
 		var timeFont = timeTextWidth < 100 ? VALUE_FONT_LARGE : VALUE_FONT;
 		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(170, 74, LABEL_FONT, timeLabelText, Globals.CENTER);
+		dc.drawText(metricsRightX, metricsLabelsY, LABEL_FONT, timeLabelText, Globals.CENTER);
 		dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(170, 104, timeFont, timeText, Globals.CENTER);
+		dc.drawText(metricsRightX, metricsValuesY, timeFont, timeText, Globals.VCENTER);
 		
 		// Grid line
-		drawHorizontalGridLine(dc, 134);
+		var middleGridLineY =
+			device.round240 ? metricsValuesY + (valueHeightLarge / 2) + 10 :
+			device.round218 ? metricsValuesY + (valueHeightLarge / 2) + 8 :
+			0;
+		drawHorizontalGridLine(dc, middleGridLineY);
 		
 		// Goal rendering
 		var goalLabelTextWidth = dc.getTextWidthInPixels(goalLabelText, LABEL_FONT);
@@ -173,22 +218,22 @@ class PBSeekerView extends Ui.DataField {
 		var goalCompletedTickSpace = !goalCompleted ? 0 : GOAL_LABEL_SPACE;
 		
 		var totalGoalWidth = goalLabelTextWidth + goalLabelSpace + goalTimeTextWidth + goalValueSpace + goalDistTextWidth + goalCompletedTickSpace + goalCompletedTickWidth;
-		var goalX = (240 - totalGoalWidth) / 2;
-		var goalY = 159;
+		var goalX = (dc.getWidth() - totalGoalWidth) / 2;
+		var goalY = middleGridLineY + ((bottomGridLineY - middleGridLineY) / 2);
 		
 		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(goalX, goalY, LABEL_FONT, goalLabelText, Globals.LEFT);
+		dc.drawText(goalX, goalY, LABEL_FONT, goalLabelText, Globals.LEFT_VCENTER);
 		goalX += goalLabelTextWidth + goalLabelSpace;
 		
 		if (goalTimeText != null) {
 			dc.setColor(goalCompleted ? SUCCESS_COLOUR : valueColour, Gfx.COLOR_TRANSPARENT);
-			dc.drawText(goalX, goalY, VALUE_FONT, goalTimeText, Globals.LEFT);
+			dc.drawText(goalX, goalY, VALUE_FONT, goalTimeText, Globals.LEFT_VCENTER);
 			goalX += goalTimeTextWidth + goalValueSpace;
 		}
 		
 		if (goalDistText != null) {
 			dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
-			dc.drawText(goalX, goalY, VALUE_FONT, goalDistText, Globals.LEFT);
+			dc.drawText(goalX, goalY, VALUE_FONT, goalDistText, Globals.LEFT_VCENTER);
 		}
 		
 		if (goalCompleted) {
@@ -197,15 +242,25 @@ class PBSeekerView extends Ui.DataField {
 		}
 		
 		// Grid line
-		drawHorizontalGridLine(dc, 184);
+		drawHorizontalGridLine(dc, bottomGridLineY);
 		
 		// Heart rate
-		dc.drawBitmap(62, 200, heartIcon);
+		var hrText = metrics.hr.format("%d");
+		var hrTextWidth = dc.getTextWidthInPixels(hrText, VALUE_FONT_LARGE);
+		var hrY = 
+			device.round240 ? device.height - valueHeightLarge - 10:
+			device.round218 ? device.height - valueHeightLarge - 8:
+			0;
+		var heartIconX = center - (hrTextWidth / 2) - 12 - (heartIcon.getWidth() / 2);
+		var heartIconY = hrY + (valueHeightLarge / 2) - (heartIcon.getHeight() / 2) + 2;
+		dc.drawBitmap(heartIconX, heartIconY, heartIcon);
 		dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(dc.getWidth() / 2, 210, VALUE_FONT_LARGE, metrics.hr.format("%d"), Globals.CENTER);
+		dc.drawText(center, hrY, VALUE_FONT_LARGE, hrText, Globals.CENTER);
 		
 		// Battery
-		drawBattery(System.getSystemStats().battery, dc, 159, 203, 25, 12);
+		var batteryX = center + (hrTextWidth / 2) + 5;
+		var batteryY = hrY + (valueHeightLarge / 2) - (heartIcon.getHeight() / 2) + 4;
+		drawBattery(System.getSystemStats().battery, dc, batteryX, batteryY, 25, 12);
 	}
 	
 	function drawHorizontalGridLine(dc, y) {

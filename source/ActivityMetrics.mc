@@ -23,8 +23,8 @@ class ActivityMetrics {
 		app = App.getApp();
 	}
 	
-	function setDeviceSettingsDependentVariables() {
-		distanceUnits = System.getDeviceSettings().distanceUnits;
+	function setDeviceSettingsDependentVariables(deviceSettings) {
+		distanceUnits = deviceSettings.distanceUnits;
 		if (distanceUnits == System.UNIT_METRIC) {
 			kmOrMileInMeters = 1000.0f;
 		} else {
