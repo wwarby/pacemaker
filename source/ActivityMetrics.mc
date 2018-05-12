@@ -17,7 +17,7 @@ class ActivityMetrics {
 	var currentSpeed = 0;
 	var computedPace = 0;
 	var computedSpeed = 0;
-	var paceMode;
+	var paceMode = Globals.PACE_MODE_CURRENT;
 	
 	function initialize() {
 		app = App.getApp();
@@ -31,7 +31,9 @@ class ActivityMetrics {
 			kmOrMileInMeters = Globals.METERS_IN_MILE;
 		}
 		
-		paceMode = app.getProperty("paceMode");
+		if (app.getProperty("paceMode") == null) {
+			paceMode = app.getProperty("paceMode");
+		}
 		
 		if (paceMode == Globals.PACE_MODE_3_SECONDS) {
 			paceData = new DataQueue(3);
@@ -64,14 +66,14 @@ class ActivityMetrics {
 		computedPace = secondsPerKmOrMile();
 	}
 	
-	hidden function secondsPerKmOrMile() {
+	function secondsPerKmOrMile() {
 		if (computedSpeed != null && computedSpeed > 0.2) {
 			return kmOrMileInMeters / computedSpeed;
 		}
 		return 0;
 	}
 	
-	hidden function speedMetersPerSecond() {
+	function speedMetersPerSecond() {
 		
 		switch (paceMode) {
 			case Globals.PACE_MODE_CURRENT:
