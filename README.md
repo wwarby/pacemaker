@@ -1,6 +1,7 @@
-# PB Seeker
+# Pacemaker
 
-A free data field for the Garmin running watches designed to help with attempts at personal best times.
+A free data field for the Garmin running watches designed to help runners keep pace with customisable goal times for
+specified distances.
 
 ![PBSeeker Screenshot Bright](/screenshots/screenshot-1.png) ![PBSeeker Screenshot Dark](/screenshots/screenshot-2.png)
 

@@ -1,5 +1,6 @@
 <drawables>
     <bitmap id="LauncherIcon" filename="launcher_icon.png" />
-    <bitmap id="HeartIcon" filename="heart_icon.png" />>
+    <bitmap id="HeartIcon" filename="heart_icon.png" />
     <bitmap id="TickIcon" filename="tick_icon.png" />
+    <bitmap id="RunnerIcon" filename="runner_icon.png" />
 </drawables>
