@@ -1,12 +1,12 @@
 <drawables>
-	<bitmap id="CadenceIcon" filename="cadence.icon.png" />
-	<bitmap id="CadenceDarkModeIcon" filename="cadence-dark-mode.icon.png" />
-	<bitmap id="DownIcon" filename="down.icon.png" />
-	<bitmap id="FinishIcon" filename="finish.icon.png" />
-	<bitmap id="FinishDarkModeIcon" filename="finish-dark-mode.icon.png" />
-	<bitmap id="HeartRateIcon" filename="heart-rate.icon.png" />
-	<bitmap id="LauncherIcon" filename="launcher.icon.png" />
-	<bitmap id="PaceIcon" filename="pace.icon.png" />
-	<bitmap id="PaceDarkModeIcon" filename="pace-dark-mode.icon.png" />
-	<bitmap id="UpIcon" filename="up.icon.png" />
+	<bitmap id="cadenceIcon" filename="cadence.icon.png" />
+	<bitmap id="cadenceDarkModeIcon" filename="cadence-dark-mode.icon.png" />
+	<bitmap id="downIcon" filename="down.icon.png" />
+	<bitmap id="finishIcon" filename="finish.icon.png" />
+	<bitmap id="finishDarkModeIcon" filename="finish-dark-mode.icon.png" />
+	<bitmap id="heartRateIcon" filename="heart-rate.icon.png" />
+	<bitmap id="launcherIcon" filename="launcher.icon.png" />
+	<bitmap id="paceIcon" filename="pace.icon.png" />
+	<bitmap id="paceDarkModeIcon" filename="pace-dark-mode.icon.png" />
+	<bitmap id="upIcon" filename="up.icon.png" />
 </drawables>

@@ -3,7 +3,7 @@
 		<property id="paceMode" type="number">0</property>
 		<property id="cadenceMode" type="number">0</property>
 		<property id="heartRateMode" type="number">0</property>
-		<property id="colourText" type="boolean">false</property>
+		<property id="colourText" type="boolean">true</property>
 		
 		<property id="goal1Distance" type="number">5000</property>
 		<property id="goal1TargetTime" type="number">1500</property>

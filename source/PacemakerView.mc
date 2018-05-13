@@ -1,5 +1,6 @@
 using Toybox.WatchUi as Ui;
 using Toybox.Graphics as Gfx;
+using Toybox.Application as App;
 using TimeFormat;
 using DistanceFormat;
 using Globals;
@@ -11,11 +12,7 @@ class PBSeekerView extends Ui.DataField {
 	hidden const VALUE_FONT = Gfx.FONT_NUMBER_MILD;
 	hidden const VALUE_FONT_LARGE = Gfx.FONT_NUMBER_MEDIUM;
 	
-	hidden const GOAL_LABEL_SPACE = 5;
 	hidden const GOAL_VALUE_SPACE = 10;
-	
-	hidden const BATTERY_BACKGROUND_COLOUR = Gfx.COLOR_LT_GRAY;
-	hidden const BATTERY_BACKGROUND_COLOUR_DARK_MODE = Gfx.COLOR_WHITE;
 	
 	hidden const LABEL_COLOUR = Gfx.COLOR_DK_GRAY;
 	hidden const LABEL_COLOUR_DARK_MODE = Gfx.COLOR_LT_GRAY;
@@ -23,11 +20,10 @@ class PBSeekerView extends Ui.DataField {
 	hidden const VALUE_COLOUR = Gfx.COLOR_BLACK;
 	hidden const VALUE_COLOUR_DARK_MODE = Gfx.COLOR_WHITE;
 	
-	hidden const SUCCESS_COLOUR = Gfx.COLOR_DK_GREEN;
+	hidden const ON_TARGET_COLOUR = Gfx.COLOR_DK_GREEN;
+	hidden const OFF_TARGET_COLOUR = Gfx.COLOR_RED;
 	
-	hidden const BATTERY_COLOUR = Gfx.COLOR_DK_GREEN;
-	hidden const BATTERY_COLOUR_LOW = Gfx.COLOR_YELLOW;
-	hidden const BATTERY_COLOUR_VERY_LOW = Gfx.COLOR_RED;
+	hidden var app;
 	
 	hidden var upIcon;
 	hidden var downIcon;
@@ -41,7 +37,8 @@ class PBSeekerView extends Ui.DataField {
 	hidden var backgroundColour = Gfx.COLOR_WHITE;
 	hidden var labelColour;
 	hidden var valueColour;
-	hidden var batteryBackgroundColour;
+	hidden var onTargetColour;
+	hidden var offTargetColour;
 	
 	hidden var distLabelText;
 	hidden var timeLabelText;
@@ -54,6 +51,7 @@ class PBSeekerView extends Ui.DataField {
 	
 	function initialize() {
 		DataField.initialize();
+		app = App.getApp();
 		metrics = new ActivityMetrics();
 		goals = new GoalMetrics(metrics);
 	}
@@ -65,8 +63,8 @@ class PBSeekerView extends Ui.DataField {
 	
 	function setDeviceSettingsDependentVariables(deviceSettings) {
 		metrics.setDeviceSettingsDependentVariables(deviceSettings);
-		distLabelText = Ui.loadResource(Rez.Strings.distance);
-		timeLabelText = Ui.loadResource(Rez.Strings.time);
+		distLabelText = Ui.loadResource(Rez.Strings.distance).toUpper();
+		timeLabelText = Ui.loadResource(Rez.Strings.time).toUpper();
 	}
 
 	function compute(info) {
@@ -90,45 +88,53 @@ class PBSeekerView extends Ui.DataField {
 		darkMode = (backgroundColour == Gfx.COLOR_BLACK);
 		labelColour = darkMode ? LABEL_COLOUR_DARK_MODE : LABEL_COLOUR;
 		valueColour = darkMode ? VALUE_COLOUR_DARK_MODE : VALUE_COLOUR;
-		batteryBackgroundColour = darkMode ? BATTERY_BACKGROUND_COLOUR_DARK_MODE : BATTERY_BACKGROUND_COLOUR;
+		
+		var colourText = app.getProperty("colourText");
+		if (colourText) {
+			onTargetColour = ON_TARGET_COLOUR;
+			offTargetColour = OFF_TARGET_COLOUR;
+		} else {
+			onTargetColour = valueColour;
+			offTargetColour = valueColour;
+		}
 	}
 	
 	function setIcons() {
 		
 		if (upIcon == null) {
-			upIcon = Ui.loadResource(Rez.Drawables.UpIcon);
+			upIcon = Ui.loadResource(Rez.Drawables.upIcon);
 		}
 		
 		if (downIcon == null) {
-			downIcon = Ui.loadResource(Rez.Drawables.DownIcon);
+			downIcon = Ui.loadResource(Rez.Drawables.downIcon);
 		}
 		
 		if (paceIcon == null || (darkModeIcons && !darkMode)) {
-			paceIcon = Ui.loadResource(Rez.Drawables.PaceIcon);
+			paceIcon = Ui.loadResource(Rez.Drawables.paceIcon);
 		}
 		
 		if (paceIcon == null || (!darkModeIcons && darkMode)) {
-			paceIcon = Ui.loadResource(Rez.Drawables.PaceDarkModeIcon);
+			paceIcon = Ui.loadResource(Rez.Drawables.paceDarkModeIcon);
 		}
 		
 		if (finishIcon == null || (darkModeIcons && !darkMode)) {
-			finishIcon = Ui.loadResource(Rez.Drawables.FinishIcon);
+			finishIcon = Ui.loadResource(Rez.Drawables.finishIcon);
 		}
 		
 		if (finishIcon == null || (!darkModeIcons && darkMode)) {
-			finishIcon = Ui.loadResource(Rez.Drawables.FinishDarkModeIcon);
+			finishIcon = Ui.loadResource(Rez.Drawables.finishDarkModeIcon);
 		}
 		
 		if (cadenceIcon == null || (darkModeIcons && !darkMode)) {
-			cadenceIcon = Ui.loadResource(Rez.Drawables.CadenceIcon);
+			cadenceIcon = Ui.loadResource(Rez.Drawables.cadenceIcon);
 		}
 		
 		if (cadenceIcon == null || (!darkModeIcons && darkMode)) {
-			cadenceIcon = Ui.loadResource(Rez.Drawables.CadenceDarkModeIcon);
+			cadenceIcon = Ui.loadResource(Rez.Drawables.cadenceDarkModeIcon);
 		}
 		
 		if (heartRateIcon == null) {
-			heartRateIcon = Ui.loadResource(Rez.Drawables.HeartRateIcon);
+			heartRateIcon = Ui.loadResource(Rez.Drawables.heartRateIcon);
 		}
 		
 		darkModeIcons = darkMode;
@@ -152,23 +158,27 @@ class PBSeekerView extends Ui.DataField {
 		var goalTimeText;
 		var goalDistText;
 		var goalCompleted = false;
+		var goalOnTarget = true;
 		if (goal != null) {
-			goalLabelText = goal.name;
+			goalLabelText = goal.name.toUpper();
 			goalTimeText = TimeFormat.formatTime(goal.predictedTime);
 			goalDistText = DistanceFormat.formatDistance(goal.remainingDistance, metrics.kmOrMileInMeters);
+			goalOnTarget = goal.onTarget();
 		} else {
 			goal = goals.lastCompletedGoal();
 			if (goal != null) {
-				goalLabelText = goal.name;
+				goalLabelText = goal.name.toUpper();
 				goalTimeText = TimeFormat.formatTime(goal.actualTime);
 				goalDistText = null;
 				goalCompleted = true;
+				goalOnTarget = goal.onTarget();
 			} else {
-				goalLabelText = "NO GOAL SET";
+				goalLabelText = Ui.loadResource(Rez.Strings.noGoalSet).toUpper();
 				goalTimeText = null;
 				goalDistText = null;
 			}
 		}
+		var targetColour = goalOnTarget ? onTargetColour : offTargetColour;
 		
 		// Calculate positions
 		var center = dc.getWidth() / 2;
@@ -206,7 +216,7 @@ class PBSeekerView extends Ui.DataField {
 		// Render pace
 		//paceText = "88:88"; // Uncomment to test realistic max width
 		var paceTextWidth = dc.getTextWidthInPixels(paceText, VALUE_FONT_LARGE);
-		dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
+		dc.setColor(targetColour, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(center, topRowY, VALUE_FONT_LARGE, paceText, Globals.VCENTER);
 		
 		// Render runner icon
@@ -242,22 +252,24 @@ class PBSeekerView extends Ui.DataField {
 		// Render middle grid line
 		drawHorizontalGridLine(dc, middleGridLineY);
 		
-		// Render goal
+		// Render goal label
 		var goalLabelTextWidth = dc.getTextWidthInPixels(goalLabelText, LABEL_FONT);
+		var goalLabelTextHeight = dc.getTextDimensions(goalLabelText, LABEL_FONT)[1];
+		dc.setColor(backgroundColour, backgroundColour);
+		dc.fillRectangle(center - (goalLabelTextWidth / 2) - 5, middleGridLineY - (goalLabelTextHeight / 2) + 2, goalLabelTextWidth + 10, goalLabelTextHeight - 4);
+		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
+		dc.drawText(center, middleGridLineY, LABEL_FONT, goalLabelText, Globals.VCENTER);
+		
+		// Render goal
 		var goalTimeTextWidth = goalTimeText == null ? 0 : dc.getTextWidthInPixels(goalTimeText, VALUE_FONT);
 		var goalDistTextWidth = goalDistText == null ? 0 : dc.getTextWidthInPixels(goalDistText, VALUE_FONT);
-		var goalLabelSpace = goalTimeTextWidth > 0 ? GOAL_LABEL_SPACE : 0;
 		var goalValueSpace = goalDistTextWidth > 0 ? GOAL_VALUE_SPACE : 0;
 		
-		var totalGoalWidth = goalLabelTextWidth + goalLabelSpace + goalTimeTextWidth + goalValueSpace + goalDistTextWidth;
+		var totalGoalWidth = goalTimeTextWidth + goalValueSpace + goalDistTextWidth;
 		var goalX = (dc.getWidth() - totalGoalWidth) / 2;
 		
-		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(goalX, thirdRowY, LABEL_FONT, goalLabelText, Globals.LEFT_VCENTER);
-		goalX += goalLabelTextWidth + goalLabelSpace;
-		
 		if (goalTimeText != null) {
-			dc.setColor(goalCompleted ? SUCCESS_COLOUR : valueColour, Gfx.COLOR_TRANSPARENT);
+			dc.setColor(targetColour, Gfx.COLOR_TRANSPARENT);
 			dc.drawText(goalX, thirdRowY, VALUE_FONT, goalTimeText, Globals.LEFT_VCENTER);
 			goalX += goalTimeTextWidth + goalValueSpace;
 		}
