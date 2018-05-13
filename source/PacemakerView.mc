@@ -34,7 +34,7 @@ class PBSeekerView extends Ui.DataField {
 	hidden var paceIcon;
 	hidden var finishIcon;
 	hidden var cadenceIcon;
-	hidden var hrIcon;
+	hidden var heartRateIcon;
 	hidden var darkModeIcons = false;
 	
 	hidden var darkMode = false;
@@ -43,7 +43,6 @@ class PBSeekerView extends Ui.DataField {
 	hidden var valueColour;
 	hidden var batteryBackgroundColour;
 	
-	hidden var paceLabelText;
 	hidden var distLabelText;
 	hidden var timeLabelText;
 	
@@ -65,15 +64,7 @@ class PBSeekerView extends Ui.DataField {
 	}
 	
 	function setDeviceSettingsDependentVariables(deviceSettings) {
-		
 		metrics.setDeviceSettingsDependentVariables(deviceSettings);
-		
-		if (metrics.distanceUnits == System.UNIT_METRIC) {
-			paceLabelText = "/km";
-		} else {
-			paceLabelText = "/mi";
-		}
-		
 		distLabelText = Ui.loadResource(Rez.Strings.distance);
 		timeLabelText = Ui.loadResource(Rez.Strings.time);
 	}
@@ -136,8 +127,8 @@ class PBSeekerView extends Ui.DataField {
 			cadenceIcon = Ui.loadResource(Rez.Drawables.CadenceDarkModeIcon);
 		}
 		
-		if (hrIcon == null) {
-			hrIcon = Ui.loadResource(Rez.Drawables.HrIcon);
+		if (heartRateIcon == null) {
+			heartRateIcon = Ui.loadResource(Rez.Drawables.HeartRateIcon);
 		}
 		
 		darkModeIcons = darkMode;
@@ -162,13 +153,13 @@ class PBSeekerView extends Ui.DataField {
 		var goalDistText;
 		var goalCompleted = false;
 		if (goal != null) {
-			goalLabelText = goal.label;
+			goalLabelText = goal.name;
 			goalTimeText = TimeFormat.formatTime(goal.predictedTime);
 			goalDistText = DistanceFormat.formatDistance(goal.remainingDistance, metrics.kmOrMileInMeters);
 		} else {
 			goal = goals.lastCompletedGoal();
 			if (goal != null) {
-				goalLabelText = goal.label;
+				goalLabelText = goal.name;
 				goalTimeText = TimeFormat.formatTime(goal.actualTime);
 				goalDistText = null;
 				goalCompleted = true;
@@ -217,8 +208,6 @@ class PBSeekerView extends Ui.DataField {
 		var paceTextWidth = dc.getTextWidthInPixels(paceText, VALUE_FONT_LARGE);
 		dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(center, topRowY, VALUE_FONT_LARGE, paceText, Globals.VCENTER);
-		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(center + (paceTextWidth / 2) + 2, topRowY - 4, LABEL_FONT, paceLabelText, Globals.LEFT);
 		
 		// Render runner icon
 		var paceIconX = center - (paceTextWidth / 2) - paceIcon.getWidth() - 4;
@@ -294,13 +283,13 @@ class PBSeekerView extends Ui.DataField {
 		dc.drawText(center - bottomRowXSpace, bottomRowY, VALUE_FONT, cadenceText, Globals.RIGHT_VCENTER);
 		
 		// Render heart rate
-		var hrText = metrics.computedHeartRate.format("%d");
-		var hrTextWidth = dc.getTextWidthInPixels(hrText, VALUE_FONT);
-		var hrIconX = center + hrTextWidth + (bottomRowXSpace * 2) - 2;
-		var hrIconY = bottomRowY - (hrIcon.getHeight() / 2);
-		dc.drawBitmap(hrIconX, hrIconY, hrIcon);
+		var heartRateText = metrics.computedHeartRate.format("%d");
+		var heartRateTextWidth = dc.getTextWidthInPixels(heartRateText, VALUE_FONT);
+		var heartRateIconX = center + heartRateTextWidth + (bottomRowXSpace * 2) - 2;
+		var heartRateIconY = bottomRowY - (heartRateIcon.getHeight() / 2);
+		dc.drawBitmap(heartRateIconX, heartRateIconY, heartRateIcon);
 		dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(center + bottomRowXSpace, bottomRowY, VALUE_FONT, hrText, Globals.LEFT_VCENTER);
+		dc.drawText(center + bottomRowXSpace, bottomRowY, VALUE_FONT, heartRateText, Globals.LEFT_VCENTER);
 	}
 	
 	function drawHorizontalGridLine(dc, y) {

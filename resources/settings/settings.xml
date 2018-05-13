@@ -5,19 +5,13 @@
 		<property id="heartRateMode" type="number">0</property>
 		<property id="colourText" type="boolean">false</property>
 		
-		<property id="enableGoal1k" type="boolean">false</property>
-		<property id="enableGoal1mi" type="boolean">false</property>
-		<property id="enableGoal2mi" type="boolean">false</property>
-		<property id="enableGoal2k" type="boolean">false</property>
-		<property id="enableGoal5k" type="boolean">true</property>
-		<property id="enableGoal5mi" type="boolean">false</property>
-		<property id="enableGoal10k" type="boolean">false</property>
-		<property id="enableGoal15k" type="boolean">false</property>
-		<property id="enableGoal10mi" type="boolean">false</property>
-		<property id="enableGoalHM" type="boolean">false</property>
-		<property id="enableGoalMA" type="boolean">false</property>
-		<property id="customGoalDistance" type="number">0</property>
-		<property id="customGoalLabel" type="string"></property>
+		<property id="goal1Distance" type="number">5000</property>
+		<property id="goal1TargetTime" type="number">1500</property>
+		<property id="goal1Name" type="string">5K</property>
+		
+		<property id="goal2Distance" type="number">0</property>
+		<property id="goal2TargetTime" type="number">0</property>
+		<property id="goal2Name" type="string"></property>
 	</properties>
 	<strings>
 		<string id="paceModeTitle">Pace mode</string>
@@ -46,26 +40,21 @@
 		
 		<string id="colourTextTitle">Colour text (green if on target, red if not)</string>
 		
+		<string id="goal1DistanceTitle">Goal 1 distance</string>
+		<string id="goal1TargetTimeTitle">Goal 1 target time</string>
+		<string id="goal1NameTitle">Goal 1 name</string>
 		
-		<string id="enableGoal1kTitle">Include 1K in finish time predictions</string>
-		<string id="enableGoal1miTitle">Include 1 mile in finish time predictions</string>
-		<string id="enableGoal2kTitle">Include 2K in finish time predictions</string>
-		<string id="enableGoal2miTitle">Include 2 miles in finish time predictions</string>
-		<string id="enableGoal5kTitle">Include 5K in finish time predictions</string>
-		<string id="enableGoal5miTitle">Include 5 miles in finish time predictions</string>
-		<string id="enableGoal10kTitle">Include 10K in finish time predictions</string>
-		<string id="enableGoal15kTitle">Include 15K in finish time predictions</string>
-		<string id="enableGoal10miTitle">Include 10 miles in finish time predictions</string>
-		<string id="enableGoalHMTitle">Include half marathon in finish time predictions</string>
-		<string id="enableGoalMATitle">Include marathon in finish time predictions</string>
+		<string id="goal2DistanceTitle">Goal 2 distance</string>
+		<string id="goal2TargetTimeTitle">Goal 2 target time</string>
+		<string id="goal2NameTitle">Goal 2 name</string>
 		
-		<string id="customGoalDistanceTitle">Custom distance for finish time predictions</string>
-		<string id="customGoalDistanceErrorMessage">Custom goal distance must be less than 999,999</string>
-		<string id="customGoalDistancePrompt">In meters, e.g. 8000 for 8K</string>
+		<string id="goalDistancePrompt">In meters, e.g. 8000 for 8K</string>
+		<string id="goalTargetTimePrompt">In seconds, e.g. 1800 for 30 minutes</string>
+		<string id="goalNamePrompt">Up to 4 characters, e.g. 8K or blank for automatic</string>
 		
-		<string id="customGoalLabelTitle">Custom goal name</string>
-		<string id="customGoalLabelErrorMessage">Custom goal name is limited to four characters</string>
-		<string id="customGoalLabelPrompt">Up to 4 characters, e.g. 8K</string>
+		<string id="goalDistanceErrorMessage">Custom goal distance must be less than 999,999</string>
+		<string id="goalTargetTimeErrorMessage">Custom goal time must be less than 999,999</string>
+		<string id="goalNameErrorMessage">Custom goal name is limited to 4 characters</string>
 	</strings>
 	<settings>
 		<setting propertyKey="@Properties.paceMode" title="@Strings.paceModeTitle">
@@ -73,58 +62,53 @@
 	            <listEntry value="0">@Strings.paceModeCurrent</listEntry>
 	            <listEntry value="1">@Strings.paceModeAverage</listEntry>
 	            <listEntry value="2">@Strings.paceMode3Seconds</listEntry>
-	            <listEntry value="3">@Strings.paceMode10Seconds</listEntry>
-	            <listEntry value="4">@Strings.paceMode30Seconds</listEntry>
+	            <listEntry value="3">@Strings.paceMode5Seconds</listEntry>
+	            <listEntry value="4">@Strings.paceMode10Seconds</listEntry>
+	            <listEntry value="5">@Strings.paceMode30Seconds</listEntry>
 	        </settingConfig>
 		</setting>
 		<setting propertyKey="@Properties.cadenceMode" title="@Strings.cadenceModeTitle">
 			<settingConfig type="list">
 	            <listEntry value="0">@Strings.cadenceModeCurrent</listEntry>
 	            <listEntry value="1">@Strings.cadenceModeCurrent</listEntry>
+	            <listEntry value="2">@Strings.cadenceMode3Seconds</listEntry>
+	            <listEntry value="3">@Strings.cadenceMode5Seconds</listEntry>
+	            <listEntry value="4">@Strings.cadenceMode10Seconds</listEntry>
+	            <listEntry value="5">@Strings.cadenceMode30Seconds</listEntry>
+	        </settingConfig>
+		</setting>
+		<setting propertyKey="@Properties.heartRateMode" title="@Strings.heartRateModeTitle">
+			<settingConfig type="list">
+	            <listEntry value="0">@Strings.heartRateModeCurrent</listEntry>
+	            <listEntry value="1">@Strings.heartRateModeCurrent</listEntry>
+	            <listEntry value="2">@Strings.heartRateMode3Seconds</listEntry>
+	            <listEntry value="3">@Strings.heartRateMode5Seconds</listEntry>
+	            <listEntry value="4">@Strings.heartRateMode10Seconds</listEntry>
+	            <listEntry value="5">@Strings.heartRateMode30Seconds</listEntry>
 	        </settingConfig>
 		</setting>
 		<setting propertyKey="@Properties.colourText" title="@Strings.colourTextTitle">
 			<settingConfig type="boolean" />
 		</setting>
 		
-		<setting propertyKey="@Properties.enableGoal1k" title="@Strings.enableGoal1kTitle">
-			<settingConfig type="boolean" />
+		<setting propertyKey="@Properties.goal1Distance" title="@Strings.goal1DistanceTitle" prompt="@Strings.goalDistancePrompt">
+			<settingConfig type="numeric" max="999999" errorMessage="@Strings.goalDistanceErrorMessage" />
 		</setting>
-		<setting propertyKey="@Properties.enableGoal1mi" title="@Strings.enableGoal1miTitle">
-			<settingConfig type="boolean" />
+		<setting propertyKey="@Properties.goal1TargetTime" title="@Strings.goal1TargetTimeTitle" prompt="@Strings.goalTargetTimePrompt">
+			<settingConfig type="numeric" max="999999" errorMessage="@Strings.goalTargetTimeErrorMessage" />
 		</setting>
-		<setting propertyKey="@Properties.enableGoal2k" title="@Strings.enableGoal2kTitle">
-			<settingConfig type="boolean" />
+		<setting propertyKey="@Properties.goal1Name" title="@Strings.goal1NameTitle" prompt="@Strings.goalNamePrompt">
+			<settingConfig type="alphaNumeric" maxLength="4" errorMessage="@Strings.goalNameErrorMessage" />
 		</setting>
-		<setting propertyKey="@Properties.enableGoal2mi" title="@Strings.enableGoal2miTitle">
-			<settingConfig type="boolean" />
+		
+		<setting propertyKey="@Properties.goal2Distance" title="@Strings.goal2DistanceTitle" prompt="@Strings.goalDistancePrompt">
+			<settingConfig type="numeric" max="999999" errorMessage="@Strings.goalDistanceErrorMessage" />
 		</setting>
-		<setting propertyKey="@Properties.enableGoal5k" title="@Strings.enableGoal5kTitle">
-			<settingConfig type="boolean" />
+		<setting propertyKey="@Properties.goal2TargetTime" title="@Strings.goal2TargetTimeTitle" prompt="@Strings.goalTargetTimePrompt">
+			<settingConfig type="numeric" max="999999" errorMessage="@Strings.goalTargetTimeErrorMessage" />
 		</setting>
-		<setting propertyKey="@Properties.enableGoal5mi" title="@Strings.enableGoal5miTitle">
-			<settingConfig type="boolean" />
-		</setting>
-		<setting propertyKey="@Properties.enableGoal10k" title="@Strings.enableGoal10kTitle">
-			<settingConfig type="boolean" />
-		</setting>
-		<setting propertyKey="@Properties.enableGoal15k" title="@Strings.enableGoal15kTitle">
-			<settingConfig type="boolean" />
-		</setting>
-		<setting propertyKey="@Properties.enableGoal10mi" title="@Strings.enableGoal10miTitle">
-			<settingConfig type="boolean" />
-		</setting>
-		<setting propertyKey="@Properties.enableGoalHM" title="@Strings.enableGoalHMTitle">
-			<settingConfig type="boolean" />
-		</setting>
-		<setting propertyKey="@Properties.enableGoalMA" title="@Strings.enableGoalMATitle">
-			<settingConfig type="boolean" />
-		</setting>
-		<setting propertyKey="@Properties.customGoalDistance" title="@Strings.customGoalDistanceTitle" prompt="@Strings.customGoalDistancePrompt">
-			<settingConfig type="numeric" max="999999" errorMessage="@Strings.customGoalDistanceErrorMessage" />
-		</setting>
-		<setting propertyKey="@Properties.customGoalLabel" title="@Strings.customGoalLabelTitle" prompt="@Strings.customGoalLabelPrompt">
-			<settingConfig type="alphaNumeric" maxLength="4" errorMessage="@Strings.customGoalLabelErrorMessage" />
+		<setting propertyKey="@Properties.goal2Name" title="@Strings.goal2NameTitle" prompt="@Strings.goalNamePrompt">
+			<settingConfig type="alphaNumeric" maxLength="4" errorMessage="@Strings.goalNameErrorMessage" />
 		</setting>
 	</settings>
 </resources>

@@ -37,6 +37,7 @@ class DataQueue {
 		if (sumOfData > 0) {
 			return sumOfData / size;
 		}
+		return 0.0;
 	}
 	
 }

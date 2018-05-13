@@ -22,8 +22,8 @@ class ActivityMetrics {
 	var averageHeartRate = 0;
 	var currentHeartRate = 0;
 	
-	var computedPace = 0;
 	var computedSpeed = 0;
+	var computedPace = 0;
 	var computedCadence = 0;
 	var computedHeartRate = 0;
 	
