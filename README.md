@@ -70,5 +70,11 @@ This project borrows code and ideas from [RunnersField by kpaumann](https://gith
 Thanks [kpaumann](https://apps.garmin.com/en-GB/developer/ab0f2743-88d2-4f32-9fb0-5fc8ba61e55a/apps) for open sourcing
 your project and giving me a leg up in writing for the Garmin SDK.
 
+### Icon Credits
+- Running shoe icon made by [Freepic](https://www.flaticon.com/authors/freepik) from [www.flaticon.com](https://www.flaticon.com/free-icon/trainers_105191)
+- Running man icon made by [Freepic](https://www.flaticon.com/authors/freepik) from [www.flaticon.com](https://www.flaticon.com/free-icon/running_763965)
+- Chequered flag icon made by [Vaadin](https://www.flaticon.com/authors/vaadin) from [www.flaticon.com](https://www.flaticon.com/free-icon/checkered-flag_106935)
+
+
 ## Changelog 0.1.0
 - Initial release

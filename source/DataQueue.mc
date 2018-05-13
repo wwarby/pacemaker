@@ -25,4 +25,18 @@ class DataQueue {
 		return data;
 	}
 	
+	function average() {
+		var size = 0;
+		var sumOfData = 0.0;
+		for (var i = 0; i < data.size(); i++) {
+			if (data[i] != null) {
+				sumOfData = sumOfData + data[i];
+				size++;
+			}
+		}
+		if (sumOfData > 0) {
+			return sumOfData / size;
+		}
+	}
+	
 }

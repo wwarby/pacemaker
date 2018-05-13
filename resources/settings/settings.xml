@@ -1,5 +1,10 @@
 <resources>
 	<properties>
+		<property id="paceMode" type="number">0</property>
+		<property id="cadenceMode" type="number">0</property>
+		<property id="heartRateMode" type="number">0</property>
+		<property id="colourText" type="boolean">false</property>
+		
 		<property id="enableGoal1k" type="boolean">false</property>
 		<property id="enableGoal1mi" type="boolean">false</property>
 		<property id="enableGoal2mi" type="boolean">false</property>
@@ -13,9 +18,35 @@
 		<property id="enableGoalMA" type="boolean">false</property>
 		<property id="customGoalDistance" type="number">0</property>
 		<property id="customGoalLabel" type="string"></property>
-		<property id="paceMode" type="number">0</property>
 	</properties>
 	<strings>
+		<string id="paceModeTitle">Pace mode</string>
+		<string id="paceModeCurrent">Current pace</string>
+		<string id="paceModeAverage">Average pace</string>
+		<string id="paceMode3Seconds">Average pace (last 3 seconds)</string>
+		<string id="paceMode5Seconds">Average pace (last 5 seconds)</string>
+		<string id="paceMode10Seconds">Average pace (last 10 seconds)</string>
+		<string id="paceMode30Seconds">Average pace (last 30 seconds)</string>
+		
+		<string id="cadenceModeTitle">Cadence mode</string>
+		<string id="cadenceModeCurrent">Current cadence</string>
+		<string id="cadenceModeAverage">Average cadence</string>
+		<string id="cadenceMode3Seconds">Average cadence (last 3 seconds)</string>
+		<string id="cadenceMode5Seconds">Average cadence (last 5 seconds)</string>
+		<string id="cadenceMode10Seconds">Average cadence (last 10 seconds)</string>
+		<string id="cadenceMode30Seconds">Average cadence (last 30 seconds)</string>
+		
+		<string id="heartRateModeTitle">Heart rate mode</string>
+		<string id="heartRateModeCurrent">Current heart rate</string>
+		<string id="heartRateModeAverage">Average heart rate</string>
+		<string id="heartRateMode3Seconds">Average heart rate (last 3 seconds)</string>
+		<string id="heartRateMode5Seconds">Average heart rate (last 5 seconds)</string>
+		<string id="heartRateMode10Seconds">Average heart rate (last 10 seconds)</string>
+		<string id="heartRateMode30Seconds">Average heart rate (last 30 seconds)</string>
+		
+		<string id="colourTextTitle">Colour text (green if on target, red if not)</string>
+		
+		
 		<string id="enableGoal1kTitle">Include 1K in finish time predictions</string>
 		<string id="enableGoal1miTitle">Include 1 mile in finish time predictions</string>
 		<string id="enableGoal2kTitle">Include 2K in finish time predictions</string>
@@ -35,15 +66,27 @@
 		<string id="customGoalLabelTitle">Custom goal name</string>
 		<string id="customGoalLabelErrorMessage">Custom goal name is limited to four characters</string>
 		<string id="customGoalLabelPrompt">Up to 4 characters, e.g. 8K</string>
-		
-		<string id="paceModeTitle">Pace mode</string>
-		<string id="paceModeCurrent">Current pace</string>
-		<string id="paceModeAverage">Average pace</string>
-		<string id="paceMode3Seconds">Average pace (last 3 seconds)</string>
-		<string id="paceMode10Seconds">Average pace (last 10 seconds)</string>
-		<string id="paceMode30Seconds">Average pace (last 30 seconds)</string>
 	</strings>
 	<settings>
+		<setting propertyKey="@Properties.paceMode" title="@Strings.paceModeTitle">
+			<settingConfig type="list">
+	            <listEntry value="0">@Strings.paceModeCurrent</listEntry>
+	            <listEntry value="1">@Strings.paceModeAverage</listEntry>
+	            <listEntry value="2">@Strings.paceMode3Seconds</listEntry>
+	            <listEntry value="3">@Strings.paceMode10Seconds</listEntry>
+	            <listEntry value="4">@Strings.paceMode30Seconds</listEntry>
+	        </settingConfig>
+		</setting>
+		<setting propertyKey="@Properties.cadenceMode" title="@Strings.cadenceModeTitle">
+			<settingConfig type="list">
+	            <listEntry value="0">@Strings.cadenceModeCurrent</listEntry>
+	            <listEntry value="1">@Strings.cadenceModeCurrent</listEntry>
+	        </settingConfig>
+		</setting>
+		<setting propertyKey="@Properties.colourText" title="@Strings.colourTextTitle">
+			<settingConfig type="boolean" />
+		</setting>
+		
 		<setting propertyKey="@Properties.enableGoal1k" title="@Strings.enableGoal1kTitle">
 			<settingConfig type="boolean" />
 		</setting>
@@ -82,15 +125,6 @@
 		</setting>
 		<setting propertyKey="@Properties.customGoalLabel" title="@Strings.customGoalLabelTitle" prompt="@Strings.customGoalLabelPrompt">
 			<settingConfig type="alphaNumeric" maxLength="4" errorMessage="@Strings.customGoalLabelErrorMessage" />
-		</setting>
-		<setting propertyKey="@Properties.paceMode" title="@Strings.paceModeTitle">
-			<settingConfig type="list">
-            <listEntry value="0">@Strings.paceModeCurrent</listEntry>
-            <listEntry value="1">@Strings.paceModeAverage</listEntry>
-            <listEntry value="2">@Strings.paceMode3Seconds</listEntry>
-            <listEntry value="3">@Strings.paceMode10Seconds</listEntry>
-            <listEntry value="4">@Strings.paceMode30Seconds</listEntry>
-        </settingConfig>
 		</setting>
 	</settings>
 </resources>

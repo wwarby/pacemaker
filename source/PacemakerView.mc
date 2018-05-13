@@ -29,8 +29,13 @@ class PBSeekerView extends Ui.DataField {
 	hidden const BATTERY_COLOUR_LOW = Gfx.COLOR_YELLOW;
 	hidden const BATTERY_COLOUR_VERY_LOW = Gfx.COLOR_RED;
 	
-	hidden var heartIcon;
-	hidden var tickIcon;
+	hidden var upIcon;
+	hidden var downIcon;
+	hidden var paceIcon;
+	hidden var finishIcon;
+	hidden var cadenceIcon;
+	hidden var hrIcon;
+	hidden var darkModeIcons = false;
 	
 	hidden var darkMode = false;
 	hidden var backgroundColour = Gfx.COLOR_WHITE;
@@ -57,8 +62,6 @@ class PBSeekerView extends Ui.DataField {
 	function onLayout(dc) {
 		device = new DeviceDetails();
 		setDeviceSettingsDependentVariables(device.settings);
-		heartIcon = Ui.loadResource(Rez.Drawables.HeartIcon);
-		tickIcon = Ui.loadResource(Rez.Drawables.TickIcon);
 	}
 	
 	function setDeviceSettingsDependentVariables(deviceSettings) {
@@ -99,11 +102,53 @@ class PBSeekerView extends Ui.DataField {
 		batteryBackgroundColour = darkMode ? BATTERY_BACKGROUND_COLOUR_DARK_MODE : BATTERY_BACKGROUND_COLOUR;
 	}
 	
+	function setIcons() {
+		
+		if (upIcon == null) {
+			upIcon = Ui.loadResource(Rez.Drawables.UpIcon);
+		}
+		
+		if (downIcon == null) {
+			downIcon = Ui.loadResource(Rez.Drawables.DownIcon);
+		}
+		
+		if (paceIcon == null || (darkModeIcons && !darkMode)) {
+			paceIcon = Ui.loadResource(Rez.Drawables.PaceIcon);
+		}
+		
+		if (paceIcon == null || (!darkModeIcons && darkMode)) {
+			paceIcon = Ui.loadResource(Rez.Drawables.PaceDarkModeIcon);
+		}
+		
+		if (finishIcon == null || (darkModeIcons && !darkMode)) {
+			finishIcon = Ui.loadResource(Rez.Drawables.FinishIcon);
+		}
+		
+		if (finishIcon == null || (!darkModeIcons && darkMode)) {
+			finishIcon = Ui.loadResource(Rez.Drawables.FinishDarkModeIcon);
+		}
+		
+		if (cadenceIcon == null || (darkModeIcons && !darkMode)) {
+			cadenceIcon = Ui.loadResource(Rez.Drawables.CadenceIcon);
+		}
+		
+		if (cadenceIcon == null || (!darkModeIcons && darkMode)) {
+			cadenceIcon = Ui.loadResource(Rez.Drawables.CadenceDarkModeIcon);
+		}
+		
+		if (hrIcon == null) {
+			hrIcon = Ui.loadResource(Rez.Drawables.HrIcon);
+		}
+		
+		darkModeIcons = darkMode;
+	}
+	
 	function onUpdate(dc) {
 		
 		if (doUpdates == false) { return; }
 		
 		setColours();
+		setIcons();
 		
 		// Format values
 		var paceText =  TimeFormat.formatTime(metrics.computedPace * 1000);
@@ -156,7 +201,11 @@ class PBSeekerView extends Ui.DataField {
 			device.round218 ? 120 :
 			0;
 		var bottomGridLineY = device.height - topGridLineY;
-		var bottomRowY = device.height - ((device.height - bottomGridLineY) / 2);
+		var bottomRowY = device.height - ((device.height - bottomGridLineY) / 2) - 5;
+		var bottomRowXSpace =
+			device.round240 ? 6 :
+			device.round218 ? 6 :
+			0;
 		var thirdRowY = middleGridLineY + ((bottomGridLineY - middleGridLineY) / 2);
 		
 		// Render background
@@ -171,8 +220,19 @@ class PBSeekerView extends Ui.DataField {
 		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(center + (paceTextWidth / 2) + 2, topRowY - 4, LABEL_FONT, paceLabelText, Globals.LEFT);
 		
+		// Render runner icon
+		var paceIconX = center - (paceTextWidth / 2) - paceIcon.getWidth() - 4;
+		var paceIconY =
+			device.round240 ? topGridLineY - paceIcon.getHeight() - 10 :
+			device.round218 ? topGridLineY - paceIcon.getHeight() - 8 :
+			0;
+		dc.drawBitmap(paceIconX, paceIconY, paceIcon);
+		
 		// Render top grid line
 		drawHorizontalGridLine(dc, topGridLineY);
+		
+		// Render bottom vertical grid line
+		drawVerticalGridLine(dc, center, topGridLineY, middleGridLineY);
 		
 		// Render distance
 		//distText = "88.88"; // Uncomment to test realistic max width
@@ -197,12 +257,10 @@ class PBSeekerView extends Ui.DataField {
 		var goalLabelTextWidth = dc.getTextWidthInPixels(goalLabelText, LABEL_FONT);
 		var goalTimeTextWidth = goalTimeText == null ? 0 : dc.getTextWidthInPixels(goalTimeText, VALUE_FONT);
 		var goalDistTextWidth = goalDistText == null ? 0 : dc.getTextWidthInPixels(goalDistText, VALUE_FONT);
-		var goalCompletedTickWidth = !goalCompleted ? 0 : tickIcon.getWidth();
 		var goalLabelSpace = goalTimeTextWidth > 0 ? GOAL_LABEL_SPACE : 0;
 		var goalValueSpace = goalDistTextWidth > 0 ? GOAL_VALUE_SPACE : 0;
-		var goalCompletedTickSpace = !goalCompleted ? 0 : GOAL_LABEL_SPACE;
 		
-		var totalGoalWidth = goalLabelTextWidth + goalLabelSpace + goalTimeTextWidth + goalValueSpace + goalDistTextWidth + goalCompletedTickSpace + goalCompletedTickWidth;
+		var totalGoalWidth = goalLabelTextWidth + goalLabelSpace + goalTimeTextWidth + goalValueSpace + goalDistTextWidth;
 		var goalX = (dc.getWidth() - totalGoalWidth) / 2;
 		
 		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
@@ -220,27 +278,29 @@ class PBSeekerView extends Ui.DataField {
 			dc.drawText(goalX, thirdRowY, VALUE_FONT, goalDistText, Globals.LEFT_VCENTER);
 		}
 		
-		if (goalCompleted) {
-			goalX += goalDistTextWidth + goalLabelSpace;
-			dc.drawBitmap(goalX, thirdRowY - (tickIcon.getHeight() / 2), tickIcon);
-		}
-		
 		// Render bottom grid line
 		drawHorizontalGridLine(dc, bottomGridLineY);
 		
-		// Render heart rate
-		var hrText = metrics.hr.format("%d");
-		var hrTextWidth = dc.getTextWidthInPixels(hrText, VALUE_FONT_LARGE);
-		var heartIconX = center - (hrTextWidth / 2) - 12 - (heartIcon.getWidth() / 2);
-		var heartIconY = bottomRowY - (heartIcon.getHeight() / 2) + 2;
-		dc.drawBitmap(heartIconX, heartIconY, heartIcon);
-		dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(center, bottomRowY, VALUE_FONT_LARGE, hrText, Globals.VCENTER);
+		// Render bottom vertical grid line
+		drawVerticalGridLine(dc, center, bottomGridLineY, device.height);
 		
-		// Render battery
-		var batteryX = center + (hrTextWidth / 2) + 5;
-		var batteryY = bottomRowY - 6;
-		drawBattery(System.getSystemStats().battery, dc, batteryX, batteryY, 25, 12);
+		// Render cadence
+		var cadenceText = metrics.computedCadence.format("%d");
+		var cadenceTextWidth = dc.getTextWidthInPixels(cadenceText, VALUE_FONT);
+		var cadenceIconX = center - cadenceTextWidth - (bottomRowXSpace * 2) - cadenceIcon.getWidth() + 8;
+		var cadenceIconY = bottomRowY - (cadenceIcon.getHeight() / 2);
+		dc.drawBitmap(cadenceIconX, cadenceIconY, cadenceIcon);
+		dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
+		dc.drawText(center - bottomRowXSpace, bottomRowY, VALUE_FONT, cadenceText, Globals.RIGHT_VCENTER);
+		
+		// Render heart rate
+		var hrText = metrics.computedHeartRate.format("%d");
+		var hrTextWidth = dc.getTextWidthInPixels(hrText, VALUE_FONT);
+		var hrIconX = center + hrTextWidth + (bottomRowXSpace * 2) - 2;
+		var hrIconY = bottomRowY - (hrIcon.getHeight() / 2);
+		dc.drawBitmap(hrIconX, hrIconY, hrIcon);
+		dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
+		dc.drawText(center + bottomRowXSpace, bottomRowY, VALUE_FONT, hrText, Globals.LEFT_VCENTER);
 	}
 	
 	function drawHorizontalGridLine(dc, y) {
@@ -248,35 +308,9 @@ class PBSeekerView extends Ui.DataField {
         dc.drawLine(0, y, dc.getWidth(), y);
 	}
 	
-	function drawBattery(battery, dc, x, y, width, height) {
-		
-		var cornerRadius = 1;
-		var connectorCornerRadius = 1;
-		var connectorVisibleWidth = 4;
-		
-		var batteryWidth = width - connectorVisibleWidth;
-		
-		var connectorX = x + width - connectorVisibleWidth - connectorCornerRadius;
-		var connectorY = y + (height / 4);
-		var connectorWidth = connectorVisibleWidth + connectorCornerRadius;
-		var connectorHeight = height - (height / 2);
-		
-		dc.setColor(batteryBackgroundColour, Gfx.COLOR_TRANSPARENT);
-		dc.fillRoundedRectangle(connectorX, connectorY, connectorWidth, connectorHeight, connectorCornerRadius);
-		
-		dc.setColor(batteryBackgroundColour, Gfx.COLOR_TRANSPARENT);
-		dc.fillRoundedRectangle(x, y, batteryWidth, height, cornerRadius);
-		
-		if (battery < 10) {
-			dc.setColor(BATTERY_COLOUR_VERY_LOW, Gfx.COLOR_TRANSPARENT);
-		} else if (battery < 30) {
-			dc.setColor(BATTERY_COLOUR_LOW, Gfx.COLOR_TRANSPARENT);
-		} else {
-			dc.setColor(BATTERY_COLOUR, Gfx.COLOR_TRANSPARENT);
-		}
-		
-		dc.fillRoundedRectangle(x, y, Calc.max(batteryWidth * battery / 100, 3), height, cornerRadius);
-			
+	function drawVerticalGridLine(dc, x, yStart, yEnd) {
+		dc.setColor(Gfx.COLOR_LT_GRAY, Gfx.COLOR_TRANSPARENT);
+        dc.drawLine(x, yStart, x, yEnd);
 	}
 
 }
