@@ -154,6 +154,8 @@ class PBSeekerView extends Ui.DataField {
 		setColours();
 		setIcons();
 		
+		var activityStarted = metrics.elapsedTime > 0;
+		
 		// Format values
 		var paceText =  TimeFormat.formatTime(metrics.computedPace * 1000);
 		var distText = DistanceFormat.formatDistance(metrics.distance, metrics.kmOrMileInMeters);
@@ -163,15 +165,21 @@ class PBSeekerView extends Ui.DataField {
 		
 		// Format goal values
 		var goal = goals.nextGoal();
+		var goalPaceDelta;
+		var goalTimeDelta;
 		var goalLabelText;
 		var goalTimeText;
 		var goalDistText;
+		var goalPaceDeltaText;
+		var goalTimeDeltaText;
 		var goalCompleted = false;
 		var goalOnTarget = true;
 		if (goal != null) {
 			goalLabelText = goal.name.toUpper();
 			goalTimeText = TimeFormat.formatTime(goal.predictedTime);
 			goalDistText = DistanceFormat.formatDistance(goal.remainingDistance, metrics.kmOrMileInMeters);
+			goalPaceDelta = Calc.min(999, (metrics.computedPace - goal.requiredPace).abs());
+			goalTimeDelta = Calc.min(999, Math.ceil(goal.delta().abs()  / 1000.0));
 			goalOnTarget = goal.onTarget();
 		} else {
 			goal = goals.lastCompletedGoal();
@@ -179,6 +187,8 @@ class PBSeekerView extends Ui.DataField {
 				goalLabelText = goal.name.toUpper();
 				goalTimeText = TimeFormat.formatTime(goal.actualTime);
 				goalDistText = null;
+				goalPaceDelta = 0;
+				goalTimeDelta = Calc.min(999, Math.ceil(goal.delta().abs()  / 1000.0));
 				goalCompleted = true;
 				goalOnTarget = goal.onTarget();
 			} else {
@@ -193,6 +203,20 @@ class PBSeekerView extends Ui.DataField {
 				goalOnTarget ? onTargetColour : offTargetColour :
 				valueColour;
 		
+		if ((goalSet || goalCompleted) && activityStarted) {
+			if (!goalCompleted) {
+				goalPaceDeltaText = goalPaceDelta.format("%d");
+			} else {
+				goalPaceDelta = 0;
+			}
+			goalTimeDeltaText = goalTimeDelta.format("%d");
+		} else {
+			goalPaceDelta = 0;
+			goalTimeDelta = 0;
+		}
+		if (goalPaceDeltaText != null && (goalPaceDeltaText.length() == 1 || goalPaceDeltaText.length() == 2)) { goalPaceDeltaText += "s"; }
+		if (goalTimeDeltaText != null && (goalTimeDeltaText.length() == 1 || goalTimeDeltaText.length() == 2)) { goalTimeDeltaText += "s"; }
+		
 		// Calculate positions
 		var center = dc.getWidth() / 2;
 		var leftQuadrant = center / 2;
@@ -202,6 +226,14 @@ class PBSeekerView extends Ui.DataField {
 			device.round218 ? 50 :
 			0;
 		var topRowY = topGridLineY / 2;
+		var topRowYLabelOffset =
+			device.round240 ? 9 :
+			device.round218 ? 9 :
+			0;
+		var goalPaceDeltaIconY =
+			 device.round240 ? 16 :
+			device.round218 ? 16 :
+			0;
 		var secondRowLabelsY =
 			device.round240 ? topGridLineY + 17 :
 			device.round218 ? topGridLineY + 15 :
@@ -221,18 +253,49 @@ class PBSeekerView extends Ui.DataField {
 			device.round218 ? 6 :
 			0;
 		var thirdRowY = middleGridLineY + ((bottomGridLineY - middleGridLineY) / 2);
+		var thirdRowMinX =
+		 	device.round240 ? 12 :
+			device.round218 ? 12 :
+			0;
 		var thirdRowValueSpace =
 		 	device.round240 ? 6 :
 			device.round218 ? 6 :
 			0;
+		var thirdRowYLabelOffset =
+			device.round240 ? 5 :
+			device.round218 ? 5 :
+			0;
+		var goalTimeDeltaIconY =
+			 device.round240 ? thirdRowY - 14 :
+			device.round218 ? thirdRowY - 14 :
+			0;
+		var goalTimeDeltaSpace =
+			 device.round240 ? 3 :
+			device.round218 ? 3 :
+			0;
 		var finishIconSpace = 5;
 		var finishIconY = thirdRowY - (finishIcon.getHeight() / 2);
+		
+		// Uncomment to test realistic max widths
+		/*
+		paceText = "88:88";
+		goalPaceDeltaText = "888";
+		distText = "88.88";
+		timeText = "88:88:88";
+		goalLabelText = "ABCDEF";
+		goalTimeText = "88:88:88";
+		goalDistText = "88.88";
+		cadenceText = "888";
+		heartRateText = "888";
+		*/
 		
 		// Measure text widths
 		var paceTextWidth = dc.getTextWidthInPixels(paceText, VALUE_FONT_LARGE);
 		var timeTextWidth = dc.getTextWidthInPixels(timeText, VALUE_FONT_LARGE);
 		var goalTimeTextWidth = goalTimeText == null ? 0 : dc.getTextWidthInPixels(goalTimeText, VALUE_FONT);
 		var goalDistTextWidth = goalDistText == null ? 0 : dc.getTextWidthInPixels(goalDistText, VALUE_FONT);
+		var goalPaceDeltaTextWidth = goalPaceDeltaText == null ? 0 : dc.getTextWidthInPixels(goalPaceDeltaText, LABEL_FONT);
+		var goalTimeDeltaTextWidth = goalTimeDeltaText == null ? 0 : dc.getTextWidthInPixels(goalTimeDeltaText, LABEL_FONT);
 		var cadenceTextWidth = dc.getTextWidthInPixels(cadenceText, VALUE_FONT);
 		var heartRateTextWidth = dc.getTextWidthInPixels(heartRateText, VALUE_FONT);
 		
@@ -241,9 +304,16 @@ class PBSeekerView extends Ui.DataField {
 		dc.fillRectangle(0, 0, dc.getWidth(), dc.getHeight());
 		
 		// Render pace
-		//paceText = "88:88"; // Uncomment to test realistic max width
-		dc.setColor(goalSet ? valueColour : targetColour, Gfx.COLOR_TRANSPARENT);
+		dc.setColor(goalSet ? targetColour : valueColour, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(center, topRowY, VALUE_FONT_LARGE, paceText, Globals.VCENTER);
+		
+		// Render pace delta
+		if (goalPaceDelta > 0) {
+			var goalPaceDeltaX = center + (paceTextWidth / 2) + 3;
+			dc.setColor(targetColour, Gfx.COLOR_TRANSPARENT);
+			dc.drawText(goalPaceDeltaX, topRowY + topRowYLabelOffset, LABEL_FONT, goalPaceDeltaText, Globals.LEFT_VCENTER);
+			dc.drawBitmap(goalPaceDeltaX, goalPaceDeltaIconY, goalOnTarget ? upIcon : downIcon);
+		}
 		
 		// Render pace icon
 		var paceIconX = center - (paceTextWidth / 2) - paceIcon.getWidth() - 4;
@@ -260,14 +330,12 @@ class PBSeekerView extends Ui.DataField {
 		drawVerticalGridLine(dc, center, topGridLineY, middleGridLineY);
 		
 		// Render distance
-		//distText = "88.88"; // Uncomment to test realistic max width
 		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(leftQuadrant, secondRowLabelsY, LABEL_FONT, distLabelText, Globals.VCENTER);
 		dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(leftQuadrant, secondRowValuesY, VALUE_FONT_LARGE, distText, Globals.VCENTER);
 				
 		// Render elapsed time
-		//timeText = "88:88:88"; // Uncomment to test realistic max width
 		var timeFont = timeTextWidth < 100 ? VALUE_FONT_LARGE : VALUE_FONT;
 		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(rightQuadrant, secondRowLabelsY, LABEL_FONT, timeLabelText, Globals.VCENTER);
@@ -278,7 +346,7 @@ class PBSeekerView extends Ui.DataField {
 		drawHorizontalGridLine(dc, middleGridLineY);
 		
 		// Render goal label
-		if (goalSet) {
+		if (goalSet || goalCompleted) {
 			var goalLabelTextWidth = dc.getTextWidthInPixels(goalLabelText, LABEL_FONT);
 			var goalLabelTextHeight = dc.getTextDimensions(goalLabelText, LABEL_FONT)[1];
 			dc.setColor(backgroundColour, backgroundColour);
@@ -290,7 +358,8 @@ class PBSeekerView extends Ui.DataField {
 		// Render completed goal
 		if (goalCompleted) {
 			
-			var totalGoalWidth = goalTimeTextWidth + (finishIcon.getWidth() * 2) + (finishIconSpace * 2);
+			var goalTimeDeltaWidth = goalTimeDelta > 0 ? goalTimeDeltaTextWidth + finishIconSpace : 0;
+			var totalGoalWidth = goalTimeTextWidth + goalTimeDeltaWidth + (finishIcon.getWidth() * 2) + (finishIconSpace * 2);
 			var goalX = (dc.getWidth() - totalGoalWidth) / 2;
 			
 			dc.drawBitmap(goalX, finishIconY, finishReverseIcon);
@@ -298,8 +367,17 @@ class PBSeekerView extends Ui.DataField {
 			
 			dc.setColor(targetColour, Gfx.COLOR_TRANSPARENT);
 			dc.drawText(goalX, thirdRowY, VALUE_FONT, goalTimeText, Globals.LEFT_VCENTER);
-			goalX += goalTimeTextWidth + finishIconSpace;
+			goalX += goalTimeTextWidth;
 			
+			if (goalTimeDelta > 0) {
+				goalX += goalTimeDeltaSpace;
+				dc.setColor(targetColour, Gfx.COLOR_TRANSPARENT);
+				dc.drawText(goalX, thirdRowY + thirdRowYLabelOffset, LABEL_FONT, goalTimeDeltaText, Globals.LEFT_VCENTER);
+				dc.drawBitmap(goalX, goalTimeDeltaIconY, goalOnTarget ? upIcon : downIcon);
+				goalX += goalTimeDeltaTextWidth;
+			}
+			
+			goalX += finishIconSpace;
 			dc.drawBitmap(goalX, finishIconY, finishIcon);
 			
 		// Render uncompleted goal
@@ -307,6 +385,14 @@ class PBSeekerView extends Ui.DataField {
 			
 			dc.setColor(targetColour, Gfx.COLOR_TRANSPARENT);
 			dc.drawText(center - thirdRowValueSpace, thirdRowY, VALUE_FONT, goalTimeText, Globals.RIGHT_VCENTER);
+			
+			var goalTimeDeltaX = center - thirdRowValueSpace - goalTimeTextWidth - goalTimeDeltaTextWidth - goalTimeDeltaSpace;
+			
+			if (goalTimeDelta > 0 && goalTimeDeltaX > thirdRowMinX) {
+				dc.setColor(targetColour, Gfx.COLOR_TRANSPARENT);
+				dc.drawText(goalTimeDeltaX, thirdRowY + thirdRowYLabelOffset, LABEL_FONT, goalTimeDeltaText, Globals.LEFT_VCENTER);
+				dc.drawBitmap(goalTimeDeltaX, goalTimeDeltaIconY, goalOnTarget ? upIcon : downIcon);
+			}
 			
 			dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
 			dc.drawText(center + thirdRowValueSpace, thirdRowY, VALUE_FONT, goalDistText, Globals.LEFT_VCENTER);

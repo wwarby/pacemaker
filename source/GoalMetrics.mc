@@ -29,7 +29,13 @@ class GoalMetrics {
 	}
 	
 	function nameFromDistance(distance) {
-		return (distance >= 100 && distance % 100 == 0 ? (distance / 1000.0).format("%.1f") + "K" : distance.format("%d") + "M");
+		if (distance < 1000) {
+			return distance.format("%d") + "M";
+		} else if (distance % 1000 == 0) {
+			return (distance / 1000.0).format("%d") + "K";
+		} else {
+			return (distance / 1000.0).format("%.1f") + "K";
+		}
 	}
 	
 	function compute(info) {

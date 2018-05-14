@@ -43,10 +43,10 @@ class Goal {
 			requiredPace = 0;
 			completed = true;
 		} else {
-			var secondsRemainingAtCurrentSpeed = (remainingDistance / speedMetersPerSecond) * 1000;
+			var secondsRemainingAtCurrentSpeed = (remainingDistance / speedMetersPerSecond) * 1000.0;
 			predictedTime = (elapsedTime + secondsRemainingAtCurrentSpeed).toNumber();
 			remainingTime = targetTime - elapsedTime;
-			requiredSpeed = remainingDistance / (remainingTime / 1000);
+			requiredSpeed = remainingDistance / (remainingTime / 1000.0);
 			if (requiredSpeed != null && requiredSpeed > 0.2) {
 				requiredPace = kmOrMileInMeters / requiredSpeed;
 			} else {
