@@ -14,7 +14,9 @@ class Goal {
 	
 	function initialize(t, d, n, i) {
 		targetTime = t;
+		predictedTime = t;
 		distance = d;
+		remainingDistance = d;
 		name = n;
 		index = i;
 	}

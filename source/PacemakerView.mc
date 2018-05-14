@@ -12,8 +12,6 @@ class PBSeekerView extends Ui.DataField {
 	hidden const VALUE_FONT = Gfx.FONT_NUMBER_MILD;
 	hidden const VALUE_FONT_LARGE = Gfx.FONT_NUMBER_MEDIUM;
 	
-	hidden const GOAL_VALUE_SPACE = 10;
-	
 	hidden const LABEL_COLOUR = Gfx.COLOR_DK_GRAY;
 	hidden const LABEL_COLOUR_DARK_MODE = Gfx.COLOR_LT_GRAY;
 	
@@ -29,6 +27,7 @@ class PBSeekerView extends Ui.DataField {
 	hidden var downIcon;
 	hidden var paceIcon;
 	hidden var finishIcon;
+	hidden var finishReverseIcon;
 	hidden var cadenceIcon;
 	hidden var heartRateIcon;
 	hidden var darkModeIcons = false;
@@ -125,6 +124,14 @@ class PBSeekerView extends Ui.DataField {
 			finishIcon = Ui.loadResource(Rez.Drawables.finishDarkModeIcon);
 		}
 		
+		if (finishReverseIcon == null || (darkModeIcons && !darkMode)) {
+			finishReverseIcon = Ui.loadResource(Rez.Drawables.finishReverseIcon);
+		}
+		
+		if (finishReverseIcon == null || (!darkModeIcons && darkMode)) {
+			finishReverseIcon = Ui.loadResource(Rez.Drawables.finishDarkModeReverseIcon);
+		}
+		
 		if (cadenceIcon == null || (darkModeIcons && !darkMode)) {
 			cadenceIcon = Ui.loadResource(Rez.Drawables.cadenceIcon);
 		}
@@ -151,6 +158,8 @@ class PBSeekerView extends Ui.DataField {
 		var paceText =  TimeFormat.formatTime(metrics.computedPace * 1000);
 		var distText = DistanceFormat.formatDistance(metrics.distance, metrics.kmOrMileInMeters);
 		var timeText =  TimeFormat.formatTime(metrics.elapsedTime);
+		var cadenceText = metrics.computedCadence.format("%d");
+		var heartRateText = metrics.computedHeartRate.format("%d");
 		
 		// Format goal values
 		var goal = goals.nextGoal();
@@ -173,12 +182,16 @@ class PBSeekerView extends Ui.DataField {
 				goalCompleted = true;
 				goalOnTarget = goal.onTarget();
 			} else {
-				goalLabelText = Ui.loadResource(Rez.Strings.noGoalSet).toUpper();
+				goalLabelText = null;
 				goalTimeText = null;
 				goalDistText = null;
 			}
 		}
-		var targetColour = goalOnTarget ? onTargetColour : offTargetColour;
+		var goalSet = goalTimeText != null && !goalCompleted;
+		var targetColour =
+			metrics.elapsedTime > 0 ?
+				goalOnTarget ? onTargetColour : offTargetColour :
+				valueColour;
 		
 		// Calculate positions
 		var center = dc.getWidth() / 2;
@@ -208,6 +221,20 @@ class PBSeekerView extends Ui.DataField {
 			device.round218 ? 6 :
 			0;
 		var thirdRowY = middleGridLineY + ((bottomGridLineY - middleGridLineY) / 2);
+		var thirdRowValueSpace =
+		 	device.round240 ? 6 :
+			device.round218 ? 6 :
+			0;
+		var finishIconSpace = 5;
+		var finishIconY = thirdRowY - (finishIcon.getHeight() / 2);
+		
+		// Measure text widths
+		var paceTextWidth = dc.getTextWidthInPixels(paceText, VALUE_FONT_LARGE);
+		var timeTextWidth = dc.getTextWidthInPixels(timeText, VALUE_FONT_LARGE);
+		var goalTimeTextWidth = goalTimeText == null ? 0 : dc.getTextWidthInPixels(goalTimeText, VALUE_FONT);
+		var goalDistTextWidth = goalDistText == null ? 0 : dc.getTextWidthInPixels(goalDistText, VALUE_FONT);
+		var cadenceTextWidth = dc.getTextWidthInPixels(cadenceText, VALUE_FONT);
+		var heartRateTextWidth = dc.getTextWidthInPixels(heartRateText, VALUE_FONT);
 		
 		// Render background
 		dc.setColor(backgroundColour, backgroundColour);
@@ -215,11 +242,10 @@ class PBSeekerView extends Ui.DataField {
 		
 		// Render pace
 		//paceText = "88:88"; // Uncomment to test realistic max width
-		var paceTextWidth = dc.getTextWidthInPixels(paceText, VALUE_FONT_LARGE);
-		dc.setColor(targetColour, Gfx.COLOR_TRANSPARENT);
+		dc.setColor(goalSet ? valueColour : targetColour, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(center, topRowY, VALUE_FONT_LARGE, paceText, Globals.VCENTER);
 		
-		// Render runner icon
+		// Render pace icon
 		var paceIconX = center - (paceTextWidth / 2) - paceIcon.getWidth() - 4;
 		var paceIconY =
 			device.round240 ? topGridLineY - paceIcon.getHeight() - 10 :
@@ -242,7 +268,6 @@ class PBSeekerView extends Ui.DataField {
 				
 		// Render elapsed time
 		//timeText = "88:88:88"; // Uncomment to test realistic max width
-		var timeTextWidth = dc.getTextWidthInPixels(timeText, VALUE_FONT_LARGE);
 		var timeFont = timeTextWidth < 100 ? VALUE_FONT_LARGE : VALUE_FONT;
 		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(rightQuadrant, secondRowLabelsY, LABEL_FONT, timeLabelText, Globals.VCENTER);
@@ -253,30 +278,45 @@ class PBSeekerView extends Ui.DataField {
 		drawHorizontalGridLine(dc, middleGridLineY);
 		
 		// Render goal label
-		var goalLabelTextWidth = dc.getTextWidthInPixels(goalLabelText, LABEL_FONT);
-		var goalLabelTextHeight = dc.getTextDimensions(goalLabelText, LABEL_FONT)[1];
-		dc.setColor(backgroundColour, backgroundColour);
-		dc.fillRectangle(center - (goalLabelTextWidth / 2) - 5, middleGridLineY - (goalLabelTextHeight / 2) + 2, goalLabelTextWidth + 10, goalLabelTextHeight - 4);
-		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(center, middleGridLineY, LABEL_FONT, goalLabelText, Globals.VCENTER);
-		
-		// Render goal
-		var goalTimeTextWidth = goalTimeText == null ? 0 : dc.getTextWidthInPixels(goalTimeText, VALUE_FONT);
-		var goalDistTextWidth = goalDistText == null ? 0 : dc.getTextWidthInPixels(goalDistText, VALUE_FONT);
-		var goalValueSpace = goalDistTextWidth > 0 ? GOAL_VALUE_SPACE : 0;
-		
-		var totalGoalWidth = goalTimeTextWidth + goalValueSpace + goalDistTextWidth;
-		var goalX = (dc.getWidth() - totalGoalWidth) / 2;
-		
-		if (goalTimeText != null) {
-			dc.setColor(targetColour, Gfx.COLOR_TRANSPARENT);
-			dc.drawText(goalX, thirdRowY, VALUE_FONT, goalTimeText, Globals.LEFT_VCENTER);
-			goalX += goalTimeTextWidth + goalValueSpace;
+		if (goalSet) {
+			var goalLabelTextWidth = dc.getTextWidthInPixels(goalLabelText, LABEL_FONT);
+			var goalLabelTextHeight = dc.getTextDimensions(goalLabelText, LABEL_FONT)[1];
+			dc.setColor(backgroundColour, backgroundColour);
+			dc.fillRectangle(center - (goalLabelTextWidth / 2) - 5, middleGridLineY - (goalLabelTextHeight / 2) + 2, goalLabelTextWidth + 10, goalLabelTextHeight - 4);
+			dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
+			dc.drawText(center, middleGridLineY, LABEL_FONT, goalLabelText, Globals.VCENTER);
 		}
 		
-		if (goalDistText != null) {
+		// Render completed goal
+		if (goalCompleted) {
+			
+			var totalGoalWidth = goalTimeTextWidth + (finishIcon.getWidth() * 2) + (finishIconSpace * 2);
+			var goalX = (dc.getWidth() - totalGoalWidth) / 2;
+			
+			dc.drawBitmap(goalX, finishIconY, finishReverseIcon);
+			goalX += finishIcon.getWidth() + finishIconSpace;
+			
+			dc.setColor(targetColour, Gfx.COLOR_TRANSPARENT);
+			dc.drawText(goalX, thirdRowY, VALUE_FONT, goalTimeText, Globals.LEFT_VCENTER);
+			goalX += goalTimeTextWidth + finishIconSpace;
+			
+			dc.drawBitmap(goalX, finishIconY, finishIcon);
+			
+		// Render uncompleted goal
+		} else if (goalSet) {
+			
+			dc.setColor(targetColour, Gfx.COLOR_TRANSPARENT);
+			dc.drawText(center - thirdRowValueSpace, thirdRowY, VALUE_FONT, goalTimeText, Globals.RIGHT_VCENTER);
+			
 			dc.setColor(valueColour, Gfx.COLOR_TRANSPARENT);
-			dc.drawText(goalX, thirdRowY, VALUE_FONT, goalDistText, Globals.LEFT_VCENTER);
+			dc.drawText(center + thirdRowValueSpace, thirdRowY, VALUE_FONT, goalDistText, Globals.LEFT_VCENTER);
+			
+			dc.drawBitmap(center + thirdRowValueSpace + goalDistTextWidth + finishIconSpace, finishIconY, finishIcon);
+			
+		// Render no goal set
+		} else {
+			dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
+			dc.drawText(center, thirdRowY, LABEL_FONT, Ui.loadResource(Rez.Strings.noGoalSet).toUpper(), Globals.VCENTER);
 		}
 		
 		// Render bottom grid line
@@ -286,8 +326,6 @@ class PBSeekerView extends Ui.DataField {
 		drawVerticalGridLine(dc, center, bottomGridLineY, device.height);
 		
 		// Render cadence
-		var cadenceText = metrics.computedCadence.format("%d");
-		var cadenceTextWidth = dc.getTextWidthInPixels(cadenceText, VALUE_FONT);
 		var cadenceIconX = center - cadenceTextWidth - (bottomRowXSpace * 2) - cadenceIcon.getWidth() + 8;
 		var cadenceIconY = bottomRowY - (cadenceIcon.getHeight() / 2);
 		dc.drawBitmap(cadenceIconX, cadenceIconY, cadenceIcon);
@@ -295,8 +333,6 @@ class PBSeekerView extends Ui.DataField {
 		dc.drawText(center - bottomRowXSpace, bottomRowY, VALUE_FONT, cadenceText, Globals.RIGHT_VCENTER);
 		
 		// Render heart rate
-		var heartRateText = metrics.computedHeartRate.format("%d");
-		var heartRateTextWidth = dc.getTextWidthInPixels(heartRateText, VALUE_FONT);
 		var heartRateIconX = center + heartRateTextWidth + (bottomRowXSpace * 2) - 2;
 		var heartRateIconY = bottomRowY - (heartRateIcon.getHeight() / 2);
 		dc.drawBitmap(heartRateIconX, heartRateIconY, heartRateIcon);

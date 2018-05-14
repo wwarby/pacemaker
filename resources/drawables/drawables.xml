@@ -4,6 +4,8 @@
 	<bitmap id="downIcon" filename="down.icon.png" />
 	<bitmap id="finishIcon" filename="finish.icon.png" />
 	<bitmap id="finishDarkModeIcon" filename="finish-dark-mode.icon.png" />
+	<bitmap id="finishReverseIcon" filename="finish-reverse.icon.png" />
+	<bitmap id="finishDarkModeReverseIcon" filename="finish-dark-mode-reverse.icon.png" />
 	<bitmap id="heartRateIcon" filename="heart-rate.icon.png" />
 	<bitmap id="launcherIcon" filename="launcher.icon.png" />
 	<bitmap id="paceIcon" filename="pace.icon.png" />

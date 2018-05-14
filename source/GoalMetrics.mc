@@ -24,12 +24,12 @@ class GoalMetrics {
 			if (name == null || name.length() == 0) {
 				name = nameFromDistance(distance);
 			}
-			goals.add(new Goal(distance, targetTime, name, i));
+			goals.add(new Goal(targetTime, distance, name, i));
 		}
 	}
 	
 	function nameFromDistance(distance) {
-		return (distance >= 100 && distance % 100 == 0 ? (distance / 1000).toString() + "K" : distance.toString() + "M");
+		return (distance >= 100 && distance % 100 == 0 ? (distance / 1000.0).format("%.1f") + "K" : distance.format("%d") + "M");
 	}
 	
 	function compute(info) {
@@ -55,6 +55,9 @@ class GoalMetrics {
 			if (goals[i].enabled() && !goals[i].completed && goals[i].distance <= metrics.distance) {
 				goals[i].actualTime = metrics.elapsedTime;
 				goals[i].completed = true;
+			} else if (goals[i].distance > metrics.distance) {
+				goals[i].actualTime = 0;
+				goals[i].completed = false;
 			}
 		}
 	}
