@@ -93,5 +93,10 @@ your project and giving me a leg up in writing for the Garmin SDK.
 - Chequered flag icon made by [Vaadin](https://www.flaticon.com/authors/vaadin) from [www.flaticon.com](https://www.flaticon.com/free-icon/checkered-flag_106935)
 
 
-## Changelog 0.1.0
-- Initial release
+## Changelog
+- 0.2.0
+  - Concept redesign
+- 0.1.1
+  - Tweak settings layout
+- 0.1.0
+  - Initial release
