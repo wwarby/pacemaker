@@ -8,10 +8,10 @@
 		<property id="middleLeftMetric" type="number">3</property>
 		<property id="middleRightMetric" type="number">6</property>
 		<property id="bottomMetric" type="number">2</property>
-		<property id="paceMode" type="number">-1</property>
-		<property id="cadenceMode" type="number">-1</property>
+		<property id="paceMode" type="number">5</property>
+		<property id="cadenceMode" type="number">5</property>
 		<property id="heartRateMode" type="number">-1</property>
-		<property id="powerMode" type="number">-1</property>
+		<property id="powerMode" type="number">5</property>
 	</properties>
 	<strings>
 		<string id="goalDistance">goalDistance</string>

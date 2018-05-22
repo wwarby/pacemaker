@@ -109,7 +109,7 @@ class ActivityMetrics {
 	function computeSpeed(info) {
 		if (paceMode == -1) { return info.currentSpeed; }
 		if (paceMode == 0) { return info.averageSpeed; }
-		if (pacaData != null) { return paceData.average(); }
+		if (paceData != null) { return paceData.average(); }
 		return null;
 	}
 	
