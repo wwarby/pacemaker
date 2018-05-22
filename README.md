@@ -20,7 +20,7 @@ average from start or average over the previous 3 / 5 / 10 / 30 / 60 seconds.
 
 Pacemaker is aware of and supports device settings for distance units (KM or miles) and background colours (black or white).
 
-![Screenshot Light](/supporting-files/screenshot-1.png) ![Screenshot Dark](/screenshots/screenshot-2.png)
+![Screenshot Light](/supporting-files/screenshots/screenshot-1.png) ![Screenshot Dark](/supporting-files/screenshots/screenshot-2.png)
 
 ## BETA
 Pacemaker is currently in BETA. I am in the process of testing it on my own runs and intend to release it in the Garmin
