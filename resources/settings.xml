@@ -59,6 +59,7 @@
 		<string id="paceMode5Seconds">Average pace (last 5 seconds)</string>
 		<string id="paceMode10Seconds">Average pace (last 10 seconds)</string>
 		<string id="paceMode30Seconds">Average pace (last 30 seconds)</string>
+		<string id="paceMode60Seconds">Average pace (last 60 seconds)</string>
 		
 		<string id="cadenceModeTitle">Cadence mode</string>
 		<string id="cadenceModeCurrent">Current cadence</string>
@@ -67,6 +68,7 @@
 		<string id="cadenceMode5Seconds">Average cadence (last 5 seconds)</string>
 		<string id="cadenceMode10Seconds">Average cadence (last 10 seconds)</string>
 		<string id="cadenceMode30Seconds">Average cadence (last 30 seconds)</string>
+		<string id="cadenceMode60Seconds">Average cadence (last 60 seconds)</string>
 		
 		<string id="heartRateModeTitle">Heart rate mode</string>
 		<string id="heartRateModeCurrent">Current heart rate</string>
@@ -75,6 +77,7 @@
 		<string id="heartRateMode5Seconds">Average heart rate (last 5 seconds)</string>
 		<string id="heartRateMode10Seconds">Average heart rate (last 10 seconds)</string>
 		<string id="heartRateMode30Seconds">Average heart rate (last 30 seconds)</string>
+		<string id="heartRateMode60Seconds">Average heart rate (last 60 seconds)</string>
 		
 		<string id="powerModeTitle">Power mode</string>
 		<string id="powerModeCurrent">Current power</string>
@@ -83,6 +86,7 @@
 		<string id="powerMode5Seconds">Average power (last 5 seconds)</string>
 		<string id="powerMode10Seconds">Average power (last 10 seconds)</string>
 		<string id="powerMode30Seconds">Average power (last 30 seconds)</string>
+		<string id="powerMode60Seconds">Average power (last 60 seconds)</string>
 	</strings>
 	<settings>
 		<setting propertyKey="@Properties.goalDistance" title="@Strings.goalDistanceTitle" prompt="@Strings.goalDistancePrompt">
@@ -160,6 +164,7 @@
 	            <listEntry value="5">@Strings.paceMode5Seconds</listEntry>
 	            <listEntry value="10">@Strings.paceMode10Seconds</listEntry>
 	            <listEntry value="30">@Strings.paceMode30Seconds</listEntry>
+	            <listEntry value="60">@Strings.paceMode60Seconds</listEntry>
 	        </settingConfig>
 		</setting>
 		
@@ -171,6 +176,7 @@
 	            <listEntry value="5">@Strings.cadenceMode5Seconds</listEntry>
 	            <listEntry value="10">@Strings.cadenceMode10Seconds</listEntry>
 	            <listEntry value="30">@Strings.cadenceMode30Seconds</listEntry>
+	            <listEntry value="60">@Strings.cadenceMode60Seconds</listEntry>
 	        </settingConfig>
 		</setting>
 		
@@ -182,6 +188,7 @@
 	            <listEntry value="5">@Strings.heartRateMode5Seconds</listEntry>
 	            <listEntry value="10">@Strings.heartRateMode10Seconds</listEntry>
 	            <listEntry value="30">@Strings.heartRateMode30Seconds</listEntry>
+	            <listEntry value="60">@Strings.heartRateMode60Seconds</listEntry>
 	        </settingConfig>
 		</setting>
 		
@@ -193,6 +200,7 @@
 	            <listEntry value="5">@Strings.powerMode5Seconds</listEntry>
 	            <listEntry value="10">@Strings.powerMode10Seconds</listEntry>
 	            <listEntry value="30">@Strings.powerMode30Seconds</listEntry>
+	            <listEntry value="60">@Strings.powerMode60Seconds</listEntry>
 	        </settingConfig>
 		</setting>
 	</settings>
