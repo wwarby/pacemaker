@@ -91,7 +91,7 @@ class ActivityMetrics {
 			}
 		}
 		
-		if (powerData != null) {
+		if (powerData != null && info has :currentPower) {
 			if (info.currentPower != null) {
 				powerData.add(info.currentPower);
 			} else {
@@ -135,10 +135,11 @@ class ActivityMetrics {
 	}
 	
 	function computePower(info) {
-		if (!(info has :powerMode)) { return null; }
-		if (powerMode == -1) { return info.currentPower; }
-		if (powerMode == 0) { return info.averagePower; }
-		if (powerData != null) { return powerData.average(); }
+		if (info has :currentPower) {
+			if (powerMode == -1) { return info.currentPower; }
+			if (powerMode == 0) { return info.averagePower; }
+			if (powerData != null) { return powerData.average(); }
+		}
 		return null;
 	}
 	
