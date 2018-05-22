@@ -1,22 +1,26 @@
+using Toybox.WatchUi as Ui;
 using Toybox.Application as App;
 
-class PBSeekerApp extends App.AppBase {
+class PacemakerApp extends App.AppBase {
+	
+	var mainView;
+	
+	function initialize() {
+		AppBase.initialize();
+	}
 
-    function initialize() {
-        AppBase.initialize();
-    }
+	function onStart(state) {}
 
-    // onStart() is called on application start up
-    function onStart(state) {
-    }
-
-    // onStop() is called when your application is exiting
-    function onStop(state) {
-    }
-
-    //! Return the initial view of your application here
-    function getInitialView() {
-        return [ new PBSeekerView() ];
-    }
+	function onStop(state) {}
+	
+	function onSettingsChanged() {
+		mainView.readSettings();
+		Ui.requestUpdate();
+	}
+	
+	function getInitialView() {
+		mainView = new PacemakerView();
+		return [mainView];
+	}
 
 }

@@ -1,4 +1,4 @@
-using Globals;
+using Toybox.WatchUi as Ui;
 
 module DistanceFormat {
 	
@@ -11,7 +11,7 @@ module DistanceFormat {
 				return distanceKmOrMiles.format("%.1f");
 			}
 		} else {
-			return Globals.ZERO_DISTANCE;
+			return Ui.loadResource(Rez.Strings.zeroDistance);
 		}
 	}
 	

@@ -1,91 +1,95 @@
 using Toybox.WatchUi as Ui;
 using Toybox.Application as App;
 using Calc;
-using Globals;
 
 class GoalMetrics {
 	
-	hidden const MAX_GOALS = 2;
+	var goalDistance;
+	var goalTargetTime;
 	
-	hidden var goals = new[0];
-	hidden var metrics;
-	hidden var app;
+	var predictedTime;
+	var remainingDistance;
+	var requiredSpeed;
+	var requiredPace;
+	var remainingTime;
+	var completedTime;
 	
-	function initialize(parentMetrics) {
-		
-		metrics = parentMetrics.weak().get();
-		app = App.getApp();
-		
-		// Initialize goals
-		for (var i = 1; i < MAX_GOALS + 1; i++) {
-			var distance = app.getProperty("goal" + i + "Distance");
-			var targetTime = app.getProperty("goal" + i + "TargetTime") * 1000;
-			var name = app.getProperty("goal" + i + "Name");
-			if (name == null || name.length() == 0) {
-				name = nameFromDistance(distance);
-			}
-			goals.add(new Goal(targetTime, distance, name, i));
-		}
+	function initialize() {
+		predictedTime = goalTargetTime;
+		remainingDistance = goalDistance;
 	}
 	
-	function nameFromDistance(distance) {
-		if (distance < 1000) {
-			return distance.format("%d") + "M";
-		} else if (distance % 1000 == 0) {
-			return (distance / 1000.0).format("%d") + "K";
+	function readSettings(deviceSettings) {
+		
+		goalDistance = App.Properties.getValue(Ui.loadResource(Rez.Strings.goalDistance));
+		if (goalDistance != null && goalDistance <= 0) {  goalDistance = null; }
+		
+		goalTargetTime = App.Properties.getValue(Ui.loadResource(Rez.Strings.goalTargetTime));
+		if (goalTargetTime != null && goalTargetTime > 0) { 
+			goalTargetTime *= 1000.0;
 		} else {
-			return (distance / 1000.0).format("%.1f") + "K";
+			goalTargetTime = null;
 		}
 	}
 	
-	function compute(info) {
-		
-		// Ensure goals are configured correctly per user settings
-		for (var i = 0; i < goals.size(); i++) {
-			goals[i].distance = app.getProperty("goal" + goals[i].index + "Distance");
-			goals[i].targetTime = app.getProperty("goal" + goals[i].index + "TargetTime") * 1000;
-			goals[i].name = app.getProperty("goal" + goals[i].index + "Name");
-			if (goals[i].name  == null || goals[i].name .length() == 0) {
-				goals[i].name = nameFromDistance(goals[i].distance);
-			}
+	function goalSet() {
+		return goalDistance != null && goalTargetTime != null;
+	}
+	
+	function goalCompleted() {
+		return completedTime != null;
+	}
+	
+	function checkReset(info) {
+		// Goal not set or activity not started
+		if (!goalSet() || (info != null && (info.elapsedDistance == null || info.timerTime == null))) {
+			predictedTime = null;
+			remainingDistance = null;
+			requiredSpeed = null;
+			requiredPace = null;
+			remainingTime = null;
+			completedTime = null;
+			return;
 		}
+	}
+	
+	function compute(info, currentSpeed, kmOrMileInMeters) {
 		
-		// Compute values for next goal
-		var goal = nextGoal();
-		if (goal != null) {
-			goal.compute(metrics.distance, metrics.elapsedTime, metrics.computedSpeed, metrics.kmOrMileInMeters);
-		}
+		readSettings(null);
+		checkReset(info);
 		
-		// Capture actual time for completed goals
-		for (var i = 0; i < goals.size(); i++) {
-			if (goals[i].enabled() && !goals[i].completed && goals[i].distance <= metrics.distance) {
-				goals[i].actualTime = metrics.elapsedTime;
-				goals[i].completed = true;
-			} else if (goals[i].distance > metrics.distance) {
-				goals[i].actualTime = 0;
-				goals[i].completed = false;
+		remainingDistance = goalDistance != null ? Calc.max(0, goalDistance - (info.elapsedDistance == null ? 0 : info.elapsedDistance)) : null;
+		
+		// Goal completed or not moving
+		if (completedTime != null || currentSpeed == null || currentSpeed == 0 || info.elapsedDistance == null || !goalSet()) { return; }
+		
+		// Capture goal finish time
+		if (goalDistance <= info.elapsedDistance) {
+			completedTime = info.timerTime;
+			predictedTime = completedTime;
+			remainingTime = null;
+			requiredSpeed = null;
+			requiredPace = null;
+		} else {
+			// Compute goal metrics
+			predictedTime = (info.timerTime + ((remainingDistance / currentSpeed) * 1000.0)).toNumber();
+			remainingTime = goalTargetTime - info.timerTime;
+			requiredSpeed = remainingDistance / (remainingTime / 1000.0);
+			if (requiredSpeed != null && requiredSpeed > 0.2) {
+				requiredPace = kmOrMileInMeters / requiredSpeed;
+			} else {
+				requiredPace = null;
 			}
 		}
 	}
 	
-	function nextGoal() {
-		var goal = null;
-		for (var i = 0; i < goals.size(); i++) {
-			if (goals[i].enabled() && goals[i].distance > metrics.distance && (goal == null || goals[i].distance < goal.distance)) {
-				goal = goals[i];
-			}
-		}
-		return goal;
+	function delta() {
+		if (goalTargetTime == null) { return 0; }
+		return (completedTime != null ? completedTime : predictedTime != null ? predictedTime : 0) - goalTargetTime;
 	}
 	
-	function lastCompletedGoal() {
-		var goal = null;
-		for (var i = 0; i < goals.size(); i++) {
-			if (goals[i].enabled() && goals[i].completed && (goal == null || goals[i].distance > goal.distance)) {
-				goal = goals[i];
-			}
-		}
-		return goal;
+	function onTarget() {
+		return delta() <= 0;
 	}
 	
 }

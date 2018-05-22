@@ -1,0 +1,15 @@
+<strings>
+    <string id="AppName">Pacemaker</string>
+    
+    <string id="hr">HR</string>
+    <string id="cad">CAD</string>
+    <string id="power">POWER</string>
+    <string id="pace">PACE</string>
+    <string id="dist">DIST</string>
+    <string id="finish">FINISH</string>
+    <string id="time">TIME</string>
+    
+    <string id="noGoal">NO GOAL</string>
+    <string id="zeroTime">0:00</string>
+    <string id="zeroDistance">0.00</string>
+</strings>

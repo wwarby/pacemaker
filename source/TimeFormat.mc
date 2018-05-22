@@ -1,5 +1,5 @@
+using Toybox.WatchUi as Ui;
 using Toybox.Math;
-using Globals;
 
 module TimeFormat {
 	
@@ -21,7 +21,7 @@ module TimeFormat {
 				return hours.format("%d") + ":" + minutes.format("%02d") + ":" + seconds.format("%02d");
 			}
 		} else {
-			return Globals.ZERO_TIME;
+			return Ui.loadResource(Rez.Strings.zeroTime);
 		}
 		
 	}

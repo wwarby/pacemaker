@@ -1,0 +1,199 @@
+<resources>
+	<properties>
+		<property id="goalDistance" type="number">5000</property>
+		<property id="goalTargetTime" type="number">1500</property>
+		<property id="colourText" type="boolean">true</property>
+		<property id="topLeftMetric" type="number">0</property>
+		<property id="topRightMetric" type="number">1</property>
+		<property id="middleLeftMetric" type="number">3</property>
+		<property id="middleRightMetric" type="number">6</property>
+		<property id="bottomMetric" type="number">2</property>
+		<property id="paceMode" type="number">-1</property>
+		<property id="cadenceMode" type="number">-1</property>
+		<property id="heartRateMode" type="number">-1</property>
+		<property id="powerMode" type="number">-1</property>
+	</properties>
+	<strings>
+		<string id="goalDistance">goalDistance</string>
+		<string id="goalTargetTime">goalTargetTime</string>
+		<string id="colourText">colourText</string>
+		<string id="topLeftMetric">topLeftMetric</string>
+		<string id="topRightMetric">topRightMetric</string>
+		<string id="middleLeftMetric">middleLeftMetric</string>
+		<string id="middleRightMetric">middleRightMetric</string>
+		<string id="bottomMetric">bottomMetric</string>
+		<string id="paceMode">paceMode</string>
+		<string id="cadenceMode">cadenceMode</string>
+		<string id="heartRateMode">heartRateMode</string>
+		<string id="powerMode">powerMode</string>
+		
+		<string id="goalDistanceTitle">Goal distance (in meters)</string>
+		<string id="goalDistancePrompt">8000 for 8K</string>
+		<string id="goalDistanceErrorMessage">Must be less than 999,999</string>
+		
+		<string id="goalTargetTimeTitle">Goal target time (in seconds)</string>
+		<string id="goalTargetTimePrompt">1800 for 30 minutes</string>
+		<string id="goalTargetTimeErrorMessage">Must be less than 999,999</string>
+		
+		<string id="colourTextTitle">Colour text (green if on target, red if not)</string>
+		
+		<string id="topLeftMetricTitle">Top left metric</string>
+		<string id="topRightMetricTitle">Top right metric</string>
+		<string id="middleLeftMetricTitle">Middle left metric</string>
+		<string id="middleRightMetricTitle">Middle right metric</string>
+		<string id="bottomMetricTitle">Bottom metric</string>
+		
+		<string id="metricHeartRateTitle">Heart rate</string>
+		<string id="metricCadenceTitle">Cadence</string>
+		<string id="metricPowerTitle">Power</string>
+		<string id="metricPaceTitle">Pace</string>
+		<string id="metricElapsedDistanceTitle">Elapsed distance</string>
+		<string id="metricRemainingDistanceTitle">Remaining distance</string>
+		<string id="metricPredictedTimeTitle">Predicted finish time</string>
+		<string id="metricTimerTimeTitle">Elapsed time</string>
+		
+		<string id="paceModeTitle">Pace mode</string>
+		<string id="paceModeCurrent">Current pace</string>
+		<string id="paceModeAverage">Average pace</string>
+		<string id="paceMode3Seconds">Average pace (last 3 seconds)</string>
+		<string id="paceMode5Seconds">Average pace (last 5 seconds)</string>
+		<string id="paceMode10Seconds">Average pace (last 10 seconds)</string>
+		<string id="paceMode30Seconds">Average pace (last 30 seconds)</string>
+		
+		<string id="cadenceModeTitle">Cadence mode</string>
+		<string id="cadenceModeCurrent">Current cadence</string>
+		<string id="cadenceModeAverage">Average cadence</string>
+		<string id="cadenceMode3Seconds">Average cadence (last 3 seconds)</string>
+		<string id="cadenceMode5Seconds">Average cadence (last 5 seconds)</string>
+		<string id="cadenceMode10Seconds">Average cadence (last 10 seconds)</string>
+		<string id="cadenceMode30Seconds">Average cadence (last 30 seconds)</string>
+		
+		<string id="heartRateModeTitle">Heart rate mode</string>
+		<string id="heartRateModeCurrent">Current heart rate</string>
+		<string id="heartRateModeAverage">Average heart rate</string>
+		<string id="heartRateMode3Seconds">Average heart rate (last 3 seconds)</string>
+		<string id="heartRateMode5Seconds">Average heart rate (last 5 seconds)</string>
+		<string id="heartRateMode10Seconds">Average heart rate (last 10 seconds)</string>
+		<string id="heartRateMode30Seconds">Average heart rate (last 30 seconds)</string>
+		
+		<string id="powerModeTitle">Power mode</string>
+		<string id="powerModeCurrent">Current power</string>
+		<string id="powerModeAverage">Average power</string>
+		<string id="powerMode3Seconds">Average power (last 3 seconds)</string>
+		<string id="powerMode5Seconds">Average power (last 5 seconds)</string>
+		<string id="powerMode10Seconds">Average power (last 10 seconds)</string>
+		<string id="powerMode30Seconds">Average power (last 30 seconds)</string>
+	</strings>
+	<settings>
+		<setting propertyKey="@Properties.goalDistance" title="@Strings.goalDistanceTitle" prompt="@Strings.goalDistancePrompt">
+			<settingConfig type="numeric" max="999999" errorMessage="@Strings.goalDistanceErrorMessage" />
+		</setting>
+		
+		<setting propertyKey="@Properties.goalTargetTime" title="@Strings.goalTargetTimeTitle" prompt="@Strings.goalTargetTimePrompt">
+			<settingConfig type="numeric" max="999999" errorMessage="@Strings.goalTargetTimeErrorMessage" />
+		</setting>
+		
+		<setting propertyKey="@Properties.colourText" title="@Strings.colourTextTitle">
+			<settingConfig type="boolean" />
+		</setting>
+		
+		<setting propertyKey="@Properties.topLeftMetric" title="@Strings.topLeftMetricTitle">
+			<settingConfig type="list">
+	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
+	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
+	            <listEntry value="2">@Strings.metricPowerTitle</listEntry>
+	        </settingConfig>
+		</setting>
+		
+		<setting propertyKey="@Properties.topRightMetric" title="@Strings.topRightMetricTitle">
+			<settingConfig type="list">
+	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
+	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
+	            <listEntry value="2">@Strings.metricPowerTitle</listEntry>
+	        </settingConfig>
+		</setting>
+		
+		<setting propertyKey="@Properties.middleLeftMetric" title="@Strings.middleLeftMetricTitle">
+			<settingConfig type="list">
+	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
+	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
+	            <listEntry value="2">@Strings.metricPowerTitle</listEntry>
+	            <listEntry value="3">@Strings.metricPaceTitle</listEntry>
+	            <listEntry value="4">@Strings.metricElapsedDistanceTitle</listEntry>
+	            <listEntry value="5">@Strings.metricRemainingDistanceTitle</listEntry>
+	            <listEntry value="6">@Strings.metricPredictedTimeTitle</listEntry>
+	            <listEntry value="7">@Strings.metricTimerTimeTitle</listEntry>
+	        </settingConfig>
+		</setting>
+		
+		<setting propertyKey="@Properties.middleRightMetric" title="@Strings.middleRightMetricTitle">
+			<settingConfig type="list">
+	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
+	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
+	            <listEntry value="2">@Strings.metricPowerTitle</listEntry>
+	            <listEntry value="3">@Strings.metricPaceTitle</listEntry>
+	            <listEntry value="4">@Strings.metricElapsedDistanceTitle</listEntry>
+	            <listEntry value="5">@Strings.metricRemainingDistanceTitle</listEntry>
+	            <listEntry value="6">@Strings.metricPredictedTimeTitle</listEntry>
+	            <listEntry value="7">@Strings.metricTimerTimeTitle</listEntry>
+	        </settingConfig>
+		</setting>
+		
+		<setting propertyKey="@Properties.bottomMetric" title="@Strings.bottomMetricTitle">
+			<settingConfig type="list">
+	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
+	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
+	            <listEntry value="2">@Strings.metricPowerTitle</listEntry>
+	            <listEntry value="3">@Strings.metricPaceTitle</listEntry>
+	            <listEntry value="4">@Strings.metricElapsedDistanceTitle</listEntry>
+	            <listEntry value="5">@Strings.metricRemainingDistanceTitle</listEntry>
+	            <listEntry value="6">@Strings.metricPredictedTimeTitle</listEntry>
+	            <listEntry value="7">@Strings.metricTimerTimeTitle</listEntry>
+	        </settingConfig>
+		</setting>
+		
+		<setting propertyKey="@Properties.paceMode" title="@Strings.paceModeTitle">
+			<settingConfig type="list">
+	            <listEntry value="-1">@Strings.paceModeCurrent</listEntry>
+	            <listEntry value="0">@Strings.paceModeAverage</listEntry>
+	            <listEntry value="3">@Strings.paceMode3Seconds</listEntry>
+	            <listEntry value="5">@Strings.paceMode5Seconds</listEntry>
+	            <listEntry value="10">@Strings.paceMode10Seconds</listEntry>
+	            <listEntry value="30">@Strings.paceMode30Seconds</listEntry>
+	        </settingConfig>
+		</setting>
+		
+		<setting propertyKey="@Properties.cadenceMode" title="@Strings.cadenceModeTitle">
+			<settingConfig type="list">
+	            <listEntry value="-1">@Strings.cadenceModeCurrent</listEntry>
+	            <listEntry value="0">@Strings.cadenceModeAverage</listEntry>
+	            <listEntry value="3">@Strings.cadenceMode3Seconds</listEntry>
+	            <listEntry value="5">@Strings.cadenceMode5Seconds</listEntry>
+	            <listEntry value="10">@Strings.cadenceMode10Seconds</listEntry>
+	            <listEntry value="30">@Strings.cadenceMode30Seconds</listEntry>
+	        </settingConfig>
+		</setting>
+		
+		<setting propertyKey="@Properties.heartRateMode" title="@Strings.heartRateModeTitle">
+			<settingConfig type="list">
+	            <listEntry value="-1">@Strings.heartRateModeCurrent</listEntry>
+	            <listEntry value="0">@Strings.heartRateModeAverage</listEntry>
+	            <listEntry value="3">@Strings.heartRateMode3Seconds</listEntry>
+	            <listEntry value="5">@Strings.heartRateMode5Seconds</listEntry>
+	            <listEntry value="10">@Strings.heartRateMode10Seconds</listEntry>
+	            <listEntry value="30">@Strings.heartRateMode30Seconds</listEntry>
+	        </settingConfig>
+		</setting>
+		
+		<setting propertyKey="@Properties.powerMode" title="@Strings.powerModeTitle">
+			<settingConfig type="list">
+	            <listEntry value="-1">@Strings.powerModeCurrent</listEntry>
+	            <listEntry value="0">@Strings.powerModeAverage</listEntry>
+	            <listEntry value="3">@Strings.powerMode3Seconds</listEntry>
+	            <listEntry value="5">@Strings.powerMode5Seconds</listEntry>
+	            <listEntry value="10">@Strings.powerMode10Seconds</listEntry>
+	            <listEntry value="30">@Strings.powerMode30Seconds</listEntry>
+	        </settingConfig>
+		</setting>
+	</settings>
+</resources>

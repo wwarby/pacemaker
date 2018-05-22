@@ -1,22 +1,26 @@
 # Pacemaker
 
-A free data field for Garmin running watches designed to help runners keep pace with customisable goals. You can set up to
-10 goals in the app settings, each with a specified distance and target time and the data field will track whether you are
-on target. For each goal in turn, it will show you:
-- A prediction of your time
-- How far ahead (or behind) your target time you are (in seconds)
-- How much you need to adjust your running pace by to hit your target time (in seconds)
-- Whether you are on target to hit your target time (by colouring text red or green)
-- The remaining distance to the next goal
+A free data field for Garmin running watches designed to help runners keep pace with a customisable goal. You can set a
+custom goal distance and time in the app settings to see a prediction of your finish time which takes account of both
+your current pace and average pace for the distance completed so far. It will also show you remaining distance to your
+goal, and colour the pace and finish time text red or green to indicate whether you are on target.
 
-You could use these features to (for example):
-- Chase your personal best time for a fixed distance
-- Set a series of markers to help pace even splits across the run
+Pacemaker has five display fields, each of which can be customised to show one of the following metrics:
+- Heart rate
+- Cadence
+- Power (including from Stryd, if connected as a power meter)
+- Pace
+- Elapsed distance
+- Remaining distance
+- Predicted finish time
+- Elapsed time
 
-Pacemaker also show the common metrics most runners use during a run: pace, distance, elapsed time, cadence
-and heart rate, and you can configure how some of these values are averaged during your run.
+You can also independently customise how heart rate, cadence, power and pace are calculated, using either current values,
+average from start or average over the previous 3 / 5 / 10 / 30 / 60 seconds.
 
-![Screenshot Light](/screenshots/screenshot-1.png) ![Screenshot Dark](/screenshots/screenshot-2.png)
+Pacemaker is aware of and supports device settings for distance units (KM or miles) and background colours (black or white).
+
+![Screenshot Light](/supporting-files/screenshot-1.png) ![Screenshot Dark](/screenshots/screenshot-2.png)
 
 ## BETA
 Pacemaker is currently in BETA. I am in the process of testing it on my own runs and intend to release it in the Garmin
@@ -24,60 +28,29 @@ app store when I am confident that it is reasonably stable. For anyone stumbling
 download and try it out, but be warned - it has had insufficient real world testing yet so if it crashes your watch during
 a race, don't blame me.
 
-## Features
-- Pace
-- Pace adjust recommendation for next goal
-- Total distance
-- Elapsed time
-- Predicted time for next goal
-- Delta of predicted time vs. target time for next goal
-- Remaining distance to next goal
-- Cadence
-- Heart rate
-- Configuration settings for
-   - Setting goals
-   - Coloured text
-   - Calculation method for pace, cadence and heart rate
-- Supports device light/dark mode setting
-- Supports device units setting (KM or miles)
-
 ## Supported Devices
+- Approach S60
 - D2 Charlie
-- Descent MK1
-- fenix 5X
+- fenix 5 / 5S / 5X Chronos
+- Forerunner 645 / 645 Music / 735xt / 935
+- vivoactive 3
 
 *Note: Only tested in on a real fenix 5X in the field, all other watches tested only in the SDK device simulator.*
 
-## Goal Settings
-You can set up to 10 goals with Pacemaker. Each goal is comprised of 3 values: distance, target time and name. You must set
-the distance in meters and the target time in seconds for each goal. The name field is optional - if you leave it blank,
-a goal name will be generated automatically from the distance field, e.g. `5K` for a distance of `5000`.
-
-The goals do not have to be set in any particular order (in other words you can put shorter distances after longer ones)
-and the app will work out the order based on distance, but you do have to match the distances and times together using the
-goal numbers (e.g. the distance for Goal 3 always goes with the target time for Goal 3).
-
-## One Goal at a Time
-Note that only one goal is active at a time, and it is always the goal with the shortest distance that is still further than
-you have run so far. As soon as you pass that distance, the data field will immediately start predictions for your next goal.
-When you pass the distance of your longest goal, the finish time for that longest goal will remain on screen.
-
 ## Unsupported Devices
-Supporting multiple devices in the Garmin SDK is hard work, mostly due to severe limitations on memory usage in the less
-powerful devices in the range. The following devices are currently unsupported due to memory limit issues, but I may be
-able to reduce memory usage to support them if there is enough interest:
+I have made every reasonable effort to support as many devices as I can with the initial release of this data field.
+Supporting multiple devices in the Garmin SDK is hard work due to screen size variations and severe limitations on memory usage
+in the less powerful devices in the range.
 
-- Approach S60
-- D2 Charlie
-- Descent MK1
-- fenix 5 / 5S / Chronos
-- Forerunner 645 / Music
-- Forerunner 935
-- vivoactive 3
+I have not supported the Descent MK1 device because the current SDK won't let me
+test it with Connect IQ 2.4, which is the miminum version I support. If this changes, I will support the Descent MK1 in a future
+release. I have not supported the vivoactive HR because it's screen is too small for my layout. I could support it with some
+considerable amount of effort if there is any interest in the future.
 
 I will never be able to support older Connect IQ 1.x devices like the Forerunner 235. Those devices have a limitation of
 16KB memory for data fields, and it is almost impossible to work within that limit without abandoning all principles
 of maintainable object-oriented programming, and dropping down to a procedural coding style which I have no interest in doing.
+As it is, most of the devices I am supporting have a memory limit of 28.6KB which is pretty challenging.
 
 ## Source
 Pacemaker is open source (MIT license) and it's code resides on GitHub at https://github.com/wwarby/pacemaker
@@ -88,12 +61,12 @@ Thanks [kpaumann](https://apps.garmin.com/en-GB/developer/ab0f2743-88d2-4f32-9fb
 your project and giving me a leg up in writing for the Garmin SDK.
 
 ### Icon Credits
-- Running shoe icon made by [Freepic](https://www.flaticon.com/authors/freepik) from [www.flaticon.com](https://www.flaticon.com/free-icon/trainers_105191)
-- Running man icon made by [Freepic](https://www.flaticon.com/authors/freepik) from [www.flaticon.com](https://www.flaticon.com/free-icon/running_763965)
-- Chequered flag icon made by [Vaadin](https://www.flaticon.com/authors/vaadin) from [www.flaticon.com](https://www.flaticon.com/free-icon/checkered-flag_106935)
-
+- Icons by [Freepic](https://www.flaticon.com/authors/freepik) from [www.flaticon.com](https://www.flaticon.com)
+- Chequered flag icon by [Vaadin](https://www.flaticon.com/authors/vaadin) from [www.flaticon.com](https://www.flaticon.com/free-icon/checkered-flag_106935)
 
 ## Changelog
+- 0.3.0
+  - Concept redesign
 - 0.2.0
   - Concept redesign
 - 0.1.1
