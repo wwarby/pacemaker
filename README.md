@@ -65,6 +65,8 @@ your project and giving me a leg up in writing for the Garmin SDK.
 - Chequered flag icon by [Vaadin](https://www.flaticon.com/authors/vaadin) from [www.flaticon.com](https://www.flaticon.com/free-icon/checkered-flag_106935)
 
 ## Changelog
+- 0.3.3
+  - Fix crash in pace average calculation, change settings defaults
 - 0.3.2
   - Fix power value stuck at zero
 - 0.3.1
