@@ -61,7 +61,7 @@ class PacemakerView extends Ui.DataField {
 		var valueColour = darkMode ? Gfx.COLOR_WHITE : Gfx.COLOR_BLACK;
 		var goalColour;
 		
-		if (App.Properties.getValue(Ui.loadResource(Rez.Strings.colourText)) && activityMetrics.timerTime > 0) {
+		if (App.Properties.getValue(Ui.loadResource(Rez.Strings.colourText)) && activityMetrics.timerTime != null && activityMetrics.timerTime > 0) {
 			goalColour = goalMetrics.onTarget() ?
 				darkMode ? Gfx.COLOR_GREEN : Gfx.COLOR_DK_GREEN :
 				Gfx.COLOR_RED;
