@@ -28,6 +28,10 @@ app store when I am confident that it is reasonably stable. For anyone stumbling
 download and try it out, but be warned - it has had insufficient real world testing yet so if it crashes your watch during
 a race, don't blame me.
 
+## Known Issues
+- Some devices such as vivoactive 3 do not provide a running power value (it looks like it should do so when paired with an external
+power meter device like Stryd, but I can't tell for sure). On unsupported devices, the power value will show as zero.
+
 ## Supported Devices
 - Approach S60
 - D2 Charlie
