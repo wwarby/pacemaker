@@ -125,7 +125,7 @@ class PacemakerView extends Ui.DataField {
 		
 		// Uncomment to test realistic max widths
 		/*
-		topLeftMetric.valueText = "888";
+		topLeftMetric.valueText = "+888";
 		topRightMetric.valueText = "888";
 		middleLeftMetric.valueText = "88:88:88";
 		middleRightMetric.valueText = "88:88:88";
@@ -149,12 +149,12 @@ class PacemakerView extends Ui.DataField {
 		// Render top left metric
 		dc.drawBitmap(iconX + (topLeftMetric.icon.getWidth() / 2), iconY - (topLeftMetric.icon.getHeight() / 2), topLeftMetric.icon);
 		dc.setColor(topLeftMetric.useGoalColour ? goalColour : valueColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(topLeftValueX, topRowY, Gfx.FONT_NUMBER_MEDIUM, topLeftMetric.valueText, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
+		dc.drawText(topLeftValueX, topRowY, topLeftMetric.valueText.length() > 3 ? Gfx.FONT_NUMBER_MILD : Gfx.FONT_NUMBER_MEDIUM, topLeftMetric.valueText, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
 		
 		// Render top right metric
 		dc.drawBitmap(dc.getWidth() - iconX - topRightMetric.icon.getWidth() - (topRightMetric.icon.getWidth() / 2), iconY - (topRightMetric.icon.getHeight() / 2), topRightMetric.icon);
 		dc.setColor(topRightMetric.useGoalColour ? goalColour : valueColour, Gfx.COLOR_TRANSPARENT);
-		dc.drawText(dc.getWidth() - topLeftValueX, topRowY, Gfx.FONT_NUMBER_MEDIUM, topRightMetric.valueText, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
+		dc.drawText(dc.getWidth() - topLeftValueX, topRowY, topRightMetric.valueText.length() > 3 ? Gfx.FONT_NUMBER_MILD : Gfx.FONT_NUMBER_MEDIUM, topRightMetric.valueText, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
 		
 		// Render middle left metric
 		dc.setColor(labelColour, Gfx.COLOR_TRANSPARENT);
