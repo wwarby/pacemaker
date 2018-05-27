@@ -85,6 +85,7 @@ class PacemakerView extends Ui.DataField {
 		// Calculate positions
 		var half = dc.getWidth() / 2;
 		var quarter = half / 2;
+		var iconSize = 20;
 		var topGridLineY =
 			round240 ? 80 :
 			round218 ? 73 :
@@ -147,12 +148,12 @@ class PacemakerView extends Ui.DataField {
 		drawVerticalGridLine(dc, half, 0, bottomGridLineY);
 		
 		// Render top left metric
-		dc.drawBitmap(iconX + (topLeftMetric.icon.getWidth() / 2), iconY - (topLeftMetric.icon.getHeight() / 2), topLeftMetric.icon);
+		dc.drawBitmap(iconX + (iconSize / 2), iconY - (iconSize / 2), topLeftMetric.icon());
 		dc.setColor(topLeftMetric.useGoalColour ? goalColour : valueColour, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(topLeftValueX, topRowY, topLeftMetric.valueText.length() > 3 ? Gfx.FONT_NUMBER_MILD : Gfx.FONT_NUMBER_MEDIUM, topLeftMetric.valueText, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
 		
 		// Render top right metric
-		dc.drawBitmap(dc.getWidth() - iconX - topRightMetric.icon.getWidth() - (topRightMetric.icon.getWidth() / 2), iconY - (topRightMetric.icon.getHeight() / 2), topRightMetric.icon);
+		dc.drawBitmap(dc.getWidth() - iconX - iconSize - (iconSize / 2), iconY - (iconSize / 2), topRightMetric.icon());
 		dc.setColor(topRightMetric.useGoalColour ? goalColour : valueColour, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(dc.getWidth() - topLeftValueX, topRowY, topRightMetric.valueText.length() > 3 ? Gfx.FONT_NUMBER_MILD : Gfx.FONT_NUMBER_MEDIUM, topRightMetric.valueText, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
 		
@@ -171,8 +172,8 @@ class PacemakerView extends Ui.DataField {
 		// Render bottom metric
 		var bottomIconOffsetX = Calc.max(0, (130 - bottomMetric.width) / 3);
 		var bottomIconOffsetY = 5;
-		dc.drawBitmap(iconX + (bottomMetric.icon.getWidth() / 2) + bottomIconOffsetX, dc.getHeight() - iconY + bottomIconOffsetY - (bottomMetric.icon.getHeight() / 2), bottomMetric.icon);
-		dc.drawBitmap(dc.getWidth() - iconX - bottomIconOffsetX - bottomMetric.icon.getWidth() - (bottomMetric.icon.getWidth() / 2), dc.getHeight() - iconY + bottomIconOffsetY - (bottomMetric.icon.getHeight() / 2), bottomMetric.icon);
+		dc.drawBitmap(iconX + (iconSize / 2) + bottomIconOffsetX, dc.getHeight() - iconY + bottomIconOffsetY - (iconSize / 2), bottomMetric.iconReverse());
+		dc.drawBitmap(dc.getWidth() - iconX - bottomIconOffsetX - iconSize - (iconSize / 2), dc.getHeight() - iconY + bottomIconOffsetY - (iconSize / 2), bottomMetric.icon());
 		dc.setColor(bottomMetric.useGoalColour ? goalColour : valueColour, Gfx.COLOR_TRANSPARENT);
 		dc.drawText(half, bottomRowY, bottomMetric.isError ? Gfx.FONT_MEDIUM : Gfx.FONT_NUMBER_MEDIUM, bottomMetric.valueText, Gfx.TEXT_JUSTIFY_CENTER | Gfx.TEXT_JUSTIFY_VCENTER);
 		

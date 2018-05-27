@@ -14,6 +14,7 @@ class ActivityMetrics {
 	var elapsedDistance;
 	var timerTime;
 	var currentSpeed;
+	var calories;
 	
 	var computedSpeed;
 	var computedPace;
@@ -66,6 +67,7 @@ class ActivityMetrics {
 		elapsedDistance = info.elapsedDistance;
 		timerTime = info.timerTime;		
 		currentSpeed = info.currentSpeed;
+		calories = info.calories;
 		
 		if (paceData != null) {
 			if (info.currentSpeed != null) {

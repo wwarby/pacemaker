@@ -67,8 +67,12 @@ your project and giving me a leg up in writing for the Garmin SDK.
 ### Icon Credits
 - Icons by [Freepic](https://www.flaticon.com/authors/freepik) from [www.flaticon.com](https://www.flaticon.com)
 - Chequered flag icon by [Vaadin](https://www.flaticon.com/authors/vaadin) from [www.flaticon.com](https://www.flaticon.com/free-icon/checkered-flag_106935)
+- Flame icon by [Those Icons](https://www.flaticon.com/authors/those-icons) from [www.flaticon.com](https://www.flaticon.com/free-icon/fire_483675)
 
 ## Changelog
+- 0.4.0
+  - Support reversed icons
+  - Add calories metric
 - 0.3.3
   - Fix crash in pace average calculation, change settings defaults
 - 0.3.2

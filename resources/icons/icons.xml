@@ -31,6 +31,16 @@
             <color>FFFFFF</color>
         </palette>
 	</bitmap>
+	<bitmap id="finishReverseIcon" filename="finish-reverse.png" dithering="none">
+		<palette disableTransparency="false">
+            <color>000000</color>
+        </palette>
+	</bitmap>
+	<bitmap id="finishReverseDarkModeIcon" filename="finish-reverse.png" dithering="none">
+		<palette disableTransparency="false">
+            <color>FFFFFF</color>
+        </palette>
+	</bitmap>
 	<bitmap id="heartRateIcon" filename="heart-rate.png" dithering="none">
 		<palette disableTransparency="false">
             <color>FF0000</color>
@@ -52,6 +62,16 @@
         </palette>
 	</bitmap>
 	<bitmap id="powerDarkModeIcon" filename="power.png" dithering="none">
+		<palette disableTransparency="false">
+            <color>FFAA00</color>
+        </palette>
+	</bitmap>
+	<bitmap id="caloriesIcon" filename="calories.png" dithering="none">
+		<palette disableTransparency="false">
+            <color>FF5500</color>
+        </palette>
+	</bitmap>
+	<bitmap id="caloriesDarkModeIcon" filename="calories.png" dithering="none">
 		<palette disableTransparency="false">
             <color>FFAA00</color>
         </palette>
