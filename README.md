@@ -49,10 +49,9 @@ I have made every reasonable effort to support as many devices as I can with the
 Supporting multiple devices in the Garmin SDK is hard work due to screen size variations and severe limitations on memory usage
 in the less powerful devices in the range.
 
-I have not supported the Descent MK1 device because the current SDK won't let me
-test it with Connect IQ 2.4, which is the miminum version I support. If this changes, I will support the Descent MK1 in a future
-release. I have not supported the vivoactive HR because it's screen is too small for my layout. I could support it with some
-considerable amount of effort if there is any interest in the future.
+I have not supported the Descent MK1 device because the current SDK won't let me test it with Connect IQ 2.4, which is the miminum
+version I support. If this changes, I will support the Descent MK1 in a future release. I have not supported the vivoactive HR
+because it's screen is too small for my layout.
 
 I will never be able to support older Connect IQ 1.x devices like the Forerunner 235. Those devices have a limitation of
 16KB memory for data fields, and it is almost impossible to work within that limit without abandoning all principles
