@@ -42,41 +42,18 @@
 		<string id="metricPredictedTimeDeltaTitle">Predicted time (+/- from target)</string>
 		<string id="metricTimerTimeTitle">Elapsed time</string>
 		
-		<string id="paceModeTitle">Pace mode</string>
-		<string id="paceModeCurrent">Current pace</string>
-		<string id="paceModeAverage">Average pace</string>
-		<string id="paceMode3Seconds">Average pace (last 3 seconds)</string>
-		<string id="paceMode5Seconds">Average pace (last 5 seconds)</string>
-		<string id="paceMode10Seconds">Average pace (last 10 seconds)</string>
-		<string id="paceMode30Seconds">Average pace (last 30 seconds)</string>
-		<string id="paceMode60Seconds">Average pace (last 60 seconds)</string>
-		
-		<string id="cadenceModeTitle">Cadence mode</string>
-		<string id="cadenceModeCurrent">Current cadence</string>
-		<string id="cadenceModeAverage">Average cadence</string>
-		<string id="cadenceMode3Seconds">Average cadence (last 3 seconds)</string>
-		<string id="cadenceMode5Seconds">Average cadence (last 5 seconds)</string>
-		<string id="cadenceMode10Seconds">Average cadence (last 10 seconds)</string>
-		<string id="cadenceMode30Seconds">Average cadence (last 30 seconds)</string>
-		<string id="cadenceMode60Seconds">Average cadence (last 60 seconds)</string>
-		
 		<string id="heartRateModeTitle">Heart rate mode</string>
-		<string id="heartRateModeCurrent">Current heart rate</string>
-		<string id="heartRateModeAverage">Average heart rate</string>
-		<string id="heartRateMode3Seconds">Average heart rate (last 3 seconds)</string>
-		<string id="heartRateMode5Seconds">Average heart rate (last 5 seconds)</string>
-		<string id="heartRateMode10Seconds">Average heart rate (last 10 seconds)</string>
-		<string id="heartRateMode30Seconds">Average heart rate (last 30 seconds)</string>
-		<string id="heartRateMode60Seconds">Average heart rate (last 60 seconds)</string>
-		
+		<string id="cadenceModeTitle">Cadence mode</string>
 		<string id="powerModeTitle">Power mode</string>
-		<string id="powerModeCurrent">Current power</string>
-		<string id="powerModeAverage">Average power</string>
-		<string id="powerMode3Seconds">Average power (last 3 seconds)</string>
-		<string id="powerMode5Seconds">Average power (last 5 seconds)</string>
-		<string id="powerMode10Seconds">Average power (last 10 seconds)</string>
-		<string id="powerMode30Seconds">Average power (last 30 seconds)</string>
-		<string id="powerMode60Seconds">Average power (last 60 seconds)</string>
+		<string id="paceModeTitle">Pace mode</string>
+		
+		<string id="modeCurrent">Current</string>
+		<string id="modeAverage">Average</string>
+		<string id="mode3Seconds">Average (last 3 seconds)</string>
+		<string id="mode5Seconds">Average (last 5 seconds)</string>
+		<string id="mode10Seconds">Average (last 10 seconds)</string>
+		<string id="mode30Seconds">Average (last 30 seconds)</string>
+		<string id="mode60Seconds">Average (last 60 seconds)</string>
 	</strings>
 	<settings>
 		<setting propertyKey="@Properties.d" title="@Strings.goalDistanceTitle" prompt="@Strings.goalDistancePrompt">
@@ -159,49 +136,49 @@
 		
 		<setting propertyKey="@Properties.pm" title="@Strings.paceModeTitle">
 			<settingConfig type="list">
-	            <listEntry value="-1">@Strings.paceModeCurrent</listEntry>
-	            <listEntry value="0">@Strings.paceModeAverage</listEntry>
-	            <listEntry value="3">@Strings.paceMode3Seconds</listEntry>
-	            <listEntry value="5">@Strings.paceMode5Seconds</listEntry>
-	            <listEntry value="10">@Strings.paceMode10Seconds</listEntry>
-	            <listEntry value="30">@Strings.paceMode30Seconds</listEntry>
-	            <listEntry value="60">@Strings.paceMode60Seconds</listEntry>
+	            <listEntry value="-1">@Strings.modeCurrent</listEntry>
+	            <listEntry value="0">@Strings.modeAverage</listEntry>
+	            <listEntry value="3">@Strings.mode3Seconds</listEntry>
+	            <listEntry value="5">@Strings.mode5Seconds</listEntry>
+	            <listEntry value="10">@Strings.mode10Seconds</listEntry>
+	            <listEntry value="30">@Strings.mode30Seconds</listEntry>
+	            <listEntry value="60">@Strings.mode60Seconds</listEntry>
 	        </settingConfig>
 		</setting>
 		
 		<setting propertyKey="@Properties.cm" title="@Strings.cadenceModeTitle">
 			<settingConfig type="list">
-	            <listEntry value="-1">@Strings.cadenceModeCurrent</listEntry>
-	            <listEntry value="0">@Strings.cadenceModeAverage</listEntry>
-	            <listEntry value="3">@Strings.cadenceMode3Seconds</listEntry>
-	            <listEntry value="5">@Strings.cadenceMode5Seconds</listEntry>
-	            <listEntry value="10">@Strings.cadenceMode10Seconds</listEntry>
-	            <listEntry value="30">@Strings.cadenceMode30Seconds</listEntry>
-	            <listEntry value="60">@Strings.cadenceMode60Seconds</listEntry>
+	            <listEntry value="-1">@Strings.modeCurrent</listEntry>
+	            <listEntry value="0">@Strings.modeAverage</listEntry>
+	            <listEntry value="3">@Strings.mode3Seconds</listEntry>
+	            <listEntry value="5">@Strings.mode5Seconds</listEntry>
+	            <listEntry value="10">@Strings.mode10Seconds</listEntry>
+	            <listEntry value="30">@Strings.mode30Seconds</listEntry>
+	            <listEntry value="60">@Strings.mode60Seconds</listEntry>
 	        </settingConfig>
 		</setting>
 		
 		<setting propertyKey="@Properties.hm" title="@Strings.heartRateModeTitle">
 			<settingConfig type="list">
-	            <listEntry value="-1">@Strings.heartRateModeCurrent</listEntry>
-	            <listEntry value="0">@Strings.heartRateModeAverage</listEntry>
-	            <listEntry value="3">@Strings.heartRateMode3Seconds</listEntry>
-	            <listEntry value="5">@Strings.heartRateMode5Seconds</listEntry>
-	            <listEntry value="10">@Strings.heartRateMode10Seconds</listEntry>
-	            <listEntry value="30">@Strings.heartRateMode30Seconds</listEntry>
-	            <listEntry value="60">@Strings.heartRateMode60Seconds</listEntry>
+	            <listEntry value="-1">@Strings.modeCurrent</listEntry>
+	            <listEntry value="0">@Strings.modeAverage</listEntry>
+	            <listEntry value="3">@Strings.mode3Seconds</listEntry>
+	            <listEntry value="5">@Strings.mode5Seconds</listEntry>
+	            <listEntry value="10">@Strings.mode10Seconds</listEntry>
+	            <listEntry value="30">@Strings.mode30Seconds</listEntry>
+	            <listEntry value="60">@Strings.mode60Seconds</listEntry>
 	        </settingConfig>
 		</setting>
 		
 		<setting propertyKey="@Properties.pwm" title="@Strings.powerModeTitle">
 			<settingConfig type="list">
-	            <listEntry value="-1">@Strings.powerModeCurrent</listEntry>
-	            <listEntry value="0">@Strings.powerModeAverage</listEntry>
-	            <listEntry value="3">@Strings.powerMode3Seconds</listEntry>
-	            <listEntry value="5">@Strings.powerMode5Seconds</listEntry>
-	            <listEntry value="10">@Strings.powerMode10Seconds</listEntry>
-	            <listEntry value="30">@Strings.powerMode30Seconds</listEntry>
-	            <listEntry value="60">@Strings.powerMode60Seconds</listEntry>
+	            <listEntry value="-1">@Strings.modeCurrent</listEntry>
+	            <listEntry value="0">@Strings.modeAverage</listEntry>
+	            <listEntry value="3">@Strings.mode3Seconds</listEntry>
+	            <listEntry value="5">@Strings.mode5Seconds</listEntry>
+	            <listEntry value="10">@Strings.mode10Seconds</listEntry>
+	            <listEntry value="30">@Strings.mode30Seconds</listEntry>
+	            <listEntry value="60">@Strings.mode60Seconds</listEntry>
 	        </settingConfig>
 		</setting>
 	</settings>
