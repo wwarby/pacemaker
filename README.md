@@ -78,6 +78,7 @@ your project and giving me a leg up in writing for the Garmin SDK.
   - Add calories metric
   - Add pace delta metric
   - Add finish time delta metric
+  - Reduce memory footprint
 - 0.3.3
   - Fix crash in pace average calculation, change settings defaults
 - 0.3.2
