@@ -1,6 +1,6 @@
 class DataQueue {
 
-	hidden var data;
+	var data;
 	hidden var maxSize = 0;
 	hidden var pos = 0;
 
@@ -21,21 +21,18 @@ class DataQueue {
 		pos = 0;
 	}
 	
-	function getData() {
-		return data;
-	}
-	
-	function average() {
+	function average(maxFrames) {
 		var size = 0;
-		var sumOfData = 0.0;
-		for (var i = 0; i < data.size(); i++) {
+		var sum = 0.0;
+		if (maxFrames == null || maxFrames == 0) { maxFrames = data.size(); }
+		for (var i = pos; size == maxFrames || i == pos + 1; i = i == 0 ? data.size() - 1 : i - 1) {
 			if (data[i] != null) {
-				sumOfData = sumOfData + data[i];
+				sum = sum + data[i];
 				size++;
 			}
 		}
-		if (sumOfData > 0) {
-			return sumOfData / size;
+		if (sum > 0) {
+			return sum / size;
 		}
 		return 0.0;
 	}

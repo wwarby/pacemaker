@@ -32,28 +32,28 @@ class ActivityMetrics {
 		
 		kmOrMileInMeters = deviceSettings.distanceUnits == System.UNIT_METRIC ? 1000.0f : 1609.34f;
 		
-		paceMode = App.Properties.getValue(Ui.loadResource(Rez.Strings.paceMode));
+		paceMode = App.Properties.getValue(Ui.loadResource(Rez.Strings.currentPaceMode));
 		if (paceMode > 0) {
 			paceData = new DataQueue(paceMode);
 		} else {
 			paceData = null;
 		}
 		
-		cadenceMode = App.Properties.getValue(Ui.loadResource(Rez.Strings.cadenceMode));
+		cadenceMode = App.Properties.getValue(Ui.loadResource(Rez.Strings.currentCadenceMode));
 		if (cadenceMode > 0) {
 			cadenceData = new DataQueue(cadenceMode);
 		} else {
 			cadenceData = null;
 		}
 		
-		heartRateMode = App.Properties.getValue(Ui.loadResource(Rez.Strings.heartRateMode));
+		heartRateMode = App.Properties.getValue(Ui.loadResource(Rez.Strings.currentHeartRateMode));
 		if (heartRateMode > 0) {
 			heartRateData = new DataQueue(heartRateMode);
 		} else {
 			heartRateData = null;
 		}
 		
-		powerMode = App.Properties.getValue(Ui.loadResource(Rez.Strings.powerMode));
+		powerMode = App.Properties.getValue(Ui.loadResource(Rez.Strings.currentPowerMode));
 		if (powerMode > 0) {
 			powerData = new DataQueue(powerMode);
 		} else {

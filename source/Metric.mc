@@ -1,50 +1,45 @@
 using Toybox.WatchUi as Ui;
 using Toybox.Graphics as Gfx;
-using IconLoader;
 
-class MetricDisplayDetail {
-
-	var labelText;
-	var valueText;
-	var width;
-	var icon;
-	var useGoalColour = false;
-	var isError = false;
+class Metric {
 	
-	function initialize(metric, hasLabel, hasIcon, activityMetrics, goalMetrics, dc) {
-		
-		if (metric == 0) {
-			labelText = hasLabel ? Ui.loadResource(Rez.Strings.hr) : null;
-			valueText = (activityMetrics.computedHeartRate == null ? 0 : activityMetrics.computedHeartRate).format("%d");
-		} else if (metric == 1) {
-			labelText = hasLabel ? Ui.loadResource(Rez.Strings.cad) : null;
-			valueText = (activityMetrics.computedCadence == null ? 0 : activityMetrics.computedCadence).format("%d");
-		} else if (metric == 2) {
-			labelText = hasLabel ? Ui.loadResource(Rez.Strings.power) : null;
-			valueText = (activityMetrics.computedPower == null ? 0 : activityMetrics.computedPower).format("%d");
-		} else if (metric == 3) {
-			labelText = hasLabel ? Ui.loadResource(Rez.Strings.pace) : null;
-			valueText = TimeFormat.formatTime((activityMetrics.computedPace == null ? 0 : activityMetrics.computedPace) * 1000);
-			useGoalColour = true;
-		} else if (metric == 4) {
-			labelText = hasLabel ? Ui.loadResource(Rez.Strings.dist) : null;
-			valueText = DistanceFormat.formatDistance(activityMetrics.elapsedDistance, activityMetrics.kmOrMileInMeters);
-		} else if (metric == 5) {
-			labelText = hasLabel ? Ui.loadResource(Rez.Strings.finish) : null;
-			valueText = goalMetrics.goalDistance == null || goalMetrics.goalDistance == 0 ? Ui.loadResource(Rez.Strings.noGoal) : DistanceFormat.formatDistance(goalMetrics.remainingDistance, activityMetrics.kmOrMileInMeters);
-			isError = goalMetrics.goalDistance == null || goalMetrics.goalDistance == 0;
-		} else if (metric == 6) {
-			labelText = hasLabel ? Ui.loadResource(Rez.Strings.finish) : null;
-			valueText =  goalMetrics.goalSet() ? TimeFormat.formatTime(goalMetrics.predictedTime) : Ui.loadResource(Rez.Strings.noGoal);
-			isError = !goalMetrics.goalSet();
-			useGoalColour = !isError;
-		} else if (metric == 7) {
-			labelText = hasLabel ? Ui.loadResource(Rez.Strings.time) : null;
-			valueText = TimeFormat.formatTime(activityMetrics.timerTime);
+	var labelText;
+	var valueText = ""; // TODO REMOVE
+	var short;
+	var useGoalColour = false;
+	var category = null;
+	
+	function initialize(isShort) {
+		short = isShort;
+	}
+	
+	function setValue(value, mode) {
+		// Integer
+		if (mode == 1) {
+			valueText = value == null ? Ui.loadResource(Rez.Strings.zero) : value.format("%d");
+		// Time
+		} else if (mode == 2) {
+			
+		// Distance
+		} else if (mode == 3) {
+			
 		}
-		
-		width = valueText == null ? 0 : dc.getTextWidthInPixels(valueText, Gfx.FONT_NUMBER_MEDIUM);
-		icon = IconLoader.getIcon(metric);
+	}
+	
+	function getDotColour(darkMode) {
+		// Average
+		if (category == 1) {
+			if (short) { dotColour = darkMode ? Gfx.COLOR_BLUE : Gfx.COLOR_DK_BLUE; }
+		// Max
+		} else if (category == 2) {
+			if (short) { dotColour = darkMode ? Gfx.COLOR_ORANGE : Gfx.COLOR_YELLOW; }
+		} else {
+			return null;
+		}
+	}
+	
+	function getWidth(dc) {
+		return valueText == null ? 0 : dc.getTextWidthInPixels(valueText, Gfx.FONT_NUMBER_MEDIUM);
 	}
 	
 }

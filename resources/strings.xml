@@ -2,14 +2,35 @@
     <string id="AppName">Pacemaker</string>
     
     <string id="hr">HR</string>
-    <string id="cad">CAD</string>
-    <string id="power">POWER</string>
-    <string id="pace">PACE</string>
-    <string id="dist">DIST</string>
-    <string id="finish">FINISH</string>
-    <string id="time">TIME</string>
+	<string id="avgHr">AVG HR</string>
+	<string id="maxHr">MAX HR</string>
+	<string id="cad">CAD</string>
+	<string id="avgCad">AVG CAD</string>
+	<string id="maxCad">MAX CAD</string>
+	<string id="power">POWER</string>
+	<string id="powerShort">POW</string>
+	<string id="pace">PACE</string>
+	<string id="avgPace">AVG PACE</string>
+	<string id="maxPace">MAX PACE</string>
+	<string id="cal">CAL</string>
+	<string id="calMin">CAL/min</string>
+	<string id="dist">DIST</string>
+	<string id="remain">REMAIN</string>
+	<string id="remainShort">REM</string>
+	<string id="finish">FINISH</string>
+	<string id="finishShort">FIN</string>
+	<string id="timer">TIMER</string>
+	<string id="timerShort">TMR</string>
+	<string id="ascent">ASCENT</string>
+	<string id="ascentShort">ASC</string>
+	<string id="descent">DESCENT</string>
+	<string id="descentShort">DESC</string>
+	<string id="effect">EFFECT</string>
+	<string id="effectShort">EFF</string>
+	<string id="time">TIME</string>
     
     <string id="noGoal">NO GOAL</string>
+    <string id="zero">0</string>
     <string id="zeroTime">0:00</string>
     <string id="zeroDistance">0.00</string>
 </strings>
