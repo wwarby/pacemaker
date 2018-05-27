@@ -10,10 +10,12 @@ Pacemaker has five display fields, each of which can be customised to show one o
 - Cadence
 - Power (including from Stryd, if connected as a power meter)
 - Pace
+- Pace delta (+/- difference from target)
 - Calories
 - Elapsed distance
 - Remaining distance
 - Predicted finish time
+- Predicted finish time delta (+/- difference from target)
 - Elapsed time
 
 You can also independently customise how heart rate, cadence, power and pace are calculated, using either current values,
@@ -74,6 +76,8 @@ your project and giving me a leg up in writing for the Garmin SDK.
 - 0.4.0
   - Support reversed icons
   - Add calories metric
+  - Add pace delta metric
+  - Add finish time delta metric
 - 0.3.3
   - Fix crash in pace average calculation, change settings defaults
 - 0.3.2

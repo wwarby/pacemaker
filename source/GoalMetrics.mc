@@ -84,8 +84,13 @@ class GoalMetrics {
 	}
 	
 	function delta() {
-		if (goalTargetTime == null) { return 0; }
-		return (completedTime != null ? completedTime : predictedTime != null ? predictedTime : 0) - goalTargetTime;
+		if (!goalSet() || (predictedTime == null && completedTime == null)) { return 0; }
+		return (completedTime != null ? completedTime : predictedTime) - goalTargetTime;
+	}
+	
+	function paceDelta(currentPace) {
+		if (!goalSet() || requiredPace == null) { return 0; }
+		return completedTime != null ? currentPace : currentPace - requiredPace;
 	}
 	
 	function onTarget() {

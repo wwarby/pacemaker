@@ -32,18 +32,47 @@ class MetricDisplayDetail {
 			valueText = TimeFormat.formatTime((activityMetrics.computedPace == null ? 0 : activityMetrics.computedPace) * 1000);
 			useGoalColour = !goalMetrics.goalCompleted();
 		} else if (metric == 5) {
+			labelText = hasLabel ? Ui.loadResource(Rez.Strings.pace) : null;
+			if (goalMetrics.goalSet()) {
+				var delta = goalMetrics.paceDelta(activityMetrics.computedPace) * 1000.0;
+				valueText = TimeFormat.formatTime(delta.abs());
+				if (delta > 0) {
+					valueText = "+" + valueText;
+				} else if (delta < 0) {
+					valueText = "-" + valueText;
+				}
+			} else {
+				valueText = Ui.loadResource(Rez.Strings.noGoal);
+			}
+			isError = !goalMetrics.goalSet();
+			useGoalColour = !isError && !goalMetrics.goalCompleted();
+		} else if (metric == 6) {
 			labelText = hasLabel ? Ui.loadResource(Rez.Strings.dist) : null;
 			valueText = DistanceFormat.formatDistance(activityMetrics.elapsedDistance, activityMetrics.kmOrMileInMeters);
-		} else if (metric == 6) {
+		} else if (metric == 7) {
 			labelText = hasLabel ? Ui.loadResource(Rez.Strings.finish) : null;
 			valueText = goalMetrics.goalDistance == null || goalMetrics.goalDistance == 0 ? Ui.loadResource(Rez.Strings.noGoal) : DistanceFormat.formatDistance(goalMetrics.remainingDistance, activityMetrics.kmOrMileInMeters);
 			isError = goalMetrics.goalDistance == null || goalMetrics.goalDistance == 0;
-		} else if (metric == 7) {
+		} else if (metric == 8) {
 			labelText = hasLabel ? Ui.loadResource(Rez.Strings.finish) : null;
 			valueText =  goalMetrics.goalSet() ? TimeFormat.formatTime(goalMetrics.predictedTime) : Ui.loadResource(Rez.Strings.noGoal);
 			isError = !goalMetrics.goalSet();
 			useGoalColour = !isError;
-		} else if (metric == 8) {
+		} else if (metric == 9) {
+			labelText = hasLabel ? Ui.loadResource(Rez.Strings.finish) : null;
+			if (goalMetrics.goalSet()) {
+				valueText = TimeFormat.formatTime(goalMetrics.delta().abs());
+				if (goalMetrics.delta() > 0) {
+					valueText = "+" + valueText;
+				} else if (goalMetrics.delta() < 0) {
+					valueText = "-" + valueText;
+				}
+			} else {
+				valueText = Ui.loadResource(Rez.Strings.noGoal);
+			}
+			isError = !goalMetrics.goalSet();
+			useGoalColour = !isError;
+		} else if (metric == 10) {
 			labelText = hasLabel ? Ui.loadResource(Rez.Strings.time) : null;
 			valueText = TimeFormat.formatTime(activityMetrics.timerTime);
 		}

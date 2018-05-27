@@ -47,10 +47,12 @@
 		<string id="metricCadenceTitle">Cadence</string>
 		<string id="metricPowerTitle">Power</string>
 		<string id="metricPaceTitle">Pace</string>
+		<string id="metricPaceDeltaTitle">Pace (+/- from target)</string>
 		<string id="metricCaloriesTitle">Calories</string>
 		<string id="metricElapsedDistanceTitle">Elapsed distance</string>
 		<string id="metricRemainingDistanceTitle">Remaining distance</string>
 		<string id="metricPredictedTimeTitle">Predicted finish time</string>
+		<string id="metricPredictedTimeDeltaTitle">Predicted time (+/- from target)</string>
 		<string id="metricTimerTimeTitle">Elapsed time</string>
 		
 		<string id="paceModeTitle">Pace mode</string>
@@ -127,10 +129,12 @@
 	            <listEntry value="2">@Strings.metricPowerTitle</listEntry>
 	            <listEntry value="3">@Strings.metricCaloriesTitle</listEntry>
 	            <listEntry value="4">@Strings.metricPaceTitle</listEntry>
-	            <listEntry value="5">@Strings.metricElapsedDistanceTitle</listEntry>
-	            <listEntry value="6">@Strings.metricRemainingDistanceTitle</listEntry>
-	            <listEntry value="7">@Strings.metricPredictedTimeTitle</listEntry>
-	            <listEntry value="8">@Strings.metricTimerTimeTitle</listEntry>
+	            <listEntry value="5">@Strings.metricPaceDeltaTitle</listEntry>
+	            <listEntry value="6">@Strings.metricElapsedDistanceTitle</listEntry>
+	            <listEntry value="7">@Strings.metricRemainingDistanceTitle</listEntry>
+	            <listEntry value="8">@Strings.metricPredictedTimeTitle</listEntry>
+	            <listEntry value="9">@Strings.metricPredictedTimeDeltaTitle</listEntry>
+	            <listEntry value="10">@Strings.metricTimerTimeTitle</listEntry>
 	        </settingConfig>
 		</setting>
 		
@@ -141,10 +145,12 @@
 	            <listEntry value="2">@Strings.metricPowerTitle</listEntry>
 	            <listEntry value="3">@Strings.metricCaloriesTitle</listEntry>
 	            <listEntry value="4">@Strings.metricPaceTitle</listEntry>
-	            <listEntry value="5">@Strings.metricElapsedDistanceTitle</listEntry>
-	            <listEntry value="6">@Strings.metricRemainingDistanceTitle</listEntry>
-	            <listEntry value="7">@Strings.metricPredictedTimeTitle</listEntry>
-	            <listEntry value="8">@Strings.metricTimerTimeTitle</listEntry>
+	            <listEntry value="5">@Strings.metricPaceDeltaTitle</listEntry>
+	            <listEntry value="6">@Strings.metricElapsedDistanceTitle</listEntry>
+	            <listEntry value="7">@Strings.metricRemainingDistanceTitle</listEntry>
+	            <listEntry value="8">@Strings.metricPredictedTimeTitle</listEntry>
+	            <listEntry value="9">@Strings.metricPredictedTimeDeltaTitle</listEntry>
+	            <listEntry value="10">@Strings.metricTimerTimeTitle</listEntry>
 	        </settingConfig>
 		</setting>
 		
@@ -155,10 +161,12 @@
 	            <listEntry value="2">@Strings.metricPowerTitle</listEntry>
 	            <listEntry value="3">@Strings.metricCaloriesTitle</listEntry>
 	            <listEntry value="4">@Strings.metricPaceTitle</listEntry>
-	            <listEntry value="5">@Strings.metricElapsedDistanceTitle</listEntry>
-	            <listEntry value="6">@Strings.metricRemainingDistanceTitle</listEntry>
-	            <listEntry value="7">@Strings.metricPredictedTimeTitle</listEntry>
-	            <listEntry value="8">@Strings.metricTimerTimeTitle</listEntry>
+	            <listEntry value="5">@Strings.metricPaceDeltaTitle</listEntry>
+	            <listEntry value="6">@Strings.metricElapsedDistanceTitle</listEntry>
+	            <listEntry value="7">@Strings.metricRemainingDistanceTitle</listEntry>
+	            <listEntry value="8">@Strings.metricPredictedTimeTitle</listEntry>
+	            <listEntry value="9">@Strings.metricPredictedTimeDeltaTitle</listEntry>
+	            <listEntry value="10">@Strings.metricTimerTimeTitle</listEntry>
 	        </settingConfig>
 		</setting>
 		

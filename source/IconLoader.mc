@@ -58,21 +58,21 @@ module IconLoader {
 			return caloriesIcon;
 		}
 		
-		if (metric == 4) {
+		if (metric == 4 || metric == 5) {
 			if (paceIcon == null) {
 				paceIcon = Ui.loadResource(iconsDarkMode ? Rez.Drawables.paceDarkModeIcon : Rez.Drawables.paceIcon);
 			}
 			return paceIcon;
 		}
 		
-		if (metric == 5) {
+		if (metric == 6) {
 			if (distanceIcon == null) {
 				distanceIcon = Ui.loadResource(iconsDarkMode ? Rez.Drawables.distanceDarkModeIcon : Rez.Drawables.distanceIcon);
 			}
 			return distanceIcon;
 		}
 		
-		if (metric == 6 || metric == 7) {
+		if (metric == 7 || metric == 8 || metric == 9) {
 			if (reverse) {
 				if (finishReverseIcon == null) {
 					finishReverseIcon = Ui.loadResource(iconsDarkMode ? Rez.Drawables.finishReverseDarkModeIcon : Rez.Drawables.finishReverseIcon);
@@ -85,7 +85,7 @@ module IconLoader {
 			return finishIcon;
 		}
 		
-		if (metric == 8) {
+		if (metric == 10) {
 			if (timeIcon == null) {
 				timeIcon = Ui.loadResource(iconsDarkMode ? Rez.Drawables.timeDarkModeIcon : Rez.Drawables.timeIcon);
 			}
