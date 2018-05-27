@@ -21,10 +21,10 @@ class GoalMetrics {
 	
 	function readSettings(deviceSettings) {
 		
-		goalDistance = App.Properties.getValue(Ui.loadResource(Rez.Strings.goalDistance));
+		goalDistance = App.Properties.getValue("d");
 		if (goalDistance != null && goalDistance <= 0) {  goalDistance = null; }
 		
-		goalTargetTime = App.Properties.getValue(Ui.loadResource(Rez.Strings.goalTargetTime));
+		goalTargetTime = App.Properties.getValue("t");
 		if (goalTargetTime != null && goalTargetTime > 0) { 
 			goalTargetTime *= 1000.0;
 		} else {

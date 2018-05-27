@@ -1,32 +1,19 @@
 <resources>
 	<properties>
-		<property id="goalDistance" type="number">5000</property>
-		<property id="goalTargetTime" type="number">1500</property>
-		<property id="colourText" type="boolean">true</property>
-		<property id="topLeftMetric" type="number">0</property>
-		<property id="topRightMetric" type="number">1</property>
-		<property id="middleLeftMetric" type="number">3</property>
-		<property id="middleRightMetric" type="number">6</property>
-		<property id="bottomMetric" type="number">2</property>
-		<property id="paceMode" type="number">5</property>
-		<property id="cadenceMode" type="number">5</property>
-		<property id="heartRateMode" type="number">-1</property>
-		<property id="powerMode" type="number">5</property>
+		<property id="d" type="number">5000</property>
+		<property id="t" type="number">1500</property>
+		<property id="c" type="boolean">true</property>
+		<property id="m1" type="number">0</property>
+		<property id="m2" type="number">1</property>
+		<property id="m3" type="number">4</property>
+		<property id="m4" type="number">8</property>
+		<property id="m5" type="number">7</property>
+		<property id="pm" type="number">5</property>
+		<property id="cm" type="number">5</property>
+		<property id="hm" type="number">-1</property>
+		<property id="pwm" type="number">5</property>
 	</properties>
 	<strings>
-		<string id="goalDistance">goalDistance</string>
-		<string id="goalTargetTime">goalTargetTime</string>
-		<string id="colourText">colourText</string>
-		<string id="topLeftMetric">topLeftMetric</string>
-		<string id="topRightMetric">topRightMetric</string>
-		<string id="middleLeftMetric">middleLeftMetric</string>
-		<string id="middleRightMetric">middleRightMetric</string>
-		<string id="bottomMetric">bottomMetric</string>
-		<string id="paceMode">paceMode</string>
-		<string id="cadenceMode">cadenceMode</string>
-		<string id="heartRateMode">heartRateMode</string>
-		<string id="powerMode">powerMode</string>
-		
 		<string id="goalDistanceTitle">Goal distance (in meters)</string>
 		<string id="goalDistancePrompt">8000 for 8K</string>
 		<string id="goalDistanceErrorMessage">Must be less than 999,999</string>
@@ -92,19 +79,19 @@
 		<string id="powerMode60Seconds">Average power (last 60 seconds)</string>
 	</strings>
 	<settings>
-		<setting propertyKey="@Properties.goalDistance" title="@Strings.goalDistanceTitle" prompt="@Strings.goalDistancePrompt">
+		<setting propertyKey="@Properties.d" title="@Strings.goalDistanceTitle" prompt="@Strings.goalDistancePrompt">
 			<settingConfig type="numeric" max="999999" errorMessage="@Strings.goalDistanceErrorMessage" />
 		</setting>
 		
-		<setting propertyKey="@Properties.goalTargetTime" title="@Strings.goalTargetTimeTitle" prompt="@Strings.goalTargetTimePrompt">
+		<setting propertyKey="@Properties.t" title="@Strings.goalTargetTimeTitle" prompt="@Strings.goalTargetTimePrompt">
 			<settingConfig type="numeric" max="999999" errorMessage="@Strings.goalTargetTimeErrorMessage" />
 		</setting>
 		
-		<setting propertyKey="@Properties.colourText" title="@Strings.colourTextTitle">
+		<setting propertyKey="@Properties.c" title="@Strings.colourTextTitle">
 			<settingConfig type="boolean" />
 		</setting>
 		
-		<setting propertyKey="@Properties.topLeftMetric" title="@Strings.topLeftMetricTitle">
+		<setting propertyKey="@Properties.m1" title="@Strings.topLeftMetricTitle">
 			<settingConfig type="list">
 	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
 	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
@@ -113,7 +100,7 @@
 	        </settingConfig>
 		</setting>
 		
-		<setting propertyKey="@Properties.topRightMetric" title="@Strings.topRightMetricTitle">
+		<setting propertyKey="@Properties.m2" title="@Strings.topRightMetricTitle">
 			<settingConfig type="list">
 	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
 	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
@@ -122,23 +109,7 @@
 	        </settingConfig>
 		</setting>
 		
-		<setting propertyKey="@Properties.middleLeftMetric" title="@Strings.middleLeftMetricTitle">
-			<settingConfig type="list">
-	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
-	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
-	            <listEntry value="2">@Strings.metricPowerTitle</listEntry>
-	            <listEntry value="3">@Strings.metricCaloriesTitle</listEntry>
-	            <listEntry value="4">@Strings.metricPaceTitle</listEntry>
-	            <listEntry value="5">@Strings.metricPaceDeltaTitle</listEntry>
-	            <listEntry value="6">@Strings.metricElapsedDistanceTitle</listEntry>
-	            <listEntry value="7">@Strings.metricRemainingDistanceTitle</listEntry>
-	            <listEntry value="8">@Strings.metricPredictedTimeTitle</listEntry>
-	            <listEntry value="9">@Strings.metricPredictedTimeDeltaTitle</listEntry>
-	            <listEntry value="10">@Strings.metricTimerTimeTitle</listEntry>
-	        </settingConfig>
-		</setting>
-		
-		<setting propertyKey="@Properties.middleRightMetric" title="@Strings.middleRightMetricTitle">
+		<setting propertyKey="@Properties.m3" title="@Strings.middleLeftMetricTitle">
 			<settingConfig type="list">
 	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
 	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
@@ -154,7 +125,7 @@
 	        </settingConfig>
 		</setting>
 		
-		<setting propertyKey="@Properties.bottomMetric" title="@Strings.bottomMetricTitle">
+		<setting propertyKey="@Properties.m4" title="@Strings.middleRightMetricTitle">
 			<settingConfig type="list">
 	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
 	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
@@ -170,7 +141,23 @@
 	        </settingConfig>
 		</setting>
 		
-		<setting propertyKey="@Properties.paceMode" title="@Strings.paceModeTitle">
+		<setting propertyKey="@Properties.m5" title="@Strings.bottomMetricTitle">
+			<settingConfig type="list">
+	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
+	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
+	            <listEntry value="2">@Strings.metricPowerTitle</listEntry>
+	            <listEntry value="3">@Strings.metricCaloriesTitle</listEntry>
+	            <listEntry value="4">@Strings.metricPaceTitle</listEntry>
+	            <listEntry value="5">@Strings.metricPaceDeltaTitle</listEntry>
+	            <listEntry value="6">@Strings.metricElapsedDistanceTitle</listEntry>
+	            <listEntry value="7">@Strings.metricRemainingDistanceTitle</listEntry>
+	            <listEntry value="8">@Strings.metricPredictedTimeTitle</listEntry>
+	            <listEntry value="9">@Strings.metricPredictedTimeDeltaTitle</listEntry>
+	            <listEntry value="10">@Strings.metricTimerTimeTitle</listEntry>
+	        </settingConfig>
+		</setting>
+		
+		<setting propertyKey="@Properties.pm" title="@Strings.paceModeTitle">
 			<settingConfig type="list">
 	            <listEntry value="-1">@Strings.paceModeCurrent</listEntry>
 	            <listEntry value="0">@Strings.paceModeAverage</listEntry>
@@ -182,7 +169,7 @@
 	        </settingConfig>
 		</setting>
 		
-		<setting propertyKey="@Properties.cadenceMode" title="@Strings.cadenceModeTitle">
+		<setting propertyKey="@Properties.cm" title="@Strings.cadenceModeTitle">
 			<settingConfig type="list">
 	            <listEntry value="-1">@Strings.cadenceModeCurrent</listEntry>
 	            <listEntry value="0">@Strings.cadenceModeAverage</listEntry>
@@ -194,7 +181,7 @@
 	        </settingConfig>
 		</setting>
 		
-		<setting propertyKey="@Properties.heartRateMode" title="@Strings.heartRateModeTitle">
+		<setting propertyKey="@Properties.hm" title="@Strings.heartRateModeTitle">
 			<settingConfig type="list">
 	            <listEntry value="-1">@Strings.heartRateModeCurrent</listEntry>
 	            <listEntry value="0">@Strings.heartRateModeAverage</listEntry>
@@ -206,7 +193,7 @@
 	        </settingConfig>
 		</setting>
 		
-		<setting propertyKey="@Properties.powerMode" title="@Strings.powerModeTitle">
+		<setting propertyKey="@Properties.pwm" title="@Strings.powerModeTitle">
 			<settingConfig type="list">
 	            <listEntry value="-1">@Strings.powerModeCurrent</listEntry>
 	            <listEntry value="0">@Strings.powerModeAverage</listEntry>

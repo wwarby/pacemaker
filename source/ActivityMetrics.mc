@@ -1,6 +1,5 @@
 using Toybox.WatchUi as Ui;
 using Toybox.Application as App;
-using Calc;
 
 class ActivityMetrics {
 
@@ -33,28 +32,28 @@ class ActivityMetrics {
 		
 		kmOrMileInMeters = deviceSettings.distanceUnits == System.UNIT_METRIC ? 1000.0f : 1609.34f;
 		
-		paceMode = App.Properties.getValue(Ui.loadResource(Rez.Strings.paceMode));
+		paceMode = App.Properties.getValue("pm");
 		if (paceMode > 0) {
 			paceData = new DataQueue(paceMode);
 		} else {
 			paceData = null;
 		}
 		
-		cadenceMode = App.Properties.getValue(Ui.loadResource(Rez.Strings.cadenceMode));
+		cadenceMode = App.Properties.getValue("cm");
 		if (cadenceMode > 0) {
 			cadenceData = new DataQueue(cadenceMode);
 		} else {
 			cadenceData = null;
 		}
 		
-		heartRateMode = App.Properties.getValue(Ui.loadResource(Rez.Strings.heartRateMode));
+		heartRateMode = App.Properties.getValue("hm");
 		if (heartRateMode > 0) {
 			heartRateData = new DataQueue(heartRateMode);
 		} else {
 			heartRateData = null;
 		}
 		
-		powerMode = App.Properties.getValue(Ui.loadResource(Rez.Strings.powerMode));
+		powerMode = App.Properties.getValue("pwm");
 		if (powerMode > 0) {
 			powerData = new DataQueue(powerMode);
 		} else {
@@ -101,48 +100,32 @@ class ActivityMetrics {
 			}
 		}
 		
-		computedSpeed = computeSpeed(info);
-		computedPace = computePace();
-		computedCadence = computeCadence(info);
-		computedHeartRate = computeHeartRate(info);
-		computedPower = computePower(info);
-	}
-	
-	function computeSpeed(info) {
-		if (paceMode == -1) { return info.currentSpeed; }
-		if (paceMode == 0) { return info.averageSpeed; }
-		if (paceData != null) { return paceData.average(); }
-		return null;
-	}
-	
-	function computePace() {
-		if (computedSpeed != null && computedSpeed > 0.2) {
-			return kmOrMileInMeters / computedSpeed;
-		}
-		return null;
-	}
-	
-	function computeCadence(info) {
-		if (cadenceMode == -1) { return info.currentCadence; }
-		if (cadenceMode == 0) { return info.averageCadence; }
-		if (cadenceData != null) { return cadenceData.average(); }
-		return null;
-	}
-	
-	function computeHeartRate(info) {
-		if (heartRateMode == -1) { return info.currentHeartRate; }
-		if (heartRateMode == 0) { return info.averageHeartRate; }
-		if (heartRateData != null) { return heartRateData.average(); }
-		return null;
-	}
-	
-	function computePower(info) {
-		if (info has :currentPower) {
-			if (powerMode == -1) { return info.currentPower; }
-			if (powerMode == 0) { return info.averagePower; }
-			if (powerData != null) { return powerData.average(); }
-		}
-		return null;
+		computedHeartRate =
+			heartRateMode == -1 ? info.currentHeartRate :
+			heartRateMode == 0 ? info.averageHeartRate :
+			heartRateData != null ? heartRateData.average() :
+			null;
+		
+		computedCadence =
+			cadenceMode == -1 ? info.currentCadence :
+			cadenceMode == 0 ? info.averageCadence :
+			cadenceData != null ? cadenceData.average() :
+			null;
+		
+		computedPower =
+			!(info has :currentPower) ? null :
+			powerMode == -1 ? info.currentPower :
+			powerMode == 0 ? info.averagePower :
+			powerData != null ? powerData.average() :
+			null;
+		
+		computedSpeed =
+			paceMode == -1 ? info.currentSpeed :
+			paceMode == 0 ? info.averageSpeed :
+			paceData != null ? paceData.average() :
+			null;
+		
+		computedPace = (computedSpeed != null && computedSpeed > 0.2) ? kmOrMileInMeters / computedSpeed : null;
 	}
 	
 }

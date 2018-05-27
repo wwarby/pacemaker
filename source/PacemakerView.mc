@@ -1,8 +1,6 @@
 using Toybox.WatchUi as Ui;
 using Toybox.Graphics as Gfx;
 using Toybox.Application as App;
-using TimeFormat;
-using DistanceFormat;
 using Calc;
 using IconLoader;
 
@@ -61,7 +59,7 @@ class PacemakerView extends Ui.DataField {
 		var valueColour = darkMode ? Gfx.COLOR_WHITE : Gfx.COLOR_BLACK;
 		var goalColour;
 		
-		if (App.Properties.getValue(Ui.loadResource(Rez.Strings.colourText)) && activityMetrics.timerTime != null && activityMetrics.timerTime > 0) {
+		if (App.Properties.getValue("c") && activityMetrics.timerTime != null && activityMetrics.timerTime > 0) {
 			goalColour = goalMetrics.onTarget() ?
 				darkMode ? Gfx.COLOR_GREEN : Gfx.COLOR_DK_GREEN :
 				Gfx.COLOR_RED;
@@ -76,11 +74,11 @@ class PacemakerView extends Ui.DataField {
 		var dcw = dc.weak().get();
 		
 		// Format metric data
-		var topLeftMetric = new MetricDisplayDetail(App.Properties.getValue(Ui.loadResource(Rez.Strings.topLeftMetric)), false, true, amw, gmw, dcw);
-		var topRightMetric = new MetricDisplayDetail(App.Properties.getValue(Ui.loadResource(Rez.Strings.topRightMetric)), false, true, amw, gmw, dcw);
-		var middleLeftMetric = new MetricDisplayDetail(App.Properties.getValue(Ui.loadResource(Rez.Strings.middleLeftMetric)), true, false, amw, gmw, dcw);
-		var middleRightMetric = new MetricDisplayDetail(App.Properties.getValue(Ui.loadResource(Rez.Strings.middleRightMetric)), true, false, amw, gmw, dcw);
-		var bottomMetric = new MetricDisplayDetail(App.Properties.getValue(Ui.loadResource(Rez.Strings.bottomMetric)), false, true, amw, gmw, dcw);
+		var topLeftMetric = new MetricDisplayDetail(App.Properties.getValue("m1"), false, true, amw, gmw, dcw);
+		var topRightMetric = new MetricDisplayDetail(App.Properties.getValue("m2"), false, true, amw, gmw, dcw);
+		var middleLeftMetric = new MetricDisplayDetail(App.Properties.getValue("m3"), true, false, amw, gmw, dcw);
+		var middleRightMetric = new MetricDisplayDetail(App.Properties.getValue("m4"), true, false, amw, gmw, dcw);
+		var bottomMetric = new MetricDisplayDetail(App.Properties.getValue("m5"), false, true, amw, gmw, dcw);
 		
 		// Calculate positions
 		var half = dc.getWidth() / 2;
