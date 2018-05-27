@@ -30,7 +30,7 @@ class MetricDisplayDetail {
 		} else if (metric == 4) {
 			labelText = hasLabel ? Ui.loadResource(Rez.Strings.pace) : null;
 			valueText = TimeFormat.formatTime((activityMetrics.computedPace == null ? 0 : activityMetrics.computedPace) * 1000);
-			useGoalColour = true;
+			useGoalColour = !goalMetrics.goalCompleted();
 		} else if (metric == 5) {
 			labelText = hasLabel ? Ui.loadResource(Rez.Strings.dist) : null;
 			valueText = DistanceFormat.formatDistance(activityMetrics.elapsedDistance, activityMetrics.kmOrMileInMeters);

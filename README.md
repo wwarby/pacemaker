@@ -10,6 +10,7 @@ Pacemaker has five display fields, each of which can be customised to show one o
 - Cadence
 - Power (including from Stryd, if connected as a power meter)
 - Pace
+- Calories
 - Elapsed distance
 - Remaining distance
 - Predicted finish time
