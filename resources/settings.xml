@@ -1,7 +1,7 @@
 <resources>
 	<properties>
 		<property id="d" type="number">5000</property>
-		<property id="t" type="number">1500</property>
+		<property id="t" type="string">26:07</property>
 		<property id="c" type="boolean">true</property>
 		<property id="m1" type="number">0</property>
 		<property id="m2" type="number">1</property>
@@ -15,12 +15,11 @@
 	</properties>
 	<strings>
 		<string id="goalDistanceTitle">Goal distance (in meters)</string>
-		<string id="goalDistancePrompt">8000 for 8K</string>
+		<string id="goalDistancePrompt">e.g. 8000 for 8K</string>
 		<string id="goalDistanceErrorMessage">Must be less than 999,999</string>
 		
-		<string id="goalTargetTimeTitle">Goal target time (in seconds)</string>
-		<string id="goalTargetTimePrompt">1800 for 30 minutes</string>
-		<string id="goalTargetTimeErrorMessage">Must be less than 999,999</string>
+		<string id="goalTargetTimeTitle">Goal target time (hh:mm:ss)</string>
+		<string id="goalTargetTimePrompt">e.g. 25:00</string>
 		
 		<string id="colourTextTitle">Colour text (green if on target, red if not)</string>
 		
@@ -61,7 +60,7 @@
 		</setting>
 		
 		<setting propertyKey="@Properties.t" title="@Strings.goalTargetTimeTitle" prompt="@Strings.goalTargetTimePrompt">
-			<settingConfig type="numeric" max="999999" errorMessage="@Strings.goalTargetTimeErrorMessage" />
+			<settingConfig type="alphaNumeric" maxLength="9" />
 		</setting>
 		
 		<setting propertyKey="@Properties.c" title="@Strings.colourTextTitle">

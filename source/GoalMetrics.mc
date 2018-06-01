@@ -24,11 +24,35 @@ class GoalMetrics {
 		goalDistance = App.Properties.getValue("d");
 		if (goalDistance != null && goalDistance <= 0) {  goalDistance = null; }
 		
-		goalTargetTime = App.Properties.getValue("t");
-		if (goalTargetTime != null && goalTargetTime > 0) { 
-			goalTargetTime *= 1000.0;
-		} else {
+		
+		try {
+			var time = App.Properties.getValue("t").toString();
+			if (time == null || time.length() == 0) {
+				goalTargetTime = null;
+			} else if (time.find(":") == null) { // Seconds
+				goalTargetTime = time.toNumber();
+			} else if (time.length() == 4) { // m:ss
+				goalTargetTime = (time.substring(0, 1).toNumber() * 60) + time.substring(2, 4).toNumber();
+			} else if (time.length() == 5) { // mm:ss
+				goalTargetTime = (time.substring(0, 2).toNumber() * 60) + time.substring(3, 5).toNumber();
+			} else if (time.length() == 7) { // h:mm:ss
+				goalTargetTime = (time.substring(0, 1).toNumber() * 3600) + (time.substring(2, 4).toNumber() * 60) + time.substring(5, 7).toNumber();
+			} else if (time.length() == 8) { // hh:mm:ss
+				goalTargetTime = (time.substring(0, 2).toNumber() * 3600) + (time.substring(3, 5).toNumber() * 60) + time.substring(6, 8).toNumber();
+			} else if (time.length() == 9) { // hhh:mm:ss
+				goalTargetTime = (time.substring(0, 3).toNumber() * 3600) + (time.substring(4, 6).toNumber() * 60) + time.substring(7, 9).toNumber();
+			}
+		} catch(ex) {
+		    // System.println(ex.getErrorMessage());
 			goalTargetTime = null;
+		}
+		
+		if (goalTargetTime != null) {
+			if (goalTargetTime > 999999) {
+				goalTargetTime = null;
+			} else if (goalTargetTime > 0) { 
+				goalTargetTime *= 1000.0;
+			}
 		}
 	}
 	

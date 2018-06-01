@@ -72,6 +72,8 @@ your project and giving me a leg up in writing for the Garmin SDK.
 - Flame icon by [Those Icons](https://www.flaticon.com/authors/those-icons) from [www.flaticon.com](https://www.flaticon.com/free-icon/fire_483675)
 
 ## Changelog
+- 0.4.1
+  - Use mm:ss format for goal target time setting
 - 0.4.0
   - Support reversed icons
   - Add calories metric
