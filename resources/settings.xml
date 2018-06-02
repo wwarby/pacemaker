@@ -8,6 +8,7 @@
 		<property id="m3" type="number">4</property>
 		<property id="m4" type="number">8</property>
 		<property id="m5" type="number">7</property>
+		<property id="m6" type="number">5</property>
 		<property id="pm" type="number">5</property>
 		<property id="cm" type="number">5</property>
 		<property id="hm" type="number">-1</property>
@@ -23,12 +24,14 @@
 		
 		<string id="colourTextTitle">Colour text (green if on target, red if not)</string>
 		
-		<string id="topLeftMetricTitle">Top left metric</string>
-		<string id="topRightMetricTitle">Top right metric</string>
-		<string id="middleLeftMetricTitle">Middle left metric</string>
-		<string id="middleRightMetricTitle">Middle right metric</string>
-		<string id="bottomMetricTitle">Bottom metric</string>
+		<string id="topMetric1Title">Top metric 1</string>
+		<string id="topMetric2Title">Top metric 2</string>
+		<string id="middleMetric1Title">Middle metric 1</string>
+		<string id="middleMetric2Title">Middle metric 2</string>
+		<string id="bottomMetric1Title">Bottom metric 1</string>
+		<string id="bottomMetric2Title">Bottom metric 2</string>
 		
+		<string id="metricNoneTitle">None</string>
 		<string id="metricHeartRateTitle">Heart rate</string>
 		<string id="metricCadenceTitle">Cadence</string>
 		<string id="metricPowerTitle">Power</string>
@@ -67,25 +70,7 @@
 			<settingConfig type="boolean" />
 		</setting>
 		
-		<setting propertyKey="@Properties.m1" title="@Strings.topLeftMetricTitle">
-			<settingConfig type="list">
-	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
-	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
-	            <listEntry value="2">@Strings.metricPowerTitle</listEntry>
-	            <listEntry value="3">@Strings.metricCaloriesTitle</listEntry>
-	        </settingConfig>
-		</setting>
-		
-		<setting propertyKey="@Properties.m2" title="@Strings.topRightMetricTitle">
-			<settingConfig type="list">
-	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
-	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
-	            <listEntry value="2">@Strings.metricPowerTitle</listEntry>
-	            <listEntry value="3">@Strings.metricCaloriesTitle</listEntry>
-	        </settingConfig>
-		</setting>
-		
-		<setting propertyKey="@Properties.m3" title="@Strings.middleLeftMetricTitle">
+		<setting propertyKey="@Properties.m1" title="@Strings.topMetric1Title">
 			<settingConfig type="list">
 	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
 	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
@@ -101,7 +86,24 @@
 	        </settingConfig>
 		</setting>
 		
-		<setting propertyKey="@Properties.m4" title="@Strings.middleRightMetricTitle">
+		<setting propertyKey="@Properties.m2" title="@Strings.topMetric2Title">
+			<settingConfig type="list">
+	            <listEntry value="-1">@Strings.metricNoneTitle</listEntry>
+	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
+	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
+	            <listEntry value="2">@Strings.metricPowerTitle</listEntry>
+	            <listEntry value="3">@Strings.metricCaloriesTitle</listEntry>
+	            <listEntry value="4">@Strings.metricPaceTitle</listEntry>
+	            <listEntry value="5">@Strings.metricPaceDeltaTitle</listEntry>
+	            <listEntry value="6">@Strings.metricElapsedDistanceTitle</listEntry>
+	            <listEntry value="7">@Strings.metricRemainingDistanceTitle</listEntry>
+	            <listEntry value="8">@Strings.metricPredictedTimeTitle</listEntry>
+	            <listEntry value="9">@Strings.metricPredictedTimeDeltaTitle</listEntry>
+	            <listEntry value="10">@Strings.metricTimerTimeTitle</listEntry>
+	        </settingConfig>
+		</setting>
+		
+		<setting propertyKey="@Properties.m3" title="@Strings.middleMetric1Title">
 			<settingConfig type="list">
 	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
 	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
@@ -117,8 +119,42 @@
 	        </settingConfig>
 		</setting>
 		
-		<setting propertyKey="@Properties.m5" title="@Strings.bottomMetricTitle">
+		<setting propertyKey="@Properties.m4" title="@Strings.middleMetric2Title">
 			<settingConfig type="list">
+	            <listEntry value="-1">@Strings.metricNoneTitle</listEntry>
+	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
+	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
+	            <listEntry value="2">@Strings.metricPowerTitle</listEntry>
+	            <listEntry value="3">@Strings.metricCaloriesTitle</listEntry>
+	            <listEntry value="4">@Strings.metricPaceTitle</listEntry>
+	            <listEntry value="5">@Strings.metricPaceDeltaTitle</listEntry>
+	            <listEntry value="6">@Strings.metricElapsedDistanceTitle</listEntry>
+	            <listEntry value="7">@Strings.metricRemainingDistanceTitle</listEntry>
+	            <listEntry value="8">@Strings.metricPredictedTimeTitle</listEntry>
+	            <listEntry value="9">@Strings.metricPredictedTimeDeltaTitle</listEntry>
+	            <listEntry value="10">@Strings.metricTimerTimeTitle</listEntry>
+	        </settingConfig>
+		</setting>
+		
+		<setting propertyKey="@Properties.m5" title="@Strings.bottomMetric1Title">
+			<settingConfig type="list">
+	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
+	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
+	            <listEntry value="2">@Strings.metricPowerTitle</listEntry>
+	            <listEntry value="3">@Strings.metricCaloriesTitle</listEntry>
+	            <listEntry value="4">@Strings.metricPaceTitle</listEntry>
+	            <listEntry value="5">@Strings.metricPaceDeltaTitle</listEntry>
+	            <listEntry value="6">@Strings.metricElapsedDistanceTitle</listEntry>
+	            <listEntry value="7">@Strings.metricRemainingDistanceTitle</listEntry>
+	            <listEntry value="8">@Strings.metricPredictedTimeTitle</listEntry>
+	            <listEntry value="9">@Strings.metricPredictedTimeDeltaTitle</listEntry>
+	            <listEntry value="10">@Strings.metricTimerTimeTitle</listEntry>
+	        </settingConfig>
+		</setting>
+		
+		<setting propertyKey="@Properties.m6" title="@Strings.bottomMetric2Title">
+			<settingConfig type="list">
+	            <listEntry value="-1">@Strings.metricNoneTitle</listEntry>
 	            <listEntry value="0">@Strings.metricHeartRateTitle</listEntry>
 	            <listEntry value="1">@Strings.metricCadenceTitle</listEntry>
 	            <listEntry value="2">@Strings.metricPowerTitle</listEntry>

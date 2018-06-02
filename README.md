@@ -72,6 +72,11 @@ your project and giving me a leg up in writing for the Garmin SDK.
 - Flame icon by [Those Icons](https://www.flaticon.com/authors/those-icons) from [www.flaticon.com](https://www.flaticon.com/free-icon/fire_483675)
 
 ## Changelog
+- 0.5.0
+  - Add support for displaying 6th metric
+  - Select between 3 and 6 metrics for display
+  - Enable all metrics to be shown in top and bottom positions
+  - Reposition icons on round devices to increase space for value text
 - 0.4.1
   - Use mm:ss format for goal target time setting
 - 0.4.0

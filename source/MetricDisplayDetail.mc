@@ -11,7 +11,7 @@ class MetricDisplayDetail {
 	var isError = false;
 	var metricId;
 	
-	function initialize(metric, hasLabel, hasIcon, activityMetrics, goalMetrics, dc) {
+	function initialize(metric, hasLabel, hasIcon, short, activityMetrics, goalMetrics, dc) {
 		
 		metricId = metric;
 		
@@ -29,13 +29,13 @@ class MetricDisplayDetail {
 			valueText = (activityMetrics.calories == null ? 0 : activityMetrics.calories).format("%d");
 		} else if (metric == 4) {
 			labelText = hasLabel ? Ui.loadResource(Rez.Strings.pace) : null;
-			valueText = formatTime((activityMetrics.computedPace == null ? 0 : activityMetrics.computedPace) * 1000);
+			valueText = formatTime((activityMetrics.computedPace == null ? 0 : activityMetrics.computedPace) * 1000, short);
 			useGoalColour = !goalMetrics.goalCompleted();
 		} else if (metric == 5) {
 			labelText = hasLabel ? Ui.loadResource(Rez.Strings.pace) : null;
 			if (goalMetrics.goalSet()) {
 				var delta = goalMetrics.paceDelta(activityMetrics.computedPace) * 1000.0;
-				valueText = formatTime(delta.abs());
+				valueText = formatTime(delta.abs(), short);
 				if (delta > 0) {
 					valueText = "+" + valueText;
 				} else if (delta < 0) {
@@ -55,13 +55,13 @@ class MetricDisplayDetail {
 			isError = goalMetrics.goalDistance == null || goalMetrics.goalDistance == 0;
 		} else if (metric == 8) {
 			labelText = hasLabel ? Ui.loadResource(Rez.Strings.finish) : null;
-			valueText =  goalMetrics.goalSet() ? formatTime(goalMetrics.predictedTime) : Ui.loadResource(Rez.Strings.noGoal);
+			valueText =  goalMetrics.goalSet() ? formatTime(goalMetrics.predictedTime, short) : Ui.loadResource(Rez.Strings.noGoal);
 			isError = !goalMetrics.goalSet();
 			useGoalColour = !isError;
 		} else if (metric == 9) {
 			labelText = hasLabel ? Ui.loadResource(Rez.Strings.finish) : null;
 			if (goalMetrics.goalSet()) {
-				valueText = formatTime(goalMetrics.delta().abs());
+				valueText = formatTime(goalMetrics.delta().abs(), short);
 				if (goalMetrics.delta() > 0) {
 					valueText = "+" + valueText;
 				} else if (goalMetrics.delta() < 0) {
@@ -74,7 +74,7 @@ class MetricDisplayDetail {
 			useGoalColour = !isError;
 		} else if (metric == 10) {
 			labelText = hasLabel ? Ui.loadResource(Rez.Strings.time) : null;
-			valueText = formatTime(activityMetrics.timerTime);
+			valueText = formatTime(activityMetrics.timerTime, short);
 		}
 		
 		width = valueText == null ? 0 : dc.getTextWidthInPixels(valueText, Gfx.FONT_NUMBER_MEDIUM);
@@ -88,7 +88,7 @@ class MetricDisplayDetail {
 		return IconLoader.getIcon(metricId, true);
 	}
 	
-	function formatTime(milliseconds) {
+	function formatTime(milliseconds, short) {
 		if (milliseconds != null && milliseconds > 0) {
 			var hours = null;
 			var minutes = Math.floor(milliseconds / 1000 / 60).toNumber();
@@ -99,6 +99,8 @@ class MetricDisplayDetail {
 			}
 			if (hours == null) {
 				return minutes.format("%d") + ":" + seconds.format("%02d");
+			} else if (short) {
+				return hours.format("%d") + ":" + minutes.format("%02d");
 			} else {
 				return hours.format("%d") + ":" + minutes.format("%02d") + ":" + seconds.format("%02d");
 			}
@@ -110,10 +112,12 @@ class MetricDisplayDetail {
 	function formatDistance(meters, kmOrMileInMeters) {
 		if (meters != null && meters > 0) {
 			var distanceKmOrMiles = meters / kmOrMileInMeters;
-			if (distanceKmOrMiles < 100) {
-				return distanceKmOrMiles.format("%.2f");
-			} else {
+			if (distanceKmOrMiles >= 1000) {
+				return distanceKmOrMiles.format("%d");
+			} else if (distanceKmOrMiles >= 100) {
 				return distanceKmOrMiles.format("%.1f");
+			} else {
+				return distanceKmOrMiles.format("%.2f");
 			}
 		} else {
 			return Ui.loadResource(Rez.Strings.zeroDistance);
