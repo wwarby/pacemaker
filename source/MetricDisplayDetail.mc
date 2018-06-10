@@ -30,7 +30,7 @@ class MetricDisplayDetail {
 		} else if (metric == 4) {
 			labelText = hasLabel ? Ui.loadResource(Rez.Strings.pace) : null;
 			valueText = formatTime((activityMetrics.computedPace == null ? 0 : activityMetrics.computedPace) * 1000, short);
-			useGoalColour = !goalMetrics.goalCompleted();
+			useGoalColour = goalMetrics.goalSet() && !goalMetrics.goalCompleted();
 		} else if (metric == 5) {
 			labelText = hasLabel ? Ui.loadResource(Rez.Strings.pace) : null;
 			if (goalMetrics.goalSet()) {
@@ -55,9 +55,9 @@ class MetricDisplayDetail {
 			isError = goalMetrics.goalDistance == null || goalMetrics.goalDistance == 0;
 		} else if (metric == 8) {
 			labelText = hasLabel ? Ui.loadResource(Rez.Strings.finish) : null;
-			valueText =  goalMetrics.goalSet() ? formatTime(goalMetrics.predictedTime, short) : Ui.loadResource(Rez.Strings.noGoal);
-			isError = !goalMetrics.goalSet();
-			useGoalColour = !isError;
+			valueText =  goalMetrics.goalDistance != null ? formatTime(goalMetrics.predictedTime, short) : Ui.loadResource(Rez.Strings.noGoal);
+			isError = goalMetrics.goalDistance == null;
+			useGoalColour = goalMetrics.goalSet() && !isError;
 		} else if (metric == 9) {
 			labelText = hasLabel ? Ui.loadResource(Rez.Strings.finish) : null;
 			if (goalMetrics.goalSet()) {

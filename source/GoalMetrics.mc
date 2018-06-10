@@ -29,7 +29,7 @@ class GoalMetrics {
 			var time = App.Properties.getValue("t").toString();
 			if (time == null || time.length() == 0) {
 				goalTargetTime = null;
-			} else if (time.find(":") == null) { // Seconds
+			} else if (time.length() >= 2 && time.find(":") == null) { // Seconds
 				goalTargetTime = time.toNumber();
 			} else if (time.length() == 4) { // m:ss
 				goalTargetTime = (time.substring(0, 1).toNumber() * 60) + time.substring(2, 4).toNumber();
@@ -41,6 +41,8 @@ class GoalMetrics {
 				goalTargetTime = (time.substring(0, 2).toNumber() * 3600) + (time.substring(3, 5).toNumber() * 60) + time.substring(6, 8).toNumber();
 			} else if (time.length() == 9) { // hhh:mm:ss
 				goalTargetTime = (time.substring(0, 3).toNumber() * 3600) + (time.substring(4, 6).toNumber() * 60) + time.substring(7, 9).toNumber();
+			} else {
+				goalTargetTime = null;
 			}
 		} catch(ex) {
 		    // System.println(ex.getErrorMessage());
@@ -54,6 +56,7 @@ class GoalMetrics {
 				goalTargetTime *= 1000.0;
 			}
 		}
+		
 	}
 	
 	function goalSet() {
@@ -85,10 +88,10 @@ class GoalMetrics {
 		remainingDistance = goalDistance != null ? Calc.max(0, goalDistance - (info.elapsedDistance == null ? 0 : info.elapsedDistance)) : null;
 		
 		// Goal completed or not moving
-		if (completedTime != null || currentSpeed == null || currentSpeed == 0 || info.elapsedDistance == null || !goalSet()) { return; }
+		if (completedTime != null || currentSpeed == null || currentSpeed == 0 || info.elapsedDistance == null) { return; }
 		
 		// Capture goal finish time
-		if (goalDistance <= info.elapsedDistance) {
+		if (goalDistance != null && goalDistance <= info.elapsedDistance) {
 			completedTime = info.timerTime;
 			predictedTime = completedTime;
 			remainingTime = null;
@@ -96,13 +99,17 @@ class GoalMetrics {
 			requiredPace = null;
 		} else {
 			// Compute goal metrics
-			predictedTime = (info.timerTime + ((remainingDistance / currentSpeed) * 1000.0)).toNumber();
-			remainingTime = goalTargetTime - info.timerTime;
-			requiredSpeed = remainingDistance / (remainingTime / 1000.0);
-			if (requiredSpeed != null && requiredSpeed > 0.2) {
-				requiredPace = kmOrMileInMeters / requiredSpeed;
-			} else {
-				requiredPace = null;
+			if (remainingDistance != null && remainingDistance > 0) {
+				predictedTime = (info.timerTime + ((remainingDistance / currentSpeed) * 1000.0)).toNumber();
+			}
+			if (goalTargetTime != null && goalTargetTime > 0) {
+				remainingTime = goalTargetTime - info.timerTime;
+				requiredSpeed = remainingDistance / (remainingTime / 1000.0);
+				if (requiredSpeed != null && requiredSpeed > 0.2) {
+					requiredPace = kmOrMileInMeters / requiredSpeed;
+				} else {
+					requiredPace = null;
+				}
 			}
 		}
 	}

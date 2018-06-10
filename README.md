@@ -72,6 +72,8 @@ your project and giving me a leg up in writing for the Garmin SDK.
 - Flame icon by [Those Icons](https://www.flaticon.com/authors/those-icons) from [www.flaticon.com](https://www.flaticon.com/free-icon/fire_483675)
 
 ## Changelog
+- 0.5.1
+  - Tweak goal metric calculation when target time is not set
 - 0.5.0
   - Add support for displaying 6th metric
   - Select between 3 and 6 metrics for display
